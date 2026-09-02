@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# MindOS Sunrise Official Ubiquity ve Zorin OS Style System Installer
-# Full GTK4 / Libadwaita Complete Installation Suite
+# MindOS Sunrise Official Ubiquity & Zorin OS Style System Installer
+# Full GTK4 / Libadwaita Complete Installation Suite with Smooth Transitions
 # ==============================================================================
 
 import os
@@ -19,7 +19,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GLib, Gio, Pango
 
 APP_ID = "org.mindos.installer"
-VERSION = "1.3.0"
+VERSION = "1.4.0"
 
 
 class MindOSInstallerApp(Adw.Application):
@@ -37,13 +37,14 @@ class InstallerWindow(Adw.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_title("MindOS Sunrise Kurulumu")
-        self.set_default_size(920, 680)
+        self.set_default_size(900, 640)
         self.set_resizable(False)
 
         # State Variables
         self.selected_lang = "tr"
         self.selected_layout = "tr"
-        self.install_profile = "standard" # "standard" or "minimal"
+        self.selected_variant = ""
+        self.install_profile = "standard"
         self.install_drivers = True
         self.install_codecs = True
         self.selected_timezone = "Europe/Istanbul"
@@ -113,46 +114,47 @@ class InstallerWindow(Adw.ApplicationWindow):
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         self.set_content(main_box)
 
-        # HeaderBar
+        # Clean HeaderBar without tab bar
         self.header_bar = Adw.HeaderBar()
-        self.view_switcher = Adw.ViewSwitcher()
-        self.header_bar.set_title_widget(self.view_switcher)
+        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulumu", subtitle="v1.0")
+        self.header_bar.set_title_widget(self.header_title)
         main_box.append(self.header_bar)
 
-        # Content Stack
-        self.stack = Adw.ViewStack()
+        # Animated Stack with smooth slide transition
+        self.stack = Gtk.Stack()
+        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        self.stack.set_transition_duration(350)
         self.stack.set_vexpand(True)
         self.stack.set_hexpand(True)
         main_box.append(self.stack)
 
         # Pages
         self.page_lang = self.create_language_page()
-        self.stack.add_titled_with_icon(self.page_lang, "lang", "Dil", "preferences-desktop-locale-symbolic")
+        self.stack.add_named(self.page_lang, "lang")
 
         self.page_keyboard = self.create_keyboard_page()
-        self.stack.add_titled_with_icon(self.page_keyboard, "keyboard", "Klavye", "input-keyboard-symbolic")
+        self.stack.add_named(self.page_keyboard, "keyboard")
 
         self.page_software = self.create_software_page()
-        self.stack.add_titled_with_icon(self.page_software, "software", "Yazılım", "software-properties-symbolic")
+        self.stack.add_named(self.page_software, "software")
 
         self.page_disk = self.create_disk_page()
-        self.stack.add_titled_with_icon(self.page_disk, "disk", "Disk", "drive-harddisk-symbolic")
+        self.stack.add_named(self.page_disk, "disk")
 
         self.page_timezone = self.create_timezone_page()
-        self.stack.add_titled_with_icon(self.page_timezone, "timezone", "Bölge", "preferences-system-time-symbolic")
+        self.stack.add_named(self.page_timezone, "timezone")
 
         self.page_user = self.create_user_page()
-        self.stack.add_titled_with_icon(self.page_user, "user", "Kullanıcı", "avatar-default-symbolic")
+        self.stack.add_named(self.page_user, "user")
 
         self.page_summary = self.create_summary_page()
-        self.stack.add_titled_with_icon(self.page_summary, "summary", "Özet", "document-properties-symbolic")
+        self.stack.add_named(self.page_summary, "summary")
 
         self.page_installing = self.create_installing_page()
-        self.stack.add_titled_with_icon(self.page_installing, "installing", "Kurulum", "system-software-install-symbolic")
+        self.stack.add_named(self.page_installing, "installing")
 
         self.page_finished = self.create_finished_page()
-        self.stack.add_titled_with_icon(self.page_finished, "finished", "Tamamlandı", "emblem-ok-symbolic")
-        self.view_switcher.set_stack(self.stack)
+        self.stack.add_named(self.page_finished, "finished")
 
         # Bottom Action Bar
         self.action_bar = Gtk.ActionBar()
@@ -173,7 +175,7 @@ class InstallerWindow(Adw.ApplicationWindow):
     # --------------------------------------------------------------------------
     def create_language_page(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
-        box.set_margin_top(25)
+        box.set_margin_top(30)
         box.set_margin_bottom(25)
         box.set_margin_start(40)
         box.set_margin_end(40)
@@ -222,7 +224,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         actions_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
         actions_box.set_homogeneous(True)
-        actions_box.set_margin_top(20)
+        actions_box.set_margin_top(25)
 
         btn_try = Gtk.Button()
         btn_try.add_css_class("card")
@@ -277,7 +279,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         return box
 
     # --------------------------------------------------------------------------
-    # Page 2: Keyboard Layout & Test Area
+    # Page 2: Keyboard Layout with Real GNOME Live Switcher
     # --------------------------------------------------------------------------
     def create_keyboard_page(self):
         clamp = Adw.Clamp()
@@ -317,22 +319,36 @@ class InstallerWindow(Adw.ApplicationWindow):
         group_test.add(self.entry_kbd_test)
         box.append(group_test)
 
+        # Set default Turkish layout on load
+        self.apply_live_keyboard("tr", "")
+
         return clamp
 
     def on_keyboard_selected(self, combo, param):
         idx = combo.get_selected()
-        layout_map = {0: "tr", 1: "tr", 2: "us", 3: "gb", 4: "de", 5: "fr"}
-        variant_map = {0: "", 1: "f", 2: "", 3: "", 4: "", 5: ""}
-        layout = layout_map.get(idx, "tr")
-        variant = variant_map.get(idx, "")
+        layout_map = {0: ("tr", ""), 1: ("tr", "f"), 2: ("us", ""), 3: ("gb", ""), 4: ("de", ""), 5: ("fr", "")}
+        layout, variant = layout_map.get(idx, ("tr", ""))
         self.selected_layout = layout
+        self.selected_variant = variant
+        self.apply_live_keyboard(layout, variant)
+
+    def apply_live_keyboard(self, layout, variant=""):
         try:
+            bus_env = os.environ.copy()
+            if "DBUS_SESSION_BUS_ADDRESS" not in bus_env:
+                bus_env["DBUS_SESSION_BUS_ADDRESS"] = "unix:path=/run/user/1000/bus"
+
+            src = f"[('xkb', '{layout}')]"
+            if variant:
+                src = f"[('xkb', '{layout}+{variant}')]"
+
+            subprocess.run(["gsettings", "set", "org.gnome.desktop.input-sources", "sources", src], env=bus_env, check=False)
             if variant:
                 subprocess.Popen(["setxkbmap", "-layout", layout, "-variant", variant])
             else:
                 subprocess.Popen(["setxkbmap", "-layout", layout])
-        except Exception:
-            pass
+        except Exception as e:
+            print("Klavye uygulama hatası:", e)
 
     # --------------------------------------------------------------------------
     # Page 3: Software & Drivers
@@ -388,7 +404,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         return clamp
 
     # --------------------------------------------------------------------------
-    # Page 4: Clean 3-Option Disk Partitioning (Alongside + Slider, Format, GParted)
+    # Page 4: 3-Option Clean Disk Page with Visual Slider
     # --------------------------------------------------------------------------
     def create_disk_page(self):
         clamp = Adw.Clamp()
@@ -404,9 +420,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         group_mode.set_description("MindOS Sunrise'ın diskinize nasıl kurulacağını belirleyin:")
         box.append(group_mode)
 
-        # -------------------------------------------------------------
-        # SEÇENEK 1: WINDOWS YANINA KUR (DUAL BOOT & SLIDER)
-        # -------------------------------------------------------------
+        # OPTION 1: Windows Alongside Dual-Boot
         self.row_alongside = Adw.ActionRow(
             title="1. Windows Boot Manager'ın Yanına Kur (Önerilen Dual-Boot)",
             subtitle="Windows ve belgeleriniz korunur. Açılışta Windows veya MindOS'u seçebilirsiniz."
@@ -416,7 +430,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.row_alongside.add_prefix(self.radio_alongside)
         group_mode.add(self.row_alongside)
 
-        # Slider Kutusu (Yalnızca 1. seçenek seçiliyken görünür)
+        # Visual Slider Box
         self.slider_wrapper = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         self.slider_wrapper.set_margin_top(8)
         self.slider_wrapper.set_margin_bottom(12)
@@ -452,7 +466,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         preview_box.append(self.box_mind)
         self.slider_wrapper.append(preview_box)
 
-        # Slider Bar
+        # Interactive Slider Bar
         min_win = 30.0
         max_win = max(min_win + 10, self.total_win_gb - 25.0)
         self.scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min_win, max_win, 1.0)
@@ -468,9 +482,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         group_mode.add(self.slider_wrapper)
 
-        # -------------------------------------------------------------
-        # SEÇENEK 2: TÜM DİSKİ FORMATLA VE KUR
-        # -------------------------------------------------------------
+        # OPTION 2: Erase Entire Disk
         self.row_erase = Adw.ActionRow(
             title="2. Diski Sil ve Yalnızca MindOS Sunrise Kur (Tüm Diski Formatla)",
             subtitle="Tüm disk temizlenir, mevcut Windows ve tüm veriler silinir."
@@ -480,9 +492,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.row_erase.add_prefix(self.radio_erase)
         group_mode.add(self.row_erase)
 
-        # -------------------------------------------------------------
-        # SEÇENEK 3: ELLE BÖLÜMLENDİRME (GPARTED)
-        # -------------------------------------------------------------
+        # OPTION 3: Manual GParted
         self.row_manual = Adw.ActionRow(
             title="3. Başka Bir Şey / Elle Bölümlendirme (GParted ile Özel Yapılandırma)",
             subtitle="Bölümleri kendiniz oluşturun veya yeniden boyutlandırın. Normal Ubuntu tarzı GParted açılır."
@@ -523,7 +533,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             self.slider_wrapper.set_visible(False)
 
     # --------------------------------------------------------------------------
-    # Page 5: Timezone & Region
+    # Page 5: Timezone
     # --------------------------------------------------------------------------
     def create_timezone_page(self):
         clamp = Adw.Clamp()
@@ -559,7 +569,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         return clamp
 
     # --------------------------------------------------------------------------
-    # Page 6: User & Password
+    # Page 6: User Setup
     # --------------------------------------------------------------------------
     def create_user_page(self):
         clamp = Adw.Clamp()
@@ -639,16 +649,18 @@ class InstallerWindow(Adw.ApplicationWindow):
         return clamp
 
     # --------------------------------------------------------------------------
-    # Page 8: Progress & Slideshow
+    # Page 8: Progress & Animated Slideshow
     # --------------------------------------------------------------------------
     def create_installing_page(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
-        box.set_margin_top(30)
+        box.set_margin_top(25)
         box.set_margin_bottom(20)
         box.set_margin_start(40)
         box.set_margin_end(40)
 
-        self.slide_stack = Adw.ViewStack()
+        self.slide_stack = Gtk.Stack()
+        self.slide_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.slide_stack.set_transition_duration(500)
         self.slide_stack.set_vexpand(True)
 
         s1 = self.create_slide("weather-clear-symbolic", "MindOS Sunrise'a Hoş Geldiniz",
@@ -656,7 +668,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.slide_stack.add_named(s1, "slide1")
 
         s2 = self.create_slide("package-x-generic-symbolic", "Zengin ve Hızlı Paket Yöneticisi: mindpkg",
-                               "Steam, Google Chrome, VS Code, Discord ve 3.900+ uygulama tek komutla emrinizde.")
+                               "Steam, Google Chrome, VS Code, Discord ve 4.100+ uygulama tek komutla emrinizde.")
         self.slide_stack.add_named(s2, "slide2")
 
         s3 = self.create_slide("applications-games-symbolic", "Kusursuz Dual-Boot Uyumu",
@@ -669,10 +681,18 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         box.append(self.slide_stack)
 
+        # Status row with smooth spinner
+        status_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        self.spinner = Gtk.Spinner()
+        self.spinner.start()
+        status_box.append(self.spinner)
+
         self.lbl_status = Gtk.Label(label="Kurulum hazırlanıyor...")
         self.lbl_status.set_halign(Gtk.Align.START)
-        box.append(self.lbl_status)
+        status_box.append(self.lbl_status)
+        box.append(status_box)
 
+        # Progress Bar with smooth animation
         self.progress_bar = Gtk.ProgressBar()
         self.progress_bar.set_show_text(True)
         self.progress_bar.set_fraction(0.0)
@@ -721,7 +741,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         title.add_css_class("title-1")
         box.append(title)
 
-        subtitle = Gtk.Label(label="MindOS Sunrise diskinize kuruldu. Yeniden başlattığınızda açılış menüsünde hem MindOS hem de Windows görünecektir.")
+        subtitle = Gtk.Label(label="MindOS Sunrise diskinize kuruldu. Bilgisayarı yeniden başlattığınızda açılış menüsünde hem MindOS hem de Windows görünecektir.")
         subtitle.add_css_class("dim-label")
         box.append(subtitle)
 
@@ -735,7 +755,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         btn_reboot = Gtk.Button(label="Şimdi Yeniden Başlat")
         btn_reboot.add_css_class("suggested-action")
-        btn_reboot.connect("clicked", lambda b: subprocess.Popen(["systemctl", "reboot"]))
+        btn_reboot.connect("clicked", lambda b: subprocess.Popen(["sudo", "systemctl", "reboot"]))
         btn_box.append(btn_reboot)
 
         box.append(btn_box)
@@ -829,17 +849,17 @@ class InstallerWindow(Adw.ApplicationWindow):
         slides = ["slide1", "slide2", "slide3", "slide4"]
         i = 0
         while self.stack.get_visible_child_name() == "installing":
-            time.sleep(7)
+            time.sleep(6)
             i = (i + 1) % len(slides)
             GLib.idle_add(self.slide_stack.set_visible_child_name, slides[i])
 
     # --------------------------------------------------------------------------
-    # Installation Backend Engine
+    # Installation Backend Engine with Real Live Progress
     # --------------------------------------------------------------------------
     def run_cmd(self, cmd_list, check=True):
         if os.geteuid() != 0 and cmd_list[0] not in ["sudo", "pkexec"]:
             cmd_list = ["sudo"] + cmd_list
-        return self.run_cmd(cmd_list, check=check)
+        return subprocess.run(cmd_list, check=check)
 
     def run_installation(self):
         try:
@@ -856,7 +876,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 if self.windows_part[-1].isdigit():
                     part_num = self.windows_part[-1]
 
-                part_info = subprocess.check_output(["parted", "-m", target_disk, "unit", "MiB", "print"], text=True)
+                part_info = subprocess.check_output(["sudo", "parted", "-m", target_disk, "unit", "MiB", "print"], text=True)
                 win_start = "116MiB"
                 for pline in part_info.splitlines():
                     if pline.startswith(f"{part_num}:"):
@@ -866,10 +886,11 @@ class InstallerWindow(Adw.ApplicationWindow):
                 win_start_val = float(win_start.replace("MiB", ""))
                 win_new_end = f"{int(win_start_val + win_mb)}MiB"
 
+                self.update_progress(0.12, "Bölüm tablosu güncelleniyor...")
                 self.run_cmd(["parted", "-s", target_disk, "resizepart", part_num, win_new_end], check=False)
                 time.sleep(1)
 
-                self.update_progress(0.15, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
+                self.update_progress(0.18, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
                 self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", win_new_end, "100%"], check=False)
                 self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
@@ -877,7 +898,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 new_parts = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME", target_disk], text=True).splitlines()
                 part_root = new_parts[-1]
 
-                self.update_progress(0.20, f"Bölüm biçimlendiriliyor: {part_root} (Ext4)...")
+                self.update_progress(0.24, f"Bölüm biçimlendiriliyor: {part_root} (Ext4)...")
                 self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
 
             elif self.install_mode == "erase_disk":
@@ -903,7 +924,6 @@ class InstallerWindow(Adw.ApplicationWindow):
                 self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
 
             elif self.install_mode == "manual":
-                # Find largest non-ntfs, non-fat partition for root
                 all_parts = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME,FSTYPE", target_disk], text=True).splitlines()
                 for p in all_parts:
                     p_split = p.split()
@@ -913,17 +933,17 @@ class InstallerWindow(Adw.ApplicationWindow):
                 if not part_root:
                     part_root = all_parts[-1].split()[0]
 
-            self.update_progress(0.25, "Diskler bağlanıyor...")
+            self.update_progress(0.28, "Hedef diskler bağlanıyor...")
             target_mount = Path("/mnt/mindos_target")
-            target_mount.mkdir(parents=True, exist_ok=True)
+            self.run_cmd(["mkdir", "-p", str(target_mount)], check=True)
             self.run_cmd(["mount", part_root, str(target_mount)], check=True)
-            (target_mount / "boot" / "efi").mkdir(parents=True, exist_ok=True)
+            self.run_cmd(["mkdir", "-p", str(target_mount / "boot" / "efi")], check=True)
             if part_esp:
                 self.run_cmd(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
 
-            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor...")
+            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (Dosyalar aktarılıyor)...")
             rsync_cmd = [
-                "rsync", "-aHAXx",
+                "sudo", "rsync", "-aHAXx",
                 "--exclude=/proc/*",
                 "--exclude=/sys/*",
                 "--exclude=/dev/*",
@@ -934,12 +954,24 @@ class InstallerWindow(Adw.ApplicationWindow):
                 "--exclude=/lost+found",
                 "/", f"{target_mount}/"
             ]
-            self.run_cmd(rsync_cmd, check=True)
+            
+            # Run rsync in background and monitor copied MB progress
+            proc = subprocess.Popen(rsync_cmd)
+            while proc.poll() is None:
+                time.sleep(1)
+                try:
+                    du_out = subprocess.check_output(["sudo", "du", "-sm", str(target_mount)], text=True)
+                    copied_mb = int(du_out.split()[0])
+                    # Total approx 7000 MB
+                    frac = min(0.75, 0.35 + (copied_mb / 7000.0) * 0.40)
+                    self.update_progress(frac, f"MindOS Sunrise diske kopyalanıyor ({copied_mb} MB / ~7000 MB)...")
+                except Exception:
+                    pass
 
-            self.update_progress(0.75, "Kullanıcı, klavye ve saat dilimi yapılandırılıyor...")
+            self.update_progress(0.78, "Kullanıcı, klavye ve sistem yapılandırılıyor...")
             for d in ["proc", "sys", "dev", "run", "tmp", "mnt"]:
-                (target_mount / d).mkdir(parents=True, exist_ok=True)
-            os.chmod(target_mount / "tmp", 0o1777)
+                self.run_cmd(["mkdir", "-p", str(target_mount / d)], check=True)
+            self.run_cmd(["chmod", "1777", str(target_mount / "tmp")], check=True)
 
             root_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_root], text=True).strip()
             esp_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_esp], text=True).strip() if part_esp else ""
@@ -947,32 +979,38 @@ class InstallerWindow(Adw.ApplicationWindow):
             fstab_content = f"UUID={root_uuid}    /            ext4    defaults,noatime    1 1\n"
             if esp_uuid:
                 fstab_content += f"UUID={esp_uuid}     /boot/efi    vfat    defaults            0 2\n"
-            with open(target_mount / "etc" / "fstab", "w") as f:
-                f.write(fstab_content)
 
-            with open(target_mount / "etc" / "hostname", "w") as f:
+            with open("/tmp/fstab_target", "w") as f:
+                f.write(fstab_content)
+            self.run_cmd(["cp", "/tmp/fstab_target", str(target_mount / "etc" / "fstab")], check=True)
+
+            with open("/tmp/hostname_target", "w") as f:
                 f.write(f"{self.hostname}\n")
+            self.run_cmd(["cp", "/tmp/hostname_target", str(target_mount / "etc" / "hostname")], check=True)
 
             tz_file = Path(f"/usr/share/zoneinfo/{self.selected_timezone}")
             if tz_file.exists():
                 self.run_cmd(["cp", str(tz_file), str(target_mount / "etc" / "localtime")], check=False)
 
-            (target_mount / "etc" / "vconsole.conf").write_text(f"KEYMAP={self.selected_layout}\n")
+            # Keyboard layout
+            with open("/tmp/vconsole_target", "w") as f:
+                f.write(f"KEYMAP={self.selected_layout}\n")
+            self.run_cmd(["cp", "/tmp/vconsole_target", str(target_mount / "etc" / "vconsole.conf")], check=True)
 
             # Setup User Password
             self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
             self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
 
-            self.update_progress(0.85, "GRUB2 Dual-Boot Önyükleyici kuruluyor (UEFI + Windows)...")
+            self.update_progress(0.86, "GRUB2 Dual-Boot Önyükleyici kuruluyor (UEFI + Windows)...")
             for fs in ["dev", "dev/pts", "proc", "sys"]:
                 self.run_cmd(["mount", "--bind", f"/{fs}", f"{target_mount}/{fs}"], check=False)
             self.run_cmd(["mount", "-t", "tmpfs", "tmpfs", f"{target_mount}/run"], check=False)
 
             if part_esp:
                 self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=x86_64-efi",
-                                "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Sunrise", "--recheck"], check=False)
+                              "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Sunrise", "--recheck"], check=False)
             self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
-                            "--recheck", target_disk], check=False)
+                          "--recheck", target_disk], check=False)
 
             grub_cfg = f"""set default=0
 set timeout=5
@@ -1001,11 +1039,12 @@ menuentry 'MindOS Sunrise (Kurtarma / Recovery Modu)' {{
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
 }}
 """
-            (target_mount / "boot" / "grub").mkdir(parents=True, exist_ok=True)
-            with open(target_mount / "boot" / "grub" / "grub.cfg", "w") as f:
+            self.run_cmd(["mkdir", "-p", str(target_mount / "boot" / "grub")], check=True)
+            with open("/tmp/grub_cfg_target", "w") as f:
                 f.write(grub_cfg)
+            self.run_cmd(["cp", "/tmp/grub_cfg_target", str(target_mount / "boot" / "grub" / "grub.cfg")], check=True)
 
-            self.update_progress(0.95, "Sistem temizliği yapılıyor ve diskler kapatılıyor...")
+            self.update_progress(0.96, "Sistem temizliği yapılıyor ve diskler güvenle kapatılıyor...")
             for fs in ["boot/efi", "dev/pts", "dev", "proc", "sys", "run"]:
                 self.run_cmd(["umount", "-f", f"{target_mount}/{fs}"], check=False)
             self.run_cmd(["umount", "-f", str(target_mount)], check=False)
