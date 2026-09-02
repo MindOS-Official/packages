@@ -16,7 +16,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PKGS_DIR = REPO_ROOT / "pkgs" / "x86_64"
 INDEX_FILE = REPO_ROOT / "packages.json"
-BASE_URL = "https://raw.githubusercontent.com/MindOS-Official/packages/main/pkgs/x86_64"
+BASE_URL = "https://media.githubusercontent.com/media/MindOS-Official/packages/main/pkgs/x86_64"
 
 
 def calculate_sha256(filepath):
@@ -96,6 +96,19 @@ def update_repository_index():
                     print(f"  • {meta['name']} v{meta['version']}-{meta.get('release', '1')} (SHA256: {meta['sha256'][:8]}...)")
             except Exception as e:
                 print(f"  ⚠ {mind_file.name} okunamadı: {e}")
+
+    aliases = {}
+    for pkg in packages_list:
+        if pkg["name"] == "steam-launcher":
+            aliases["steam"] = dict(pkg, name="steam", description="Steam Installer (Valve Gaming Platform)")
+        elif pkg["name"] == "google-chrome-stable":
+            aliases["chrome"] = dict(pkg, name="chrome", description="Google Chrome Web Browser")
+        elif pkg["name"] == "code":
+            aliases["vscode"] = dict(pkg, name="vscode", description="Visual Studio Code Editor")
+
+    for alias_name, alias_pkg in aliases.items():
+        if not any(p["name"] == alias_name for p in packages_list):
+            packages_list.append(alias_pkg)
 
     repo_index = {
         "repository": "MindOS Sunrise Official Package Repository",
