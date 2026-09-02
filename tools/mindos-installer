@@ -814,7 +814,8 @@ class InstallerWindow(Adw.ApplicationWindow):
             self.btn_back.set_sensitive(False)
             self.btn_next.set_sensitive(False)
             self.action_bar.set_visible(False)
-            self.header_bar.set_show_title_buttons(False)
+            self.header_bar.set_show_start_title_buttons(False)
+            self.header_bar.set_show_end_title_buttons(False)
             self.stack.set_visible_child_name("installing")
             threading.Thread(target=self.run_installation, daemon=True).start()
             threading.Thread(target=self.run_slideshow, daemon=True).start()
@@ -835,6 +836,11 @@ class InstallerWindow(Adw.ApplicationWindow):
     # --------------------------------------------------------------------------
     # Installation Backend Engine
     # --------------------------------------------------------------------------
+    def run_cmd(self, cmd_list, check=True):
+        if os.geteuid() != 0 and cmd_list[0] not in ["sudo", "pkexec"]:
+            cmd_list = ["sudo"] + cmd_list
+        return self.run_cmd(cmd_list, check=check)
+
     def run_installation(self):
         try:
             target_disk = self.selected_disk
@@ -844,7 +850,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             if self.install_mode == "alongside":
                 self.update_progress(0.05, f"Windows bölümü ({self.windows_part}) güvenle yeniden boyutlandırılıyor...")
                 win_mb = int(self.win_gb * 1024)
-                subprocess.run(["ntfsresize", "-P", "-f", "-s", f"{win_mb}M", self.windows_part], check=False)
+                self.run_cmd(["ntfsresize", "-P", "-f", "-s", f"{win_mb}M", self.windows_part], check=False)
 
                 part_num = "3"
                 if self.windows_part[-1].isdigit():
@@ -860,29 +866,29 @@ class InstallerWindow(Adw.ApplicationWindow):
                 win_start_val = float(win_start.replace("MiB", ""))
                 win_new_end = f"{int(win_start_val + win_mb)}MiB"
 
-                subprocess.run(["parted", "-s", target_disk, "resizepart", part_num, win_new_end], check=False)
+                self.run_cmd(["parted", "-s", target_disk, "resizepart", part_num, win_new_end], check=False)
                 time.sleep(1)
 
                 self.update_progress(0.15, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
-                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "ext4", win_new_end, "100%"], check=False)
-                subprocess.run(["partprobe", target_disk], check=False)
+                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", win_new_end, "100%"], check=False)
+                self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
 
                 new_parts = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME", target_disk], text=True).splitlines()
                 part_root = new_parts[-1]
 
                 self.update_progress(0.20, f"Bölüm biçimlendiriliyor: {part_root} (Ext4)...")
-                subprocess.run(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
 
             elif self.install_mode == "erase_disk":
                 self.update_progress(0.05, f"Tüm disk temizleniyor ({target_disk})...")
-                subprocess.run(["wipefs", "-a", target_disk], check=True)
-                subprocess.run(["parted", "-s", target_disk, "mklabel", "gpt"], check=True)
-                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "1MiB", "2MiB"], check=True)
-                subprocess.run(["parted", "-s", target_disk, "set", "1", "bios_grub", "on"], check=True)
-                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "fat32", "2MiB", "514MiB"], check=True)
-                subprocess.run(["parted", "-s", target_disk, "set", "2", "esp", "on"], check=True)
-                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "ext4", "514MiB", "100%"], check=True)
+                self.run_cmd(["wipefs", "-a", target_disk], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "mklabel", "gpt"], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "1MiB", "2MiB"], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "set", "1", "bios_grub", "on"], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "fat32", "2MiB", "514MiB"], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "set", "2", "esp", "on"], check=True)
+                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", "514MiB", "100%"], check=True)
 
                 if target_disk[-1].isdigit():
                     part_esp = f"{target_disk}p2"
@@ -891,10 +897,10 @@ class InstallerWindow(Adw.ApplicationWindow):
                     part_esp = f"{target_disk}2"
                     part_root = f"{target_disk}3"
 
-                subprocess.run(["partprobe", target_disk], check=False)
+                self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
-                subprocess.run(["mkfs.vfat", "-F32", "-n", "MINDOS_ESP", part_esp], check=True)
-                subprocess.run(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+                self.run_cmd(["mkfs.vfat", "-F32", "-n", "MINDOS_ESP", part_esp], check=True)
+                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
 
             elif self.install_mode == "manual":
                 # Find largest non-ntfs, non-fat partition for root
@@ -910,10 +916,10 @@ class InstallerWindow(Adw.ApplicationWindow):
             self.update_progress(0.25, "Diskler bağlanıyor...")
             target_mount = Path("/mnt/mindos_target")
             target_mount.mkdir(parents=True, exist_ok=True)
-            subprocess.run(["mount", part_root, str(target_mount)], check=True)
+            self.run_cmd(["mount", part_root, str(target_mount)], check=True)
             (target_mount / "boot" / "efi").mkdir(parents=True, exist_ok=True)
             if part_esp:
-                subprocess.run(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
+                self.run_cmd(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
 
             self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor...")
             rsync_cmd = [
@@ -928,7 +934,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 "--exclude=/lost+found",
                 "/", f"{target_mount}/"
             ]
-            subprocess.run(rsync_cmd, check=True)
+            self.run_cmd(rsync_cmd, check=True)
 
             self.update_progress(0.75, "Kullanıcı, klavye ve saat dilimi yapılandırılıyor...")
             for d in ["proc", "sys", "dev", "run", "tmp", "mnt"]:
@@ -949,23 +955,23 @@ class InstallerWindow(Adw.ApplicationWindow):
 
             tz_file = Path(f"/usr/share/zoneinfo/{self.selected_timezone}")
             if tz_file.exists():
-                subprocess.run(["cp", str(tz_file), str(target_mount / "etc" / "localtime")], check=False)
+                self.run_cmd(["cp", str(tz_file), str(target_mount / "etc" / "localtime")], check=False)
 
             (target_mount / "etc" / "vconsole.conf").write_text(f"KEYMAP={self.selected_layout}\n")
 
             # Setup User Password
-            subprocess.run(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
-            subprocess.run(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
+            self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
+            self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
 
             self.update_progress(0.85, "GRUB2 Dual-Boot Önyükleyici kuruluyor (UEFI + Windows)...")
             for fs in ["dev", "dev/pts", "proc", "sys"]:
-                subprocess.run(["mount", "--bind", f"/{fs}", f"{target_mount}/{fs}"], check=False)
-            subprocess.run(["mount", "-t", "tmpfs", "tmpfs", f"{target_mount}/run"], check=False)
+                self.run_cmd(["mount", "--bind", f"/{fs}", f"{target_mount}/{fs}"], check=False)
+            self.run_cmd(["mount", "-t", "tmpfs", "tmpfs", f"{target_mount}/run"], check=False)
 
             if part_esp:
-                subprocess.run(["chroot", str(target_mount), "grub-install", "--target=x86_64-efi",
+                self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=x86_64-efi",
                                 "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Sunrise", "--recheck"], check=False)
-            subprocess.run(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
+            self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
                             "--recheck", target_disk], check=False)
 
             grub_cfg = f"""set default=0
@@ -1001,8 +1007,8 @@ menuentry 'MindOS Sunrise (Kurtarma / Recovery Modu)' {{
 
             self.update_progress(0.95, "Sistem temizliği yapılıyor ve diskler kapatılıyor...")
             for fs in ["boot/efi", "dev/pts", "dev", "proc", "sys", "run"]:
-                subprocess.run(["umount", "-f", f"{target_mount}/{fs}"], check=False)
-            subprocess.run(["umount", "-f", str(target_mount)], check=False)
+                self.run_cmd(["umount", "-f", f"{target_mount}/{fs}"], check=False)
+            self.run_cmd(["umount", "-f", str(target_mount)], check=False)
 
             self.update_progress(1.0, "Kurulum başarıyla tamamlandı!")
             GLib.idle_add(self.stack.set_visible_child_name, "finished")
