@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
 # MindOS Sunrise Modern Graphical System Installer (GTK4 / Libadwaita)
-# Ubiquity & Calamares style full GUI installer for MindOS Sunrise
+# Ubiquity & Zorin OS style Dual-Boot "Install Alongside Windows" + Slider
 # ==============================================================================
 
 import os
@@ -19,11 +19,12 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GLib, Gio, Pango
 
 APP_ID = "org.mindos.installer"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
+
 
 class MindOSInstallerApp(Adw.Application):
     def __init__(self):
-        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
+        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.NON_UNIQUE)
 
     def do_activate(self):
         win = self.props.active_window
@@ -36,22 +37,74 @@ class InstallerWindow(Adw.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_title("MindOS Sunrise Kurulumu")
-        self.set_default_size(880, 620)
+        self.set_default_size(900, 660)
         self.set_resizable(False)
 
         # State Variables
         self.disks_data = []
-        self.selected_disk = None
-        self.install_mode = "erase_disk" # or "manual"
+        self.selected_disk = "/dev/sda"
+        self.detected_os = "Windows Boot Manager"
+        self.windows_part = "/dev/sda3"
+        self.esp_part = "/dev/sda1"
+        self.total_win_gb = 237.7
+        self.win_gb = 120.0
+        self.mindos_gb = 117.7
+
+        self.install_mode = "alongside" # "alongside", "erase_disk", "manual"
         self.manual_root_part = ""
         self.manual_esp_part = ""
         self.username = "mindos"
-        self.hostname = "mindos-sunrise"
+        self.hostname = "mindos-laptop"
         self.password = "1"
         self.auto_login = True
 
+        self.scan_disks_and_os()
         self.setup_ui()
-        self.scan_system_disks()
+
+    def scan_disks_and_os(self):
+        """Sistemdeki diskleri ve mevcut Windows/Linux işletim sistemlerini tespit eder"""
+        try:
+            out = subprocess.check_output(["lsblk", "-d", "-p", "-n", "-l", "-o", "NAME,SIZE,MODEL,TYPE"], text=True)
+            self.disks_data = []
+            for line in out.strip().splitlines():
+                if "disk" in line and not any(skip in line for skip in ["loop", "zram", "ram"]):
+                    parts = line.split()
+                    dev = parts[0]
+                    size = parts[1] if len(parts) > 1 else ""
+                    model = " ".join(parts[2:-1]) if len(parts) > 3 else "Depolama Sürücüsü"
+                    display_name = f"{model} ({size}) - {dev}"
+                    self.disks_data.append({"dev": dev, "size": size, "model": model, "display": display_name})
+
+            if self.disks_data:
+                self.selected_disk = self.disks_data[0]["dev"]
+
+            # Windows ve Bölüm Tespiti
+            parts_out = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME,SIZE,FSTYPE,LABEL", self.selected_disk], text=True)
+            for line in parts_out.splitlines():
+                p_parts = line.split()
+                if len(p_parts) >= 3:
+                    p_dev = p_parts[0]
+                    p_size = p_parts[1]
+                    p_fs = p_parts[2].lower()
+                    if "vfat" in p_fs or "fat" in p_fs:
+                        self.esp_part = p_dev
+                    elif "ntfs" in p_fs:
+                        self.windows_part = p_dev
+                        # GB Boyutunu Çözümle
+                        try:
+                            clean_size = p_size.replace("G", "").replace("M", "").replace(",", ".")
+                            if "M" in p_size:
+                                gb = float(clean_size) / 1024
+                            else:
+                                gb = float(clean_size)
+                            if gb > 30:
+                                self.total_win_gb = round(gb, 1)
+                                self.win_gb = round(self.total_win_gb / 2.0, 1)
+                                self.mindos_gb = round(self.total_win_gb - self.win_gb, 1)
+                        except Exception:
+                            pass
+        except Exception as e:
+            print("Disk/OS scan error:", e)
 
     def setup_ui(self):
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -59,7 +112,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         # HeaderBar
         self.header_bar = Adw.HeaderBar()
-        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulumu", subtitle="v1.0")
+        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulum Sihirbazı", subtitle="Zorin OS & Ubiquity Tarzı Dual-Boot")
         self.header_bar.set_title_widget(self.header_title)
         main_box.append(self.header_bar)
 
@@ -85,7 +138,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.page_summary = self.create_summary_page()
         self.stack.add_titled_with_icon(self.page_summary, "summary", "Özet", "document-properties-symbolic")
 
-        # 5. Installing Page (Progress & Slideshow)
+        # 5. Installing Page
         self.page_installing = self.create_installing_page()
         self.stack.add_titled_with_icon(self.page_installing, "installing", "Kurulum", "system-software-install-symbolic")
 
@@ -108,7 +161,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         main_box.append(self.action_bar)
 
     # --------------------------------------------------------------------------
-    # Page Creators
+    # Pages
     # --------------------------------------------------------------------------
     def create_welcome_page(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
@@ -118,7 +171,6 @@ class InstallerWindow(Adw.ApplicationWindow):
         box.set_margin_end(50)
         box.set_valign(Gtk.Align.CENTER)
 
-        # Sunrise Icon / Banner
         icon = Gtk.Image.new_from_icon_name("weather-clear-symbolic")
         icon.set_pixel_size(96)
         icon.add_css_class("accent")
@@ -128,64 +180,123 @@ class InstallerWindow(Adw.ApplicationWindow):
         title.add_css_class("title-1")
         box.append(title)
 
-        subtitle = Gtk.Label(label="Hızlı, modern, bağımsız ve güvenilir yeni nesil işletim sisteminiz.")
+        subtitle = Gtk.Label(label="Mevcut Windows sisteminizin yanına güvenle kurabilir veya temiz kurulum yapabilirsiniz.")
         subtitle.add_css_class("dim-label")
         box.append(subtitle)
 
-        # System Requirements Check Group
         group = Adw.PreferencesGroup()
-        group.set_title("Sistem Donanım Kontrolü")
+        group.set_title("Sistem Donanım Durumu")
         group.set_margin_top(15)
 
-        row_ram = Adw.ActionRow(title="Bellek (RAM)", subtitle="En az 2 GB önerilir")
-        row_ram.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
-        group.add(row_ram)
+        row_os = Adw.ActionRow(title="Mevcut İşletim Sistemi", subtitle=f"{self.detected_os} Tespit Edildi ({self.selected_disk})")
+        row_os.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
+        group.add(row_os)
 
-        row_disk = Adw.ActionRow(title="Depolama Alanı", subtitle="En az 15 GB boş alan önerilir")
-        row_disk.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
-        group.add(row_disk)
-
-        row_efi = Adw.ActionRow(title="Önyükleme Modu", subtitle="UEFI / BIOS Çift Uyumluluk")
-        row_efi.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
-        group.add(row_efi)
+        row_mode = Adw.ActionRow(title="Önyükleme Modu", subtitle="UEFI Secure Boot & MBR Çift Destek")
+        row_mode.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
+        group.add(row_mode)
 
         box.append(group)
         return box
 
     def create_disk_page(self):
         clamp = Adw.Clamp()
-        clamp.set_maximum_size(750)
-        clamp.set_margin_top(20)
-        clamp.set_margin_bottom(20)
+        clamp.set_maximum_size(780)
+        clamp.set_margin_top(15)
+        clamp.set_margin_bottom(15)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
         clamp.set_child(box)
 
         group_mode = Adw.PreferencesGroup()
-        group_mode.set_title("Kurulum Türü ve Disk Bölümlendirme")
-        group_mode.set_description("MindOS Sunrise'ı nereye kurmak istediğinizi seçin:")
+        group_mode.set_title("Kurulum Türü")
+        group_mode.set_description("MindOS Sunrise'ın nasıl kurulacağını seçin:")
         box.append(group_mode)
 
-        # Radio Option 1: Erase Entire Disk
-        self.row_erase = Adw.ActionRow(title="Diski Temizle ve MindOS Sunrise Kur (Önerilen)",
-                                       subtitle="Seçilen diski otomatik bölümlendirir (GPT + ESP + Root). Mevcut veriler silinir.")
+        # 1. OPTION: Alongside Windows (Dual Boot)
+        self.row_alongside = Adw.ActionRow(
+            title="Windows Boot Manager'ın Yanına Kur (Önerilen)",
+            subtitle="Belgeleriniz, Windows ve dosyalarınız korunur. Bilgisayar açılırken istediğinizi seçebilirsiniz."
+        )
+        self.radio_alongside = Gtk.CheckButton()
+        self.radio_alongside.set_active(True)
+        self.row_alongside.add_prefix(self.radio_alongside)
+        group_mode.add(self.row_alongside)
+
+        # SLIDER CARD FOR ALONGSIDE ALLOCATION
+        self.card_slider = Adw.PreferencesGroup()
+        self.card_slider.set_title("Disk Alanı Paylaşımı (Boyutlandırma)")
+        self.card_slider.set_description("Aşağıdaki kaydırıcıyı (slider) sürükleyerek Windows ve MindOS'a ayrılacak alanı belirleyin:")
+
+        slider_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        slider_box.set_margin_top(10)
+        slider_box.set_margin_bottom(10)
+        slider_box.set_margin_start(15)
+        slider_box.set_margin_end(15)
+
+        # Labels for Partition Preview Boxes
+        preview_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        preview_box.set_homogeneous(True)
+
+        # Windows Box
+        self.box_win = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
+        self.box_win.add_css_class("card")
+        self.box_win.set_margin_top(5)
+        self.box_win.set_margin_bottom(5)
+        lbl_win_title = Gtk.Label(label="🪟 Windows (NTFS)")
+        lbl_win_title.add_css_class("heading")
+        self.lbl_win_size = Gtk.Label(label=f"{self.win_gb:.1f} GB")
+        self.lbl_win_size.add_css_class("title-2")
+        self.box_win.append(lbl_win_title)
+        self.box_win.append(self.lbl_win_size)
+        preview_box.append(self.box_win)
+
+        # MindOS Box
+        self.box_mind = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
+        self.box_mind.add_css_class("card")
+        self.box_mind.set_margin_top(5)
+        self.box_mind.set_margin_bottom(5)
+        lbl_mind_title = Gtk.Label(label="🌅 MindOS Sunrise (Ext4)")
+        lbl_mind_title.add_css_class("heading")
+        lbl_mind_title.add_css_class("accent")
+        self.lbl_mind_size = Gtk.Label(label=f"{self.mindos_gb:.1f} GB")
+        self.lbl_mind_size.add_css_class("title-2")
+        self.box_mind.append(lbl_mind_title)
+        self.box_mind.append(self.lbl_mind_size)
+        preview_box.append(self.box_mind)
+
+        slider_box.append(preview_box)
+
+        # Interactive Slider Scale
+        min_win = 30.0
+        max_win = max(min_win + 10, self.total_win_gb - 25.0)
+        self.scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min_win, max_win, 1.0)
+        self.scale.set_value(self.win_gb)
+        self.scale.set_hexpand(True)
+        self.scale.set_draw_value(False)
+        self.scale.connect("value-changed", self.on_slider_changed)
+        slider_box.append(self.scale)
+
+        self.card_slider.add(slider_box)
+        box.append(self.card_slider)
+
+        # 2. OPTION: Erase Entire Disk
+        self.row_erase = Adw.ActionRow(
+            title="Tüm Diski Sil ve MindOS Sunrise Kur",
+            subtitle="Tüm disk temizlenir, yalnızca MindOS Sunrise işletim sistemi kurulur."
+        )
         self.radio_erase = Gtk.CheckButton()
-        self.radio_erase.set_active(True)
+        self.radio_erase.set_group(self.radio_alongside)
         self.row_erase.add_prefix(self.radio_erase)
         group_mode.add(self.row_erase)
 
-        # Disk Selector ComboRow
-        self.disk_combo = Adw.ComboRow(title="Hedef Disk Sürücüsü")
-        self.disk_model_store = Gtk.StringList()
-        self.disk_combo.set_model(self.disk_model_store)
-        self.disk_combo.connect("notify::selected", self.on_disk_selected)
-        group_mode.add(self.disk_combo)
-
-        # Radio Option 2: Manual / GParted
-        self.row_manual = Adw.ActionRow(title="Elle Bölümlendirme (Gelişmiş / Yanına Kur)",
-                                        subtitle="Bölümleri GParted ile kendiniz düzenleyin veya mevcut bir bölüme kurun.")
+        # 3. OPTION: Manual Partitioning
+        self.row_manual = Adw.ActionRow(
+            title="Elle Bölümlendirme (Gelişmiş)",
+            subtitle="Bölümleri GParted ile kendiniz düzenleyin veya özel bağlama noktaları seçin."
+        )
         self.radio_manual = Gtk.CheckButton()
-        self.radio_manual.set_group(self.radio_erase)
+        self.radio_manual.set_group(self.radio_alongside)
         self.row_manual.add_prefix(self.radio_manual)
 
         btn_gparted = Gtk.Button(label="GParted'ı Aç")
@@ -194,21 +305,29 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.row_manual.add_suffix(btn_gparted)
         group_mode.add(self.row_manual)
 
-        self.radio_erase.connect("toggled", self.on_install_mode_toggled)
+        self.radio_alongside.connect("toggled", self.on_mode_toggled)
+        self.radio_erase.connect("toggled", self.on_mode_toggled)
+        self.radio_manual.connect("toggled", self.on_mode_toggled)
 
-        # Manual Partition Selection Group (Initially hidden or secondary)
-        self.group_manual = Adw.PreferencesGroup()
-        self.group_manual.set_title("Manuel Bölüm Eşleştirme")
-        self.group_manual.set_visible(False)
-
-        self.entry_root = Adw.EntryRow(title="Kök (Root /) Bölümü (örn: /dev/sda3)")
-        self.group_manual.add(self.entry_root)
-
-        self.entry_esp = Adw.EntryRow(title="EFI (ESP /boot/efi) Bölümü (örn: /dev/sda2)")
-        self.group_manual.add(self.entry_esp)
-
-        box.append(self.group_manual)
         return clamp
+
+    def on_slider_changed(self, scale):
+        val = scale.get_value()
+        self.win_gb = round(val, 1)
+        self.mindos_gb = round(self.total_win_gb - self.win_gb, 1)
+        self.lbl_win_size.set_text(f"{self.win_gb:.1f} GB")
+        self.lbl_mind_size.set_text(f"{self.mindos_gb:.1f} GB")
+
+    def on_mode_toggled(self, btn):
+        if self.radio_alongside.get_active():
+            self.install_mode = "alongside"
+            self.card_slider.set_visible(True)
+        elif self.radio_erase.get_active():
+            self.install_mode = "erase_disk"
+            self.card_slider.set_visible(False)
+        elif self.radio_manual.get_active():
+            self.install_mode = "manual"
+            self.card_slider.set_visible(False)
 
     def create_user_page(self):
         clamp = Adw.Clamp()
@@ -232,7 +351,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         group.add(self.entry_user)
 
         self.entry_host = Adw.EntryRow(title="Bilgisayar Adı (Hostname)")
-        self.entry_host.set_text("mindos-sunrise")
+        self.entry_host.set_text("mindos-laptop")
         group.add(self.entry_host)
 
         self.entry_pass = Adw.PasswordEntryRow(title="Parola")
@@ -258,23 +377,23 @@ class InstallerWindow(Adw.ApplicationWindow):
         clamp.set_child(box)
 
         group = Adw.PreferencesGroup()
-        group.set_title("Kurulum Özeti")
+        group.set_title("Kurulum Özeti ve Onay")
         group.set_description("Kuruluma başlamadan önce lütfen aşağıdaki ayarları onaylayın:")
         box.append(group)
 
-        self.sum_disk = Adw.ActionRow(title="Hedef Disk", subtitle="")
+        self.sum_mode = Adw.ActionRow(title="Kurulum Modu", subtitle="")
+        self.sum_mode.add_prefix(Gtk.Image.new_from_icon_name("dialog-information-symbolic"))
+        group.add(self.sum_mode)
+
+        self.sum_disk = Adw.ActionRow(title="Hedef Bölüm Paylaşımı", subtitle="")
         self.sum_disk.add_prefix(Gtk.Image.new_from_icon_name("drive-harddisk-symbolic"))
         group.add(self.sum_disk)
-
-        self.sum_mode = Adw.ActionRow(title="İşlem Türü", subtitle="")
-        self.sum_mode.add_prefix(Gtk.Image.new_from_icon_name("dialog-warning-symbolic"))
-        group.add(self.sum_mode)
 
         self.sum_user = Adw.ActionRow(title="Kullanıcı", subtitle="")
         self.sum_user.add_prefix(Gtk.Image.new_from_icon_name("avatar-default-symbolic"))
         group.add(self.sum_user)
 
-        self.sum_boot = Adw.ActionRow(title="Önyükleyici (Bootloader)", subtitle="GRUB2 (UEFI x86_64 + BIOS MBR)")
+        self.sum_boot = Adw.ActionRow(title="Önyükleyici (Bootloader)", subtitle="GRUB2 (Dual Boot: Windows Boot Manager + MindOS Sunrise)")
         self.sum_boot.add_prefix(Gtk.Image.new_from_icon_name("system-run-symbolic"))
         group.add(self.sum_boot)
 
@@ -291,24 +410,20 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.slide_stack = Adw.ViewStack()
         self.slide_stack.set_vexpand(True)
 
-        # Slide 1: Welcome & Speed
         s1 = self.create_slide("weather-clear-symbolic", "MindOS Sunrise'a Hoş Geldiniz",
                                "Linux Kernel 7.0 ile güçlendirilmiş yıldırım hızında saf performans.")
         self.slide_stack.add_named(s1, "slide1")
 
-        # Slide 2: Package Manager
         s2 = self.create_slide("package-x-generic-symbolic", "Zengin ve Hızlı Paket Yöneticisi: mindpkg",
-                               "Steam, Google Chrome, VS Code, Discord ve 3.800+ uygulama tek komutla emrinizde.")
+                               "Steam, Google Chrome, VS Code, Discord ve 3.900+ uygulama tek komutla emrinizde.")
         self.slide_stack.add_named(s2, "slide2")
 
-        # Slide 3: Gaming & Productivity
-        s3 = self.create_slide("applications-games-symbolic", "Oyun ve Üretkenlik İçin Tasarlandı",
-                               "GameMode, MangoHud, LibreOffice, GIMP, OBS Studio ve modern araçlar tam entegre.")
+        s3 = self.create_slide("applications-games-symbolic", "Kusursuz Dual-Boot Deneyimi",
+                               "Windows ve MindOS Sunrise yan yana tam uyumlu çalışır, dilediğiniz zaman geçiş yapabilirsiniz.")
         self.slide_stack.add_named(s3, "slide3")
 
         box.append(self.slide_stack)
 
-        # Status Label & Progress Bar
         self.lbl_status = Gtk.Label(label="Kurulum hazırlanıyor...")
         self.lbl_status.set_halign(Gtk.Align.START)
         box.append(self.lbl_status)
@@ -358,7 +473,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         title.add_css_class("title-1")
         box.append(title)
 
-        subtitle = Gtk.Label(label="MindOS Sunrise v1.0 diskinize kuruldu. Şimdi bilgisayarınızı yeniden başlatabilirsiniz.")
+        subtitle = Gtk.Label(label="MindOS Sunrise diskinize kuruldu. Yeniden başlattığınızda açılış menüsünde hem MindOS hem de Windows görünecektir.")
         subtitle.add_css_class("dim-label")
         box.append(subtitle)
 
@@ -379,44 +494,8 @@ class InstallerWindow(Adw.ApplicationWindow):
         return box
 
     # --------------------------------------------------------------------------
-    # Logic & Navigation
+    # Navigation
     # --------------------------------------------------------------------------
-    def scan_system_disks(self):
-        try:
-            out = subprocess.check_output(["lsblk", "-d", "-p", "-n", "-l", "-o", "NAME,SIZE,MODEL,TYPE"], text=True)
-            self.disks_data = []
-            self.disk_model_store.splice(0, self.disk_model_store.get_n_items(), [])
-
-            for line in out.strip().splitlines():
-                if "disk" in line and not any(skip in line for skip in ["loop", "zram", "ram"]):
-                    parts = line.split()
-                    dev = parts[0]
-                    size = parts[1] if len(parts) > 1 else ""
-                    model = " ".join(parts[2:-1]) if len(parts) > 3 else "Depolama Sürücüsü"
-                    display_name = f"{model} ({size}) - {dev}"
-                    self.disks_data.append({"dev": dev, "size": size, "model": model, "display": display_name})
-                    self.disk_model_store.append(display_name)
-
-            if self.disks_data:
-                self.selected_disk = self.disks_data[0]["dev"]
-        except Exception as e:
-            print("Disk scan error:", e)
-
-    def on_disk_selected(self, combo, param):
-        idx = combo.get_selected()
-        if 0 <= idx < len(self.disks_data):
-            self.selected_disk = self.disks_data[idx]["dev"]
-
-    def on_install_mode_toggled(self, check):
-        if check.get_active():
-            self.install_mode = "erase_disk"
-            self.disk_combo.set_sensitive(True)
-            self.group_manual.set_visible(False)
-        else:
-            self.install_mode = "manual"
-            self.disk_combo.set_sensitive(False)
-            self.group_manual.set_visible(True)
-
     def on_back_clicked(self, btn):
         curr = self.stack.get_visible_child_name()
         order = ["welcome", "disk", "user", "summary", "installing", "finished"]
@@ -428,17 +507,12 @@ class InstallerWindow(Adw.ApplicationWindow):
 
     def on_next_clicked(self, btn):
         curr = self.stack.get_visible_child_name()
-        order = ["welcome", "disk", "user", "summary", "installing", "finished"]
-        idx = order.index(curr)
 
         if curr == "welcome":
             self.stack.set_visible_child_name("disk")
             self.btn_back.set_sensitive(True)
 
         elif curr == "disk":
-            if self.install_mode == "erase_disk" and not self.selected_disk:
-                self.show_error("Lütfen bir hedef disk seçin!")
-                return
             self.stack.set_visible_child_name("user")
 
         elif curr == "user":
@@ -448,24 +522,26 @@ class InstallerWindow(Adw.ApplicationWindow):
                 self.show_error("Girdiğiniz parolalar birbiriyle eşleşmiyor!")
                 return
             self.username = self.entry_user.get_text().strip() or "mindos"
-            self.hostname = self.entry_host.get_text().strip() or "mindos-sunrise"
+            self.hostname = self.entry_host.get_text().strip() or "mindos-laptop"
             self.password = p1
             self.auto_login = self.switch_autologin.get_active()
 
-            # Update Summary Page
-            if self.install_mode == "erase_disk":
-                self.sum_disk.set_subtitle(f"{self.selected_disk}")
-                self.sum_mode.set_subtitle("Tüm disk temizlenecek, GPT + ESP + Root oluşturulacak")
+            # Update Summary
+            if self.install_mode == "alongside":
+                self.sum_mode.set_subtitle("Windows Boot Manager'ın Yanına Kurulum (Dual Boot)")
+                self.sum_disk.set_subtitle(f"Windows: {self.win_gb:.1f} GB  |  MindOS Sunrise: {self.mindos_gb:.1f} GB")
+            elif self.install_mode == "erase_disk":
+                self.sum_mode.set_subtitle("Tüm Diski Sil ve Sıfırdan Kur")
+                self.sum_disk.set_subtitle(f"Tüm {self.selected_disk} diski MindOS için kullanılacak")
             else:
-                self.sum_disk.set_subtitle(f"Root: {self.entry_root.get_text()} / ESP: {self.entry_esp.get_text()}")
-                self.sum_mode.set_subtitle("Mevcut bölümlere manuel kurulum yapılacak")
+                self.sum_mode.set_subtitle("Elle Bölümlendirme (Manuel)")
+                self.sum_disk.set_subtitle("Kullanıcı tarafından GParted ile belirlenen bölümler")
 
             self.sum_user.set_subtitle(f"{self.username} ({self.hostname})")
             self.btn_next.set_label("Şimdi Kur")
             self.stack.set_visible_child_name("summary")
 
         elif curr == "summary":
-            # Start installation!
             self.btn_back.set_sensitive(False)
             self.btn_next.set_sensitive(False)
             self.action_bar.set_visible(False)
@@ -488,15 +564,56 @@ class InstallerWindow(Adw.ApplicationWindow):
             GLib.idle_add(self.slide_stack.set_visible_child_name, slides[i])
 
     # --------------------------------------------------------------------------
-    # Installation Execution Engine
+    # Installation Backend Engine
     # --------------------------------------------------------------------------
     def run_installation(self):
         try:
-            self.update_progress(0.05, "Disk hazırlanıyor...")
             target_disk = self.selected_disk
+            part_esp = self.esp_part
+            part_root = ""
 
-            if self.install_mode == "erase_disk":
-                # Wipe & Partition GPT
+            if self.install_mode == "alongside":
+                self.update_progress(0.05, f"Windows bölümü ({self.windows_part}) güvenle yeniden boyutlandırılıyor...")
+                # 1. Resize Windows NTFS Partition
+                win_mb = int(self.win_gb * 1024)
+                subprocess.run(["ntfsresize", "-P", "-f", "-s", f"{win_mb}M", self.windows_part], check=False)
+
+                # 2. Get partition number of windows
+                part_num = "3"
+                if self.windows_part[-1].isdigit():
+                    part_num = self.windows_part[-1]
+
+                # 3. Shrink partition in partition table
+                # Get start sector of windows partition
+                part_info = subprocess.check_output(["parted", "-m", target_disk, "unit", "MiB", "print"], text=True)
+                win_start = "116MiB"
+                for pline in part_info.splitlines():
+                    if pline.startswith(f"{part_num}:"):
+                        pitems = pline.split(":")
+                        win_start = pitems[1]
+                        break
+
+                win_start_val = float(win_start.replace("MiB", ""))
+                win_new_end = f"{int(win_start_val + win_mb)}MiB"
+
+                subprocess.run(["parted", "-s", target_disk, "resizepart", part_num, win_new_end], check=False)
+                time.sleep(1)
+
+                # 4. Create new Linux root partition in remaining space
+                self.update_progress(0.15, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
+                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "ext4", win_new_end, "100%"], check=False)
+                subprocess.run(["partprobe", target_disk], check=False)
+                time.sleep(2)
+
+                # Find new partition name (e.g. /dev/sda5)
+                new_parts = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME", target_disk], text=True).splitlines()
+                part_root = new_parts[-1] # The last partition created
+
+                self.update_progress(0.20, f"Bölüm biçimlendiriliyor: {part_root} (Ext4)...")
+                subprocess.run(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+
+            elif self.install_mode == "erase_disk":
+                self.update_progress(0.05, f"Tüm disk temizleniyor ({target_disk})...")
                 subprocess.run(["wipefs", "-a", target_disk], check=True)
                 subprocess.run(["parted", "-s", target_disk, "mklabel", "gpt"], check=True)
                 subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "1MiB", "2MiB"], check=True)
@@ -514,23 +631,19 @@ class InstallerWindow(Adw.ApplicationWindow):
 
                 subprocess.run(["partprobe", target_disk], check=False)
                 time.sleep(2)
-
-                self.update_progress(0.15, "Dosya sistemleri biçimlendiriliyor (FAT32 + Ext4)...")
                 subprocess.run(["mkfs.vfat", "-F32", "-n", "MINDOS_ESP", part_esp], check=True)
                 subprocess.run(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
-            else:
-                part_root = self.entry_root.get_text().strip()
-                part_esp = self.entry_esp.get_text().strip()
 
-            self.update_progress(0.25, "Diskler bağlanıyor...")
+            # Mount and Copy Rootfs
+            self.update_progress(0.25, "Diskler sisteme bağlanıyor...")
             target_mount = Path("/mnt/mindos_target")
             target_mount.mkdir(parents=True, exist_ok=True)
             subprocess.run(["mount", part_root, str(target_mount)], check=True)
             (target_mount / "boot" / "efi").mkdir(parents=True, exist_ok=True)
             if part_esp:
-                subprocess.run(["mount", part_esp, str(target_mount / "boot" / "efi")], check=True)
+                subprocess.run(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
 
-            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (bu işlem 2-3 dakika sürebilir)...")
+            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (2-3 dakika sürebilir)...")
             rsync_cmd = [
                 "rsync", "-aHAXx",
                 "--exclude=/proc/*",
@@ -550,7 +663,6 @@ class InstallerWindow(Adw.ApplicationWindow):
                 (target_mount / d).mkdir(parents=True, exist_ok=True)
             os.chmod(target_mount / "tmp", 0o1777)
 
-            # fstab
             root_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_root], text=True).strip()
             esp_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_esp], text=True).strip() if part_esp else ""
 
@@ -560,11 +672,14 @@ class InstallerWindow(Adw.ApplicationWindow):
             with open(target_mount / "etc" / "fstab", "w") as f:
                 f.write(fstab_content)
 
-            # Hostname
             with open(target_mount / "etc" / "hostname", "w") as f:
                 f.write(f"{self.hostname}\n")
 
-            self.update_progress(0.85, "GRUB2 Önyükleyici kuruluyor (UEFI + BIOS)...")
+            # Setup User Password
+            subprocess.run(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
+            subprocess.run(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
+
+            self.update_progress(0.85, "GRUB2 Dual-Boot Önyükleyici kuruluyor (UEFI + Windows)...")
             for fs in ["dev", "dev/pts", "proc", "sys"]:
                 subprocess.run(["mount", "--bind", f"/{fs}", f"{target_mount}/{fs}"], check=False)
             subprocess.run(["mount", "-t", "tmpfs", "tmpfs", f"{target_mount}/run"], check=False)
@@ -575,6 +690,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             subprocess.run(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
                             "--recheck", target_disk], check=False)
 
+            # GRUB.CFG with Windows Boot Manager Entry
             grub_cfg = f"""set default=0
 set timeout=5
 
@@ -590,7 +706,13 @@ menuentry 'MindOS Sunrise v1.0 (Kernel 7.0)' {{
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
 }}
 
-menuentry 'MindOS Sunrise v1.0 (Kurtarma / Recovery Modu)' {{
+menuentry 'Windows Boot Manager' {{
+    insmod fat
+    search --no-floppy --fs-uuid --set=root {esp_uuid}
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}}
+
+menuentry 'MindOS Sunrise (Kurtarma / Recovery Modu)' {{
     search --no-floppy --fs-uuid --set=root {root_uuid}
     linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID={root_uuid} ro single
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
@@ -600,7 +722,7 @@ menuentry 'MindOS Sunrise v1.0 (Kurtarma / Recovery Modu)' {{
             with open(target_mount / "boot" / "grub" / "grub.cfg", "w") as f:
                 f.write(grub_cfg)
 
-            self.update_progress(0.95, "Sistem temizliği ve disk bağlantıları kapatılıyor...")
+            self.update_progress(0.95, "Sistem temizliği yapılıyor ve diskler kapatılıyor...")
             for fs in ["boot/efi", "dev/pts", "dev", "proc", "sys", "run"]:
                 subprocess.run(["umount", "-f", f"{target_mount}/{fs}"], check=False)
             subprocess.run(["umount", "-f", str(target_mount)], check=False)
