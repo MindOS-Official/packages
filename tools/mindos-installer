@@ -19,7 +19,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GLib, Gio, Pango
 
 APP_ID = "org.mindos.installer"
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 
 
 class MindOSInstallerApp(Adw.Application):
@@ -87,26 +87,24 @@ class InstallerWindow(Adw.ApplicationWindow):
             if self.disks_data:
                 self.selected_disk = self.disks_data[0]["dev"]
 
-            parts_out = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME,SIZE,FSTYPE,LABEL", self.selected_disk], text=True)
+            # Scan partitions with exact byte sizes
+            parts_out = subprocess.check_output(["lsblk", "-p", "-b", "-n", "-l", "-o", "NAME,SIZE,FSTYPE,LABEL", self.selected_disk], text=True)
+            max_ntfs_bytes = 0
             for line in parts_out.splitlines():
                 p_parts = line.split()
                 if len(p_parts) >= 3:
                     p_dev = p_parts[0]
-                    p_size = p_parts[1]
+                    p_bytes = int(p_parts[1]) if p_parts[1].isdigit() else 0
                     p_fs = p_parts[2].lower()
                     if "vfat" in p_fs or "fat" in p_fs:
                         self.esp_part = p_dev
                     elif "ntfs" in p_fs:
-                        self.windows_part = p_dev
-                        try:
-                            clean_size = p_size.replace("G", "").replace("M", "").replace(",", ".")
-                            gb = float(clean_size) / 1024 if "M" in p_size else float(clean_size)
-                            if gb > 30:
-                                self.total_win_gb = round(gb, 1)
-                                self.win_gb = round(self.total_win_gb / 2.0, 1)
-                                self.mindos_gb = round(self.total_win_gb - self.win_gb, 1)
-                        except Exception:
-                            pass
+                        if p_bytes > max_ntfs_bytes:
+                            max_ntfs_bytes = p_bytes
+                            self.windows_part = p_dev
+                            self.total_win_gb = round(p_bytes / (1024**3), 1)
+                            self.win_gb = round(self.total_win_gb / 2.0, 1)
+                            self.mindos_gb = round(self.total_win_gb - self.win_gb, 1)
         except Exception as e:
             print("Scan error:", e)
 
@@ -319,9 +317,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         group_test.add(self.entry_kbd_test)
         box.append(group_test)
 
-        # Set default Turkish layout on load
         self.apply_live_keyboard("tr", "")
-
         return clamp
 
     def on_keyboard_selected(self, combo, param):
@@ -681,7 +677,6 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         box.append(self.slide_stack)
 
-        # Status row with smooth spinner
         status_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         self.spinner = Gtk.Spinner()
         self.spinner.start()
@@ -692,7 +687,6 @@ class InstallerWindow(Adw.ApplicationWindow):
         status_box.append(self.lbl_status)
         box.append(status_box)
 
-        # Progress Bar with smooth animation
         self.progress_bar = Gtk.ProgressBar()
         self.progress_bar.set_show_text(True)
         self.progress_bar.set_fraction(0.0)
@@ -854,7 +848,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             GLib.idle_add(self.slide_stack.set_visible_child_name, slides[i])
 
     # --------------------------------------------------------------------------
-    # Installation Backend Engine with Real Live Progress
+    # Installation Backend Engine with Accurate NTFS Partition Target
     # --------------------------------------------------------------------------
     def run_cmd(self, cmd_list, check=True):
         if os.geteuid() != 0 and cmd_list[0] not in ["sudo", "pkexec"]:
@@ -868,30 +862,37 @@ class InstallerWindow(Adw.ApplicationWindow):
             part_root = ""
 
             if self.install_mode == "alongside":
-                self.update_progress(0.05, f"Windows bölümü ({self.windows_part}) güvenle yeniden boyutlandırılıyor...")
+                self.update_progress(0.05, f"Windows bölümü ({self.windows_part}) taranıyor ve boyutlandırılıyor...")
                 win_mb = int(self.win_gb * 1024)
+                
+                # Resize NTFS filesystem on the true Windows partition (sda3)
                 self.run_cmd(["ntfsresize", "-P", "-f", "-s", f"{win_mb}M", self.windows_part], check=False)
 
                 part_num = "3"
                 if self.windows_part[-1].isdigit():
                     part_num = self.windows_part[-1]
 
+                # Get start of Windows partition in MiB from parted
                 part_info = subprocess.check_output(["sudo", "parted", "-m", target_disk, "unit", "MiB", "print"], text=True)
-                win_start = "116MiB"
+                win_start_mib = 117
                 for pline in part_info.splitlines():
                     if pline.startswith(f"{part_num}:"):
-                        win_start = pline.split(":")[1]
+                        fields = pline.split(":")
+                        win_start_mib = int(float(fields[1].replace("MiB", "").strip()))
                         break
 
-                win_start_val = float(win_start.replace("MiB", ""))
-                win_new_end = f"{int(win_start_val + win_mb)}MiB"
+                win_new_end_mib = win_start_mib + win_mb
 
-                self.update_progress(0.12, "Bölüm tablosu güncelleniyor...")
-                self.run_cmd(["parted", "-s", target_disk, "resizepart", part_num, win_new_end], check=False)
+                # Remove trailing recovery partition 4 if present
+                self.run_cmd(["parted", "-s", target_disk, "rm", "4"], check=False)
+                time.sleep(1)
+
+                self.update_progress(0.12, "Windows bölüm boyutu güncelleniyor...")
+                self.run_cmd(["parted", "-s", target_disk, "resizepart", part_num, f"{win_new_end_mib}MiB"], check=False)
                 time.sleep(1)
 
                 self.update_progress(0.18, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
-                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", win_new_end, "100%"], check=False)
+                self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", f"{win_new_end_mib}MiB", "100%"], check=False)
                 self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
 
@@ -955,14 +956,12 @@ class InstallerWindow(Adw.ApplicationWindow):
                 "/", f"{target_mount}/"
             ]
             
-            # Run rsync in background and monitor copied MB progress
             proc = subprocess.Popen(rsync_cmd)
             while proc.poll() is None:
                 time.sleep(1)
                 try:
                     du_out = subprocess.check_output(["sudo", "du", "-sm", str(target_mount)], text=True)
                     copied_mb = int(du_out.split()[0])
-                    # Total approx 7000 MB
                     frac = min(0.75, 0.35 + (copied_mb / 7000.0) * 0.40)
                     self.update_progress(frac, f"MindOS Sunrise diske kopyalanıyor ({copied_mb} MB / ~7000 MB)...")
                 except Exception:
@@ -992,12 +991,10 @@ class InstallerWindow(Adw.ApplicationWindow):
             if tz_file.exists():
                 self.run_cmd(["cp", str(tz_file), str(target_mount / "etc" / "localtime")], check=False)
 
-            # Keyboard layout
             with open("/tmp/vconsole_target", "w") as f:
                 f.write(f"KEYMAP={self.selected_layout}\n")
             self.run_cmd(["cp", "/tmp/vconsole_target", str(target_mount / "etc" / "vconsole.conf")], check=True)
 
-            # Setup User Password
             self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
             self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
 
