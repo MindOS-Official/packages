@@ -159,14 +159,15 @@ def update_repos():
     try:
         installer_url = "https://raw.githubusercontent.com/MindOS-Official/packages/main/tools/mindos-installer"
         req = urllib.request.Request(installer_url, headers={"User-Agent": f"mindpkg/{VERSION}"})
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:
             inst_code = resp.read().decode("utf-8")
-            if "#!/usr/bin/env bash" in inst_code and "MindOS Sunrise" in inst_code:
+            if "MindOS" in inst_code and ("Gtk" in inst_code or "mindos-installer" in inst_code or "MindOS Sunrise" in inst_code):
                 inst_path = Path("/usr/bin/mindos-installer")
                 with open(inst_path, "w", encoding="utf-8") as f:
                     f.write(inst_code)
                 os.chmod(inst_path, 0o755)
-    except Exception:
+                print(f"  {COLOR_GREEN}✓ mindos-installer (GTK4 Modern GUI) otomatik güncellendi.{COLOR_RESET}")
+    except Exception as e:
         pass
 
 
