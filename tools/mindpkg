@@ -142,6 +142,7 @@ def update_repos():
         except Exception as e:
             print(f"    {COLOR_BANNER}⚠ Depo güncellenemedi: {e}{COLOR_RESET}")
 
+    # mindpkg ve installer kendini otomatik güncelleme mekanizması
     try:
         self_url = "https://raw.githubusercontent.com/MindOS-Official/packages/main/tools/mindpkg"
         req = urllib.request.Request(self_url, headers={"User-Agent": f"mindpkg/{VERSION}"})
@@ -149,10 +150,22 @@ def update_repos():
             new_code = resp.read().decode("utf-8")
             if "#!/usr/bin/env python3" in new_code and "MindOS Package Manager" in new_code:
                 current_path = Path("/usr/bin/mindpkg")
-                if current_path.exists():
-                    with open(current_path, "w", encoding="utf-8") as f:
-                        f.write(new_code)
-                    os.chmod(current_path, 0o755)
+                with open(current_path, "w", encoding="utf-8") as f:
+                    f.write(new_code)
+                os.chmod(current_path, 0o755)
+    except Exception:
+        pass
+
+    try:
+        installer_url = "https://raw.githubusercontent.com/MindOS-Official/packages/main/tools/mindos-installer"
+        req = urllib.request.Request(installer_url, headers={"User-Agent": f"mindpkg/{VERSION}"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            inst_code = resp.read().decode("utf-8")
+            if "#!/usr/bin/env bash" in inst_code and "MindOS Sunrise" in inst_code:
+                inst_path = Path("/usr/bin/mindos-installer")
+                with open(inst_path, "w", encoding="utf-8") as f:
+                    f.write(inst_code)
+                os.chmod(inst_path, 0o755)
     except Exception:
         pass
 
@@ -524,4 +537,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(f"\n\n{COLOR_YELLOW}⚠ İşlem kullanıcı tarafından iptal edildi.{COLOR_RESET}")
+        sys.exit(130)
