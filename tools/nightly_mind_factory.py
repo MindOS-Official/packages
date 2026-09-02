@@ -104,27 +104,36 @@ def run_factory(target_count=1000, batch_size=30):
                 except Exception:
                     pass
 
-            # Dönüştür
+            # Dönüştür — 90MB+ dosyaları atla (GitHub limiti)
             built_count = 0
             for deb_file in Path(dl_dir).glob("*.deb"):
                 out = package_deb_to_mind(deb_file, PKGS_DIR)
                 if out:
-                    built_count += 1
+                    if out.stat().st_size > 90 * 1024 * 1024:
+                        print(f"    ⚠ {out.name} çok büyük, atlanıyor.")
+                        out.unlink()
+                    else:
+                        built_count += 1
 
         # İndeksi güncelle
         update_repository_index()
 
-        # Git commit & push
+        # Git commit & push (pull --rebase ile senkronize et, force push kullanma)
         try:
             subprocess.run(["git", "add", "."], cwd=REPO_ROOT, check=True)
-            subprocess.run(
+            result = subprocess.run(
                 ["git", "commit", "-m", f"feat(factory): Add batch {batch_num}/{total_batches} ({built_count} .mind packages)"],
-                cwd=REPO_ROOT,
-                check=True
+                cwd=REPO_ROOT, capture_output=True, text=True
             )
-            print("  📡 GitHub'a pushlanıyor...")
-            subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
-            print(f"  ✓ Parti {batch_num} GitHub'a başarıyla gönderildi!")
+            if "nothing to commit" in result.stdout + result.stderr:
+                print(f"  ℹ Batch {batch_num}: commit edilecek yeni dosya yok.")
+            else:
+                print("  🔄 Pull --rebase yapılıyor...")
+                subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=REPO_ROOT,
+                                check=True, capture_output=True)
+                print("  📡 GitHub'a pushlanıyor...")
+                subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
+                print(f"  ✓ Parti {batch_num} GitHub'a başarıyla gönderildi!")
         except Exception as e:
             print(f"  ⚠ Git commit/push uyarısı: {e}")
 
