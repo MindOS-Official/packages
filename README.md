@@ -3,7 +3,7 @@
 Official binary package repository for **MindOS Sunrise v1.0 Linux** distribution.
 
 ## 📦 What is a `.mind` package?
-A `.mind` package is a high-speed, lightweight software container compressed with **Zstandard (zstd)** specifically tuned for the **MindOS Sunrise Core (Linux 7.0)**.
+A `.mind` package is a high-speed, lightweight software container compressed with **Zstandard (zstd)** specifically tuned for the **MindOS Sunrise**.
 
 ```
 package-name-version-release-arch.mind
