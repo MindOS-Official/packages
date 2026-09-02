@@ -943,29 +943,13 @@ class InstallerWindow(Adw.ApplicationWindow):
                 self.run_cmd(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
 
             self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (Dosyalar aktarılıyor)...")
-            rsync_cmd = [
-                "sudo", "rsync", "-aHAXx",
-                "--exclude=/proc/*",
-                "--exclude=/sys/*",
-                "--exclude=/dev/*",
-                "--exclude=/run/*",
-                "--exclude=/tmp/*",
-                "--exclude=/mnt/*",
-                "--exclude=/media/*",
-                "--exclude=/lost+found",
-                "/", f"{target_mount}/"
-            ]
-            
-            proc = subprocess.Popen(rsync_cmd)
-            while proc.poll() is None:
-                time.sleep(1)
-                try:
-                    du_out = subprocess.check_output(["sudo", "du", "-sm", str(target_mount)], text=True)
-                    copied_mb = int(du_out.split()[0])
-                    frac = min(0.75, 0.35 + (copied_mb / 7000.0) * 0.40)
-                    self.update_progress(frac, f"MindOS Sunrise diske kopyalanıyor ({copied_mb} MB / ~7000 MB)...")
-                except Exception:
-                    pass
+            copy_dirs = ["bin", "etc", "home", "lib", "lib64", "opt", "root", "sbin", "usr", "var", "boot"]
+            total_dirs = len(copy_dirs)
+            for i, d in enumerate(copy_dirs):
+                src_d = Path(f"/{d}")
+                if src_d.exists():
+                    self.update_progress(0.35 + (i / float(total_dirs)) * 0.40, f"Sistem dosyaları kopyalanıyor: /{d} ...")
+                    self.run_cmd(["cp", "-a", str(src_d), str(target_mount / d)], check=False)
 
             self.update_progress(0.78, "Kullanıcı, klavye ve sistem yapılandırılıyor...")
             for d in ["proc", "sys", "dev", "run", "tmp", "mnt"]:
