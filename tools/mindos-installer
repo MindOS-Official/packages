@@ -115,8 +115,8 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         # HeaderBar
         self.header_bar = Adw.HeaderBar()
-        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulumu", subtitle="v1.0 (Ubiquity & Zorin OS)")
-        self.header_bar.set_title_widget(self.header_title)
+        self.view_switcher = Adw.ViewSwitcher(policy=Adw.ViewSwitcherPolicy.AUTO)
+        self.header_bar.set_title_widget(self.view_switcher)
         main_box.append(self.header_bar)
 
         # Content Stack
@@ -152,6 +152,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         self.page_finished = self.create_finished_page()
         self.stack.add_titled_with_icon(self.page_finished, "finished", "Tamamlandı", "emblem-ok-symbolic")
+        self.view_switcher.set_stack(self.stack)
 
         # Bottom Action Bar
         self.action_bar = Gtk.ActionBar()
