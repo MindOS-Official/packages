@@ -97,31 +97,21 @@ def run_system_triggers():
 
 
 def download_with_progress(url, dest_path):
+    """İlerleme çubuğu ile uzak dosyayı güvenilir şekilde indirir"""
     if "raw.githubusercontent.com" in url and "/pkgs/" in url:
         url = url.replace("raw.githubusercontent.com", "media.githubusercontent.com/media")
-    """İlerleme çubuğu ile uzak dosyayı indirir"""
-    req = urllib.request.Request(url.replace("raw.githubusercontent.com","media.githubusercontent.com/media"), headers={"User-Agent": f"mindpkg/{VERSION} (MindOS Sunrise)"})
-    with urllib.request.urlopen(req, timeout=30) as response:
-        total_size = int(response.info().get('Content-Length', -1))
-        downloaded = 0
-        block_size = 65536
-        with open(dest_path, "wb") as f:
-            while True:
-                buffer = response.read(block_size)
-                if not buffer:
-                    break
-                downloaded += len(buffer)
-                f.write(buffer)
-                if total_size > 0:
-                    percent = downloaded * 100 / total_size
-                    bar_len = 30
-                    filled = int(bar_len * downloaded / total_size)
-                    bar = '█' * filled + '-' * (bar_len - filled)
-                    print(f"\r  {COLOR_GREEN}[{bar}]{COLOR_RESET} {percent:.1f}% ({downloaded / 1024:.1f} KB / {total_size / 1024:.1f} KB)", end="", flush=True)
-                else:
-                    print(f"\r  {COLOR_GREEN}İndiriliyor:{COLOR_RESET} {downloaded / 1024:.1f} KB", end="", flush=True)
-        print()
-
+    
+    dest_path = Path(dest_path)
+    dest_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    if shutil.which("curl"):
+        res = subprocess.run(["curl", "-sSL", "--fail", "-o", str(dest_path), url], check=False)
+        if res.returncode == 0 and dest_path.exists() and dest_path.stat().st_size > 0:
+            return
+            
+    req = urllib.request.Request(url, headers={"User-Agent": f"mindpkg/{VERSION} (MindOS Sunrise)"})
+    with urllib.request.urlopen(req, timeout=30) as response, open(dest_path, "wb") as f:
+        shutil.copyfileobj(response, f)
 
 def update_repos():
     """Uzak MindOS depolarını günceller ve kendini otomatik günceller"""
