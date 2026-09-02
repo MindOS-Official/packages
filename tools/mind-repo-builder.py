@@ -27,7 +27,7 @@ def calculate_sha256(filepath):
     return h.hexdigest()
 
 
-def create_mind_package(name, version, release, description, rootfs_dir, output_path, maintainer="MindOS Team <core@mindos.org>", deps=None):
+def create_mind_package(name, version, release, description, rootfs_dir, output_path, maintainer="MindOS Team <https://github.com/MindOS-Official>", deps=None):
     """Verilen kök dizinden optimize edilmiş .mind paketi üretir"""
     if deps is None:
         deps = []
