@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# MindOS Sunrise Official Ubiquity & Zorin OS Style System Installer
+# MindOS Sunrise Official Ubiquity ve Zorin OS Style System Installer
 # Full GTK4 / Libadwaita Complete Installation Suite
 # ==============================================================================
 
@@ -115,7 +115,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         # HeaderBar
         self.header_bar = Adw.HeaderBar()
-        self.view_switcher = Adw.ViewSwitcher(policy=Adw.ViewSwitcherPolicy.AUTO)
+        self.view_switcher = Adw.ViewSwitcher()
         self.header_bar.set_title_widget(self.view_switcher)
         main_box.append(self.header_bar)
 
@@ -624,7 +624,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.sum_disk.add_prefix(Gtk.Image.new_from_icon_name("drive-harddisk-symbolic"))
         group.add(self.sum_disk)
 
-        self.sum_prof = Adw.ActionRow(title="Yazılım Profili & Sürücüler", subtitle="")
+        self.sum_prof = Adw.ActionRow(title="Yazılım Profili ve Sürücüler", subtitle="")
         self.sum_prof.add_prefix(Gtk.Image.new_from_icon_name("software-properties-symbolic"))
         group.add(self.sum_prof)
 
