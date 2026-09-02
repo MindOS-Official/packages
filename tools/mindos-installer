@@ -385,11 +385,10 @@ class InstallerWindow(Adw.ApplicationWindow):
         try:
             out = subprocess.check_output(["lsblk", "-d", "-p", "-n", "-l", "-o", "NAME,SIZE,MODEL,TYPE"], text=True)
             self.disks_data = []
-            while self.disk_model_store.get_n_items() > 0:
-                self.disk_model_store.remove(0)
+            self.disk_model_store.splice(0, self.disk_model_store.get_n_items(), [])
 
             for line in out.strip().splitlines():
-                if "disk" in line and not "loop" in line:
+                if "disk" in line and not any(skip in line for skip in ["loop", "zram", "ram"]):
                     parts = line.split()
                     dev = parts[0]
                     size = parts[1] if len(parts) > 1 else ""
