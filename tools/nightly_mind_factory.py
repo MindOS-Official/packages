@@ -63,9 +63,10 @@ def get_candidate_packages(limit=1000):
     # Hala limit altındaysa en popüler alfabetik utility paketlerini ekle
     if len(candidates) < limit:
         for p in raw_pkgs:
-            if not any(bad in p for bad in ["-dev", "-doc", "-dbg", "-dbgsym", ":i386", "lib", "kernel", "linux-"]):
-                if p not in candidates:
-                    candidates.append(p)
+            if not any(bad in p for bad in ["-dev", "-doc", "-dbg", "-dbgsym", ":i386", "kernel", "linux-"]):
+                if not (p.startswith("lib") and not any(k in p for k in ["gl", "ssl", "gtk", "qt", "av", "fuse", "c6", "pulse", "asound"])):
+                    if p not in candidates:
+                        candidates.append(p)
             if len(candidates) >= limit:
                 break
 
