@@ -1,0 +1,56 @@
+name: MindOS Sunrise Package Cloud Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Paketlenecek uygulamalar (boşlukla ayrılmış, örn: "vim nano git curl wget tmux zsh btop ffmpeg")'
+        required: true
+        default: 'nano vim git curl wget tmux zsh fish btop cmatrix p7zip unzip bat ripgrep fd-find'
+      category:
+        description: 'Kategori (core, apps, dev, utils)'
+        required: false
+        default: 'utils'
+  schedule:
+    # Her Pazar gece 03:00'te otomatik senkronizasyon
+    - cron: '0 3 * * 0'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Repoyu Klonla
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Zstandard ve Gerekli Araçları Kur
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zstd binutils tar
+
+      - name: ⚙️ Paketleri .mind Formatına Dönüştür
+        run: |
+          python3 tools/bulk_packager.py "${{ github.event.inputs.packages }}"
+
+      - name: 📊 packages.json İndeksini Güncelle
+        run: |
+          python3 tools/mind-repo-builder.py sync
+
+      - name: 🚀 Değişiklikleri GitHub'a Pushla
+        run: |
+          git config --local user.name "MindOS Package Bot"
+          git config --local user.email "bot@mindos.org"
+          git add pkgs/ packages.json
+          if git diff --staged --quiet; then
+            echo "Yeni eklenecek paket bulunamadı."
+          else
+            git commit -m "feat(packages): Automated cloud build for ${{ github.event.inputs.packages }}"
+            git push origin main
+          fi
