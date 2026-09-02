@@ -1,126 +1,582 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 # ==============================================================================
-# MindOS Sunrise v1.0 Official System Installer
+# MindOS Sunrise Modern Graphical System Installer (GTK4 / Libadwaita)
+# Ubiquity & Calamares style full GUI installer for MindOS Sunrise
 # ==============================================================================
-set -e
 
-if [ "$EUID" -ne 0 ]; then
-    echo -e "\033[1;31mHata:\033[0m MindOS Installer için root yetkisi gereklidir."
-    echo -e "Lütfen \033[1msudo mindos-installer\033[0m komutu ile çalıştırın."
-    exit 1
-fi
+import os
+import sys
+import json
+import time
+import shutil
+import threading
+import subprocess
+from pathlib import Path
 
-clear
-echo -e "\033[1;33m"
-echo "  __  __ _           _  ___  ____    ____                  _          "
-echo " |  \/  (_)_ __   __| |/ _ \/ ___|  / ___| _   _ _ __  _ __(_)___  ___ "
-echo " | |\/| | | '_ \ / _\` | | | \___ \   \___ \| | | | '_ \| '__| / __|/ _ \ "
-echo " | |  | | | | | | (_| | |_| |___) |   ___) | |_| | | | | |  | \__ \  __/"
-echo " |_|  |_|_|_| |_|\__,_|\___/|____/   |____/ \__,_|_| |_|_|  |_|___/\___|"
-echo "                  MindOS Sunrise v1.0 System Installer"
-echo -e "\033[0m\n"
+import gi
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, GLib, Gio, Pango
 
-# 1. Disk Listesi Al
-echo -e "\033[1;36m==>\033[0m Sistemdeki mevcut depolama sürücüleri taranıyor...\n"
-lsblk -d -p -n -l -o NAME,SIZE,MODEL,TYPE | grep -E 'disk' | grep -v 'loop' || true
-echo ""
+APP_ID = "org.mindos.installer"
+VERSION = "1.0.0"
 
-DISKS=$(lsblk -d -p -n -l -o NAME,SIZE,MODEL,TYPE | grep -E 'disk' | grep -v 'loop' | awk '{print $1}')
+class MindOSInstallerApp(Adw.Application):
+    def __init__(self):
+        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
 
-if [ -z "$DISKS" ]; then
-    echo -e "\033[1;31mHata:\033[0m Kurulum yapılacak uygun bir disk bulunamadı!"
-    exit 1
-fi
+    def do_activate(self):
+        win = self.props.active_window
+        if not win:
+            win = InstallerWindow(application=self)
+        win.present()
 
-echo -e "\033[1;32mKurulum yapılacak hedef diski yazın (örn: /dev/sda veya /dev/nvme0n1):\033[0m"
-read -r -p "Hedef Disk: " TARGET_DISK
 
-if [ ! -b "$TARGET_DISK" ]; then
-    echo -e "\033[1;31mGeçersiz disk:\033[0m $TARGET_DISK bulunamadı!"
-    exit 1
-fi
+class InstallerWindow(Adw.ApplicationWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.set_title("MindOS Sunrise Kurulumu")
+        self.set_default_size(880, 620)
+        self.set_resizable(False)
 
-echo ""
-echo -e "\033[1;31m⚠ DİKKAT:\033[0m \033[1m$TARGET_DISK\033[0m üzerindeki TÜM VERİLER SİLİNECEKTİR!"
-echo -e "MindOS Sunrise v1.0 bu diske temiz kurulum olarak yazılacaktır."
-read -r -p "Devam etmek istiyor musunuz? (evet / hayir): " CONFIRM
+        # State Variables
+        self.disks_data = []
+        self.selected_disk = None
+        self.install_mode = "erase_disk" # or "manual"
+        self.manual_root_part = ""
+        self.manual_esp_part = ""
+        self.username = "mindos"
+        self.hostname = "mindos-sunrise"
+        self.password = "1"
+        self.auto_login = True
 
-if [ "$CONFIRM" != "evet" ] && [ "$CONFIRM" != "EVET" ] && [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "yes" ]; then
-    echo "Kurulum iptal edildi."
-    exit 0
-fi
+        self.setup_ui()
+        self.scan_system_disks()
 
-echo ""
-echo -e "\033[1;33m[1/6] Disk bölümlendiriliyor (GPT + ESP + Root)...\033[0m"
-# Disk temizle ve GPT oluştur
-wipefs -a "$TARGET_DISK"
-parted -s "$TARGET_DISK" mklabel gpt
-parted -s "$TARGET_DISK" mkpart primary 1MiB 2MiB
-parted -s "$TARGET_DISK" set 1 bios_grub on
-parted -s "$TARGET_DISK" mkpart primary fat32 2MiB 514MiB
-parted -s "$TARGET_DISK" set 2 esp on
-parted -s "$TARGET_DISK" mkpart primary ext4 514MiB 100%
+    def setup_ui(self):
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        self.set_content(main_box)
 
-# Bölüm adlarını belirle (nvme0n1p1 veya sda1)
-if [[ "$TARGET_DISK" =~ [0-9]$ ]]; then
-    PART_BIOS="${TARGET_DISK}p1"
-    PART_ESP="${TARGET_DISK}p2"
-    PART_ROOT="${TARGET_DISK}p3"
-else
-    PART_BIOS="${TARGET_DISK}1"
-    PART_ESP="${TARGET_DISK}2"
-    PART_ROOT="${TARGET_DISK}3"
-fi
+        # HeaderBar
+        self.header_bar = Adw.HeaderBar()
+        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulumu", subtitle="v1.0")
+        self.header_bar.set_title_widget(self.header_title)
+        main_box.append(self.header_bar)
 
-# Kernel partition tablosunu yenilesin
-partprobe "$TARGET_DISK" || true
-sleep 2
+        # Content Stack
+        self.stack = Adw.ViewStack()
+        self.stack.set_vexpand(True)
+        self.stack.set_hexpand(True)
+        main_box.append(self.stack)
 
-echo -e "\033[1;33m[2/6] Dosya sistemleri biçimlendiriliyor...\033[0m"
-mkfs.vfat -F32 -n "MINDOS_ESP" "$PART_ESP"
-mkfs.ext4 -F -L "MindOS_Sunrise" "$PART_ROOT"
+        # 1. Welcome Page
+        self.page_welcome = self.create_welcome_page()
+        self.stack.add_titled_with_icon(self.page_welcome, "welcome", "Hoş Geldiniz", "user-home-symbolic")
 
-echo -e "\033[1;33m[3/6] Diskler bağlanıyor...\033[0m"
-TARGET_MOUNT="/mnt/mindos_target"
-mkdir -p "$TARGET_MOUNT"
-mount "$PART_ROOT" "$TARGET_MOUNT"
-mkdir -p "$TARGET_MOUNT/boot/efi"
-mount "$PART_ESP" "$TARGET_MOUNT/boot/efi"
+        # 2. Disk & Partitioning Page
+        self.page_disk = self.create_disk_page()
+        self.stack.add_titled_with_icon(self.page_disk, "disk", "Disk Seçimi", "drive-harddisk-symbolic")
 
-echo -e "\033[1;33m[4/6] MindOS Sunrise sistemi diske kopyalanıyor (bu işlem birkaç dakika sürebilir)...\033[0m"
-rsync -aHAXx --info=progress2 \
-    --exclude='/proc/*' \
-    --exclude='/sys/*' \
-    --exclude='/dev/*' \
-    --exclude='/run/*' \
-    --exclude='/tmp/*' \
-    --exclude='/mnt/*' \
-    --exclude='/media/*' \
-    --exclude='/lost+found' \
-    / "$TARGET_MOUNT/"
+        # 3. User Setup Page
+        self.page_user = self.create_user_page()
+        self.stack.add_titled_with_icon(self.page_user, "user", "Kullanıcı", "avatar-default-symbolic")
 
-# Sanal dizinleri yeniden oluştur
-mkdir -p "$TARGET_MOUNT/proc" "$TARGET_MOUNT/sys" "$TARGET_MOUNT/dev" "$TARGET_MOUNT/run" "$TARGET_MOUNT/tmp" "$TARGET_MOUNT/mnt"
-chmod 1777 "$TARGET_MOUNT/tmp"
+        # 4. Summary Page
+        self.page_summary = self.create_summary_page()
+        self.stack.add_titled_with_icon(self.page_summary, "summary", "Özet", "document-properties-symbolic")
 
-echo -e "\033[1;33m[5/6] fstab ve sistem yapılandırması ayarlanıyor...\033[0m"
-ROOT_UUID=$(blkid -s UUID -o value "$PART_ROOT")
-ESP_UUID=$(blkid -s UUID -o value "$PART_ESP")
+        # 5. Installing Page (Progress & Slideshow)
+        self.page_installing = self.create_installing_page()
+        self.stack.add_titled_with_icon(self.page_installing, "installing", "Kurulum", "system-software-install-symbolic")
 
-printf "UUID=%s    /            ext4    defaults,noatime    1 1\nUUID=%s     /boot/efi    vfat    defaults            0 2\n" "$ROOT_UUID" "$ESP_UUID" > "$TARGET_MOUNT/etc/fstab"
+        # 6. Finished Page
+        self.page_finished = self.create_finished_page()
+        self.stack.add_titled_with_icon(self.page_finished, "finished", "Tamamlandı", "emblem-ok-symbolic")
 
-echo -e "\033[1;33m[6/6] GRUB Önyükleyici kuruluyor (UEFI + BIOS)...\033[0m"
-mount --bind /dev "$TARGET_MOUNT/dev"
-mount --bind /dev/pts "$TARGET_MOUNT/dev/pts"
-mount --bind /proc "$TARGET_MOUNT/proc"
-mount --bind /sys "$TARGET_MOUNT/sys"
-mount -t tmpfs tmpfs "$TARGET_MOUNT/run"
+        # Bottom Action Bar
+        self.action_bar = Gtk.ActionBar()
+        self.btn_back = Gtk.Button(label="Geri")
+        self.btn_back.connect("clicked", self.on_back_clicked)
+        self.btn_back.set_sensitive(False)
+        self.action_bar.pack_start(self.btn_back)
 
-chroot "$TARGET_MOUNT" grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=MindOS_Sunrise --recheck || true
-chroot "$TARGET_MOUNT" grub-install --target=i386-pc --recheck "$TARGET_DISK" || true
+        self.btn_next = Gtk.Button(label="İleri")
+        self.btn_next.add_css_class("suggested-action")
+        self.btn_next.connect("clicked", self.on_next_clicked)
+        self.action_bar.pack_end(self.btn_next)
 
-cat > "$TARGET_MOUNT/boot/grub/grub.cfg" << 'GRUB_CONFIG_EOF'
-set default=0
+        main_box.append(self.action_bar)
+
+    # --------------------------------------------------------------------------
+    # Page Creators
+    # --------------------------------------------------------------------------
+    def create_welcome_page(self):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        box.set_margin_top(30)
+        box.set_margin_bottom(30)
+        box.set_margin_start(50)
+        box.set_margin_end(50)
+        box.set_valign(Gtk.Align.CENTER)
+
+        # Sunrise Icon / Banner
+        icon = Gtk.Image.new_from_icon_name("weather-clear-symbolic")
+        icon.set_pixel_size(96)
+        icon.add_css_class("accent")
+        box.append(icon)
+
+        title = Gtk.Label(label="MindOS Sunrise v1.0 Kurulumuna Hoş Geldiniz")
+        title.add_css_class("title-1")
+        box.append(title)
+
+        subtitle = Gtk.Label(label="Hızlı, modern, bağımsız ve güvenilir yeni nesil işletim sisteminiz.")
+        subtitle.add_css_class("dim-label")
+        box.append(subtitle)
+
+        # System Requirements Check Group
+        group = Adw.PreferencesGroup()
+        group.set_title("Sistem Donanım Kontrolü")
+        group.set_margin_top(15)
+
+        row_ram = Adw.ActionRow(title="Bellek (RAM)", subtitle="En az 2 GB önerilir")
+        row_ram.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
+        group.add(row_ram)
+
+        row_disk = Adw.ActionRow(title="Depolama Alanı", subtitle="En az 15 GB boş alan önerilir")
+        row_disk.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
+        group.add(row_disk)
+
+        row_efi = Adw.ActionRow(title="Önyükleme Modu", subtitle="UEFI / BIOS Çift Uyumluluk")
+        row_efi.add_prefix(Gtk.Image.new_from_icon_name("emblem-ok-symbolic"))
+        group.add(row_efi)
+
+        box.append(group)
+        return box
+
+    def create_disk_page(self):
+        clamp = Adw.Clamp()
+        clamp.set_maximum_size(750)
+        clamp.set_margin_top(20)
+        clamp.set_margin_bottom(20)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        clamp.set_child(box)
+
+        group_mode = Adw.PreferencesGroup()
+        group_mode.set_title("Kurulum Türü ve Disk Bölümlendirme")
+        group_mode.set_description("MindOS Sunrise'ı nereye kurmak istediğinizi seçin:")
+        box.append(group_mode)
+
+        # Radio Option 1: Erase Entire Disk
+        self.row_erase = Adw.ActionRow(title="Diski Temizle ve MindOS Sunrise Kur (Önerilen)",
+                                       subtitle="Seçilen diski otomatik bölümlendirir (GPT + ESP + Root). Mevcut veriler silinir.")
+        self.radio_erase = Gtk.CheckButton()
+        self.radio_erase.set_active(True)
+        self.row_erase.add_prefix(self.radio_erase)
+        group_mode.add(self.row_erase)
+
+        # Disk Selector ComboRow
+        self.disk_combo = Adw.ComboRow(title="Hedef Disk Sürücüsü")
+        self.disk_model_store = Gtk.StringList()
+        self.disk_combo.set_model(self.disk_model_store)
+        self.disk_combo.connect("notify::selected", self.on_disk_selected)
+        group_mode.add(self.disk_combo)
+
+        # Radio Option 2: Manual / GParted
+        self.row_manual = Adw.ActionRow(title="Elle Bölümlendirme (Gelişmiş / Yanına Kur)",
+                                        subtitle="Bölümleri GParted ile kendiniz düzenleyin veya mevcut bir bölüme kurun.")
+        self.radio_manual = Gtk.CheckButton()
+        self.radio_manual.set_group(self.radio_erase)
+        self.row_manual.add_prefix(self.radio_manual)
+
+        btn_gparted = Gtk.Button(label="GParted'ı Aç")
+        btn_gparted.set_valign(Gtk.Align.CENTER)
+        btn_gparted.connect("clicked", lambda b: subprocess.Popen(["gparted"]))
+        self.row_manual.add_suffix(btn_gparted)
+        group_mode.add(self.row_manual)
+
+        self.radio_erase.connect("toggled", self.on_install_mode_toggled)
+
+        # Manual Partition Selection Group (Initially hidden or secondary)
+        self.group_manual = Adw.PreferencesGroup()
+        self.group_manual.set_title("Manuel Bölüm Eşleştirme")
+        self.group_manual.set_visible(False)
+
+        self.entry_root = Adw.EntryRow(title="Kök (Root /) Bölümü (örn: /dev/sda3)")
+        self.group_manual.add(self.entry_root)
+
+        self.entry_esp = Adw.EntryRow(title="EFI (ESP /boot/efi) Bölümü (örn: /dev/sda2)")
+        self.group_manual.add(self.entry_esp)
+
+        box.append(self.group_manual)
+        return clamp
+
+    def create_user_page(self):
+        clamp = Adw.Clamp()
+        clamp.set_maximum_size(750)
+        clamp.set_margin_top(20)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        clamp.set_child(box)
+
+        group = Adw.PreferencesGroup()
+        group.set_title("Kullanıcı Hesabı ve Bilgisayar Bilgileri")
+        group.set_description("Giriş yapmak ve yönetici yetkileri için bilgilerinizi girin:")
+        box.append(group)
+
+        self.entry_fullname = Adw.EntryRow(title="Adınız")
+        self.entry_fullname.set_text("MindOS User")
+        group.add(self.entry_fullname)
+
+        self.entry_user = Adw.EntryRow(title="Kullanıcı Adı")
+        self.entry_user.set_text("mindos")
+        group.add(self.entry_user)
+
+        self.entry_host = Adw.EntryRow(title="Bilgisayar Adı (Hostname)")
+        self.entry_host.set_text("mindos-sunrise")
+        group.add(self.entry_host)
+
+        self.entry_pass = Adw.PasswordEntryRow(title="Parola")
+        self.entry_pass.set_text("1")
+        group.add(self.entry_pass)
+
+        self.entry_pass_confirm = Adw.PasswordEntryRow(title="Parolayı Doğrulayın")
+        self.entry_pass_confirm.set_text("1")
+        group.add(self.entry_pass_confirm)
+
+        self.switch_autologin = Adw.SwitchRow(title="Otomatik Giriş Yap", subtitle="Açılışta parola sormadan masaüstünü aç")
+        self.switch_autologin.set_active(True)
+        group.add(self.switch_autologin)
+
+        return clamp
+
+    def create_summary_page(self):
+        clamp = Adw.Clamp()
+        clamp.set_maximum_size(750)
+        clamp.set_margin_top(20)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        clamp.set_child(box)
+
+        group = Adw.PreferencesGroup()
+        group.set_title("Kurulum Özeti")
+        group.set_description("Kuruluma başlamadan önce lütfen aşağıdaki ayarları onaylayın:")
+        box.append(group)
+
+        self.sum_disk = Adw.ActionRow(title="Hedef Disk", subtitle="")
+        self.sum_disk.add_prefix(Gtk.Image.new_from_icon_name("drive-harddisk-symbolic"))
+        group.add(self.sum_disk)
+
+        self.sum_mode = Adw.ActionRow(title="İşlem Türü", subtitle="")
+        self.sum_mode.add_prefix(Gtk.Image.new_from_icon_name("dialog-warning-symbolic"))
+        group.add(self.sum_mode)
+
+        self.sum_user = Adw.ActionRow(title="Kullanıcı", subtitle="")
+        self.sum_user.add_prefix(Gtk.Image.new_from_icon_name("avatar-default-symbolic"))
+        group.add(self.sum_user)
+
+        self.sum_boot = Adw.ActionRow(title="Önyükleyici (Bootloader)", subtitle="GRUB2 (UEFI x86_64 + BIOS MBR)")
+        self.sum_boot.add_prefix(Gtk.Image.new_from_icon_name("system-run-symbolic"))
+        group.add(self.sum_boot)
+
+        return clamp
+
+    def create_installing_page(self):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        box.set_margin_top(30)
+        box.set_margin_bottom(20)
+        box.set_margin_start(40)
+        box.set_margin_end(40)
+
+        # Slide Carousel
+        self.slide_stack = Adw.ViewStack()
+        self.slide_stack.set_vexpand(True)
+
+        # Slide 1: Welcome & Speed
+        s1 = self.create_slide("weather-clear-symbolic", "MindOS Sunrise'a Hoş Geldiniz",
+                               "Linux Kernel 7.0 ile güçlendirilmiş yıldırım hızında saf performans.")
+        self.slide_stack.add_named(s1, "slide1")
+
+        # Slide 2: Package Manager
+        s2 = self.create_slide("package-x-generic-symbolic", "Zengin ve Hızlı Paket Yöneticisi: mindpkg",
+                               "Steam, Google Chrome, VS Code, Discord ve 3.800+ uygulama tek komutla emrinizde.")
+        self.slide_stack.add_named(s2, "slide2")
+
+        # Slide 3: Gaming & Productivity
+        s3 = self.create_slide("applications-games-symbolic", "Oyun ve Üretkenlik İçin Tasarlandı",
+                               "GameMode, MangoHud, LibreOffice, GIMP, OBS Studio ve modern araçlar tam entegre.")
+        self.slide_stack.add_named(s3, "slide3")
+
+        box.append(self.slide_stack)
+
+        # Status Label & Progress Bar
+        self.lbl_status = Gtk.Label(label="Kurulum hazırlanıyor...")
+        self.lbl_status.set_halign(Gtk.Align.START)
+        box.append(self.lbl_status)
+
+        self.progress_bar = Gtk.ProgressBar()
+        self.progress_bar.set_show_text(True)
+        self.progress_bar.set_fraction(0.0)
+        box.append(self.progress_bar)
+
+        return box
+
+    def create_slide(self, icon_name, title_text, desc_text):
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        vbox.set_valign(Gtk.Align.CENTER)
+
+        img = Gtk.Image.new_from_icon_name(icon_name)
+        img.set_pixel_size(80)
+        img.add_css_class("accent")
+        vbox.append(img)
+
+        t = Gtk.Label(label=title_text)
+        t.add_css_class("title-2")
+        vbox.append(t)
+
+        d = Gtk.Label(label=desc_text)
+        d.add_css_class("dim-label")
+        d.set_wrap(True)
+        d.set_justify(Gtk.Justification.CENTER)
+        vbox.append(d)
+
+        return vbox
+
+    def create_finished_page(self):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        box.set_valign(Gtk.Align.CENTER)
+        box.set_margin_top(40)
+        box.set_margin_bottom(40)
+        box.set_margin_start(50)
+        box.set_margin_end(50)
+
+        icon = Gtk.Image.new_from_icon_name("emblem-ok-symbolic")
+        icon.set_pixel_size(96)
+        icon.add_css_class("success")
+        box.append(icon)
+
+        title = Gtk.Label(label="Tebrikler! Kurulum Başarıyla Tamamlandı!")
+        title.add_css_class("title-1")
+        box.append(title)
+
+        subtitle = Gtk.Label(label="MindOS Sunrise v1.0 diskinize kuruldu. Şimdi bilgisayarınızı yeniden başlatabilirsiniz.")
+        subtitle.add_css_class("dim-label")
+        box.append(subtitle)
+
+        btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        btn_box.set_halign(Gtk.Align.CENTER)
+        btn_box.set_margin_top(20)
+
+        btn_stay = Gtk.Button(label="Canlı Ortamda Kal")
+        btn_stay.connect("clicked", lambda b: self.get_application().quit())
+        btn_box.append(btn_stay)
+
+        btn_reboot = Gtk.Button(label="Şimdi Yeniden Başlat")
+        btn_reboot.add_css_class("suggested-action")
+        btn_reboot.connect("clicked", lambda b: subprocess.Popen(["systemctl", "reboot"]))
+        btn_box.append(btn_reboot)
+
+        box.append(btn_box)
+        return box
+
+    # --------------------------------------------------------------------------
+    # Logic & Navigation
+    # --------------------------------------------------------------------------
+    def scan_system_disks(self):
+        try:
+            out = subprocess.check_output(["lsblk", "-d", "-p", "-n", "-l", "-o", "NAME,SIZE,MODEL,TYPE"], text=True)
+            self.disks_data = []
+            while self.disk_model_store.get_n_items() > 0:
+                self.disk_model_store.remove(0)
+
+            for line in out.strip().splitlines():
+                if "disk" in line and not "loop" in line:
+                    parts = line.split()
+                    dev = parts[0]
+                    size = parts[1] if len(parts) > 1 else ""
+                    model = " ".join(parts[2:-1]) if len(parts) > 3 else "Depolama Sürücüsü"
+                    display_name = f"{model} ({size}) - {dev}"
+                    self.disks_data.append({"dev": dev, "size": size, "model": model, "display": display_name})
+                    self.disk_model_store.append(display_name)
+
+            if self.disks_data:
+                self.selected_disk = self.disks_data[0]["dev"]
+        except Exception as e:
+            print("Disk scan error:", e)
+
+    def on_disk_selected(self, combo, param):
+        idx = combo.get_selected()
+        if 0 <= idx < len(self.disks_data):
+            self.selected_disk = self.disks_data[idx]["dev"]
+
+    def on_install_mode_toggled(self, check):
+        if check.get_active():
+            self.install_mode = "erase_disk"
+            self.disk_combo.set_sensitive(True)
+            self.group_manual.set_visible(False)
+        else:
+            self.install_mode = "manual"
+            self.disk_combo.set_sensitive(False)
+            self.group_manual.set_visible(True)
+
+    def on_back_clicked(self, btn):
+        curr = self.stack.get_visible_child_name()
+        order = ["welcome", "disk", "user", "summary", "installing", "finished"]
+        idx = order.index(curr)
+        if idx > 0:
+            self.stack.set_visible_child_name(order[idx - 1])
+            self.btn_back.set_sensitive(idx - 1 > 0)
+            self.btn_next.set_label("İleri")
+
+    def on_next_clicked(self, btn):
+        curr = self.stack.get_visible_child_name()
+        order = ["welcome", "disk", "user", "summary", "installing", "finished"]
+        idx = order.index(curr)
+
+        if curr == "welcome":
+            self.stack.set_visible_child_name("disk")
+            self.btn_back.set_sensitive(True)
+
+        elif curr == "disk":
+            if self.install_mode == "erase_disk" and not self.selected_disk:
+                self.show_error("Lütfen bir hedef disk seçin!")
+                return
+            self.stack.set_visible_child_name("user")
+
+        elif curr == "user":
+            p1 = self.entry_pass.get_text()
+            p2 = self.entry_pass_confirm.get_text()
+            if p1 != p2:
+                self.show_error("Girdiğiniz parolalar birbiriyle eşleşmiyor!")
+                return
+            self.username = self.entry_user.get_text().strip() or "mindos"
+            self.hostname = self.entry_host.get_text().strip() or "mindos-sunrise"
+            self.password = p1
+            self.auto_login = self.switch_autologin.get_active()
+
+            # Update Summary Page
+            if self.install_mode == "erase_disk":
+                self.sum_disk.set_subtitle(f"{self.selected_disk}")
+                self.sum_mode.set_subtitle("Tüm disk temizlenecek, GPT + ESP + Root oluşturulacak")
+            else:
+                self.sum_disk.set_subtitle(f"Root: {self.entry_root.get_text()} / ESP: {self.entry_esp.get_text()}")
+                self.sum_mode.set_subtitle("Mevcut bölümlere manuel kurulum yapılacak")
+
+            self.sum_user.set_subtitle(f"{self.username} ({self.hostname})")
+            self.btn_next.set_label("Şimdi Kur")
+            self.stack.set_visible_child_name("summary")
+
+        elif curr == "summary":
+            # Start installation!
+            self.btn_back.set_sensitive(False)
+            self.btn_next.set_sensitive(False)
+            self.action_bar.set_visible(False)
+            self.header_bar.set_show_title_buttons(False)
+            self.stack.set_visible_child_name("installing")
+            threading.Thread(target=self.run_installation, daemon=True).start()
+            threading.Thread(target=self.run_slideshow, daemon=True).start()
+
+    def show_error(self, message):
+        dialog = Adw.MessageDialog(heading="Hata", body=message, transient_for=self)
+        dialog.add_response("ok", "Tamam")
+        dialog.present()
+
+    def run_slideshow(self):
+        slides = ["slide1", "slide2", "slide3"]
+        i = 0
+        while self.stack.get_visible_child_name() == "installing":
+            time.sleep(8)
+            i = (i + 1) % len(slides)
+            GLib.idle_add(self.slide_stack.set_visible_child_name, slides[i])
+
+    # --------------------------------------------------------------------------
+    # Installation Execution Engine
+    # --------------------------------------------------------------------------
+    def run_installation(self):
+        try:
+            self.update_progress(0.05, "Disk hazırlanıyor...")
+            target_disk = self.selected_disk
+
+            if self.install_mode == "erase_disk":
+                # Wipe & Partition GPT
+                subprocess.run(["wipefs", "-a", target_disk], check=True)
+                subprocess.run(["parted", "-s", target_disk, "mklabel", "gpt"], check=True)
+                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "1MiB", "2MiB"], check=True)
+                subprocess.run(["parted", "-s", target_disk, "set", "1", "bios_grub", "on"], check=True)
+                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "fat32", "2MiB", "514MiB"], check=True)
+                subprocess.run(["parted", "-s", target_disk, "set", "2", "esp", "on"], check=True)
+                subprocess.run(["parted", "-s", target_disk, "mkpart", "primary", "ext4", "514MiB", "100%"], check=True)
+
+                if target_disk[-1].isdigit():
+                    part_esp = f"{target_disk}p2"
+                    part_root = f"{target_disk}p3"
+                else:
+                    part_esp = f"{target_disk}2"
+                    part_root = f"{target_disk}3"
+
+                subprocess.run(["partprobe", target_disk], check=False)
+                time.sleep(2)
+
+                self.update_progress(0.15, "Dosya sistemleri biçimlendiriliyor (FAT32 + Ext4)...")
+                subprocess.run(["mkfs.vfat", "-F32", "-n", "MINDOS_ESP", part_esp], check=True)
+                subprocess.run(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+            else:
+                part_root = self.entry_root.get_text().strip()
+                part_esp = self.entry_esp.get_text().strip()
+
+            self.update_progress(0.25, "Diskler bağlanıyor...")
+            target_mount = Path("/mnt/mindos_target")
+            target_mount.mkdir(parents=True, exist_ok=True)
+            subprocess.run(["mount", part_root, str(target_mount)], check=True)
+            (target_mount / "boot" / "efi").mkdir(parents=True, exist_ok=True)
+            if part_esp:
+                subprocess.run(["mount", part_esp, str(target_mount / "boot" / "efi")], check=True)
+
+            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (bu işlem 2-3 dakika sürebilir)...")
+            rsync_cmd = [
+                "rsync", "-aHAXx",
+                "--exclude=/proc/*",
+                "--exclude=/sys/*",
+                "--exclude=/dev/*",
+                "--exclude=/run/*",
+                "--exclude=/tmp/*",
+                "--exclude=/mnt/*",
+                "--exclude=/media/*",
+                "--exclude=/lost+found",
+                "/", f"{target_mount}/"
+            ]
+            subprocess.run(rsync_cmd, check=True)
+
+            self.update_progress(0.75, "Kullanıcı hesabı ve sistem yapılandırması ayarlanıyor...")
+            for d in ["proc", "sys", "dev", "run", "tmp", "mnt"]:
+                (target_mount / d).mkdir(parents=True, exist_ok=True)
+            os.chmod(target_mount / "tmp", 0o1777)
+
+            # fstab
+            root_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_root], text=True).strip()
+            esp_uuid = subprocess.check_output(["blkid", "-s", "UUID", "-o", "value", part_esp], text=True).strip() if part_esp else ""
+
+            fstab_content = f"UUID={root_uuid}    /            ext4    defaults,noatime    1 1\n"
+            if esp_uuid:
+                fstab_content += f"UUID={esp_uuid}     /boot/efi    vfat    defaults            0 2\n"
+            with open(target_mount / "etc" / "fstab", "w") as f:
+                f.write(fstab_content)
+
+            # Hostname
+            with open(target_mount / "etc" / "hostname", "w") as f:
+                f.write(f"{self.hostname}\n")
+
+            self.update_progress(0.85, "GRUB2 Önyükleyici kuruluyor (UEFI + BIOS)...")
+            for fs in ["dev", "dev/pts", "proc", "sys"]:
+                subprocess.run(["mount", "--bind", f"/{fs}", f"{target_mount}/{fs}"], check=False)
+            subprocess.run(["mount", "-t", "tmpfs", "tmpfs", f"{target_mount}/run"], check=False)
+
+            if part_esp:
+                subprocess.run(["chroot", str(target_mount), "grub-install", "--target=x86_64-efi",
+                                "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Sunrise", "--recheck"], check=False)
+            subprocess.run(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
+                            "--recheck", target_disk], check=False)
+
+            grub_cfg = f"""set default=0
 set timeout=5
 
 insmod part_gpt
@@ -129,33 +585,44 @@ insmod ext2
 insmod fat
 insmod all_video
 
-menuentry 'MindOS Sunrise v1.0 (Kernel 7.0)' {
-    search --no-floppy --fs-uuid --set=root @ROOT_UUID@
-    linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID=@ROOT_UUID@ rw quiet splash init=/lib/systemd/systemd console=tty0
+menuentry 'MindOS Sunrise v1.0 (Kernel 7.0)' {{
+    search --no-floppy --fs-uuid --set=root {root_uuid}
+    linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID={root_uuid} rw quiet splash init=/lib/systemd/systemd console=tty0
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
-}
+}}
 
-menuentry 'MindOS Sunrise v1.0 (Kurtarma / Recovery Modu)' {
-    search --no-floppy --fs-uuid --set=root @ROOT_UUID@
-    linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID=@ROOT_UUID@ ro single
+menuentry 'MindOS Sunrise v1.0 (Kurtarma / Recovery Modu)' {{
+    search --no-floppy --fs-uuid --set=root {root_uuid}
+    linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID={root_uuid} ro single
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
-}
-GRUB_CONFIG_EOF
+}}
+"""
+            (target_mount / "boot" / "grub").mkdir(parents=True, exist_ok=True)
+            with open(target_mount / "boot" / "grub" / "grub.cfg", "w") as f:
+                f.write(grub_cfg)
 
-sed -i "s/@ROOT_UUID@/$ROOT_UUID/g" "$TARGET_MOUNT/boot/grub/grub.cfg"
+            self.update_progress(0.95, "Sistem temizliği ve disk bağlantıları kapatılıyor...")
+            for fs in ["boot/efi", "dev/pts", "dev", "proc", "sys", "run"]:
+                subprocess.run(["umount", "-f", f"{target_mount}/{fs}"], check=False)
+            subprocess.run(["umount", "-f", str(target_mount)], check=False)
 
-# Temizlik
-umount -f "$TARGET_MOUNT/boot/efi" || true
-umount -f "$TARGET_MOUNT/dev/pts" || true
-umount -f "$TARGET_MOUNT/dev" || true
-umount -f "$TARGET_MOUNT/proc" || true
-umount -f "$TARGET_MOUNT/sys" || true
-umount -f "$TARGET_MOUNT/run" || true
-umount -f "$TARGET_MOUNT" || true
+            self.update_progress(1.0, "Kurulum başarıyla tamamlandı!")
+            GLib.idle_add(self.stack.set_visible_child_name, "finished")
 
-echo ""
-echo -e "\033[1;32m═══════════════════════════════════════════════════════════════════════════════\033[0m"
-echo -e "\033[1;32m🎉 TEBRİKLER! MindOS Sunrise v1.0 başarıyla diske kuruldu!\033[0m"
-echo -e "\033[1;32m═══════════════════════════════════════════════════════════════════════════════\033[0m"
-echo -e "Artık USB belleğinizi çıkartabilir ve bilgisayarınızı yeniden başlatabilirsiniz:"
-echo -e "  \033[1msudo reboot\033[0m\n"
+        except Exception as e:
+            GLib.idle_add(self.show_error, f"Kurulum sırasında bir hata oluştu:\n{e}")
+            GLib.idle_add(self.stack.set_visible_child_name, "summary")
+            GLib.idle_add(self.btn_next.set_sensitive, True)
+            GLib.idle_add(self.btn_back.set_sensitive, True)
+
+    def update_progress(self, frac, text):
+        GLib.idle_add(self.progress_bar.set_fraction, frac)
+        GLib.idle_add(self.lbl_status.set_text, text)
+
+
+def main():
+    app = MindOSInstallerApp()
+    return app.run(sys.argv)
+
+if __name__ == "__main__":
+    sys.exit(main())
