@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# MindOS Sunrise Mass Package Factory (Resume-Aware & Telegram-Notifying)
+# MindOS Sunrise Mass Package Factory (Target: 15,000 Packages)
+# Resume-Aware, High-Capacity & Telegram-Notifying
 # ==============================================================================
 
 import os
@@ -30,49 +31,66 @@ def send_telegram(msg):
         pass
 
 SEED_KEYWORDS = [
-    "python3-", "python3", "nodejs", "npm", "golang", "rustc", "cargo",
+    # Geliştirme, Diller & Derleyiciler
+    "python3-", "python3", "nodejs", "npm", "golang", "rustc", "cargo", "ruby", "perl", "php-",
     "gcc", "g++", "clang", "make", "cmake", "ninja-build", "meson", "autoconf",
     "automake", "libtool", "pkg-config", "gdb", "valgrind", "strace", "ltrace",
-    "neovim", "emacs-nox", "micro", "joe", "zsh", "fish", "tcsh", "ksh",
+    # Editörler, Geliştirme Araçları & Kabuklar
+    "neovim", "emacs-nox", "micro", "joe", "zsh", "fish", "tcsh", "ksh", "git", "subversion",
+    # Sistem, İzleme & Donanım
     "glances", "bashtop", "bpytop", "sysstat", "dstat", "iotop", "iftop",
     "nload", "bmon", "vnstat", "speedtest-cli", "hardinfo", "lshw", "hwinfo",
-    "dmidecode", "lsof", "procps", "psmisc", "htop", "btop", "inxi",
-    "nmap", "wireshark-common", "tcpdump", "netcat-openbsd", "socat", "iperf3",
-    "aria2", "axel", "rsync", "rclone", "curl", "wget", "whois", "bind9-dnsutils",
-    "zstd", "lz4", "pigz", "pixz", "p7zip", "unrar", "cabextract", "cpio",
+    "dmidecode", "lsof", "procps", "psmisc", "htop", "btop", "inxi", "pciutils", "usbutils",
+    # Ağ, Güvenlik & İletişim
+    "nmap", "wireshark-common", "tcpdump", "netcat-openbsd", "socat", "iperf3", "openssh-client",
+    "aria2", "axel", "rsync", "rclone", "curl", "wget", "whois", "bind9-dnsutils", "openvpn", "wireguard-tools",
+    # Sıkıştırma & Arşivleme
+    "zstd", "lz4", "pigz", "pixz", "p7zip", "unrar", "cabextract", "cpio", "tar", "gzip", "bzip2", "xz-utils",
+    # Medya & Grafik CLI/GUI
     "ffmpeg", "imagemagick", "graphicsmagick", "sox", "mpv", "mediainfo",
-    "yt-dlp", "optipng", "jpegoptim", "gifsicle",
+    "yt-dlp", "optipng", "jpegoptim", "gifsicle", "vlc", "obs-studio", "flac", "vorbis-tools",
+    # Veri, Metin & Terminal
     "jq", "yq", "ripgrep", "fd-find", "bat", "eza", "fzf", "silversearcher-ag",
-    "dos2unix", "tree", "pv", "progress", "screen", "tmux", "byobu",
+    "dos2unix", "tree", "pv", "progress", "screen", "tmux", "byobu", "ranger", "mc",
+    # Disk, Dosya Sistemleri & Kurtarma
     "btrfs-progs", "xfsprogs", "f2fs-tools", "e2fsprogs", "dosfstools",
-    "ntfs-3g", "parted", "gdisk", "wipefs", "testdisk", "ncdu", "duf"
+    "ntfs-3g", "parted", "gdisk", "wipefs", "testdisk", "ncdu", "duf", "smartmontools",
+    # Kütüphaneler & Altyapılar
+    "libgl1", "libvulkan1", "libgtk-3", "libgtk-4", "libqt5", "libqt6", "libwayland", "libx11",
+    "libasound2", "libpulse0", "libpipewire", "libssl", "libcurl4", "libffi", "libsqlite3",
+    # Masaüstü & Uygulamalar
+    "alacritty", "kitty", "foot", "rofi", "dmenu", "polybar", "waybar", "sway", "i3", "feh",
+    "fastfetch", "neofetch", "cmatrix", "cowsay", "figlet", "fortune-mod", "sl"
 ]
 
 
-def get_candidate_packages(limit=6000):
-    print("🔍 Sistem paket havuzu taranıyor...")
+def get_candidate_packages(limit=15000):
+    print("🔍 Sistem paket havuzu taranıyor (Hedef 15.000 Paket)...")
     raw_pkgs = subprocess.check_output(["apt-cache", "pkgnames"], text=True).splitlines()
     candidates = []
+    
+    # 1. Öncelikli anahtar kelimeler
     for kw in SEED_KEYWORDS:
         for p in raw_pkgs:
             if p.startswith(kw) or p == kw:
                 if not any(bad in p for bad in ["-dev", "-doc", "-dbg", "-dbgsym", ":i386"]):
                     if p not in candidates:
                         candidates.append(p)
+                        if len(candidates) >= limit:
+                            return candidates[:limit]
 
-    if len(candidates) < limit:
-        for p in raw_pkgs:
-            if not any(bad in p for bad in ["-dev", "-doc", "-dbg", "-dbgsym", ":i386", "kernel", "linux-"]):
-                if not (p.startswith("lib") and not any(k in p for k in ["gl", "ssl", "gtk", "qt", "av", "fuse", "c6", "pulse", "asound"])):
-                    if p not in candidates:
-                        candidates.append(p)
-            if len(candidates) >= limit:
-                break
+    # 2. Geniş havuz: Tüm yararlı binary araçlar ve kütüphaneler
+    for p in raw_pkgs:
+        if not any(bad in p for bad in ["-dev", "-doc", "-dbg", "-dbgsym", ":i386", "kernel", "linux-image", "linux-headers", "linux-modules"]):
+            if p not in candidates:
+                candidates.append(p)
+                if len(candidates) >= limit:
+                    break
 
     return candidates[:limit]
 
 
-def run_factory(target_count=6000, batch_size=30):
+def run_factory(target_count=15000, batch_size=30):
     print(f"🏭 MindOS Sunrise Mass Package Factory Başlatıldı!")
     print(f"🎯 Hedef: {target_count} paket (.mind) üretilip GitHub'a pushlanacak.\n")
 
@@ -84,7 +102,6 @@ def run_factory(target_count=6000, batch_size=30):
     existing_names = set()
     for f in existing_files:
         clean = f.name.replace("-x86_64.mind", "")
-        # rsplit with - to get package base name
         parts = clean.rsplit("-", 2)
         if len(parts) >= 2:
             existing_names.add(parts[0])
@@ -96,7 +113,7 @@ def run_factory(target_count=6000, batch_size=30):
     print(f"📦 Halihazırda mevcut paket sayısı: {already_built_count}")
     print(f"⚡ Kaldığı yerden inşa edilecek yeni paket sayısı: {len(to_build)}\n")
 
-    send_telegram(f"🏭 MindOS Fabrikası Kaldığı Yerden Başlatıldı! 🌅\n\n📦 Mevcut: {already_built_count} paket\n🎯 Kalan: {len(to_build)} paket\n🚀 Hedef: {target_count} paket")
+    send_telegram(f"🏭 MindOS Fabrikası 15.000 Hedefiyle Başlatıldı! 🌅\n\n📦 Mevcut: {already_built_count} paket\n🎯 Hedef: {target_count} paket\n🚀 Kalan: {len(to_build)} paket")
 
     import tempfile
     total_batches = (len(to_build) + batch_size - 1) // batch_size
@@ -119,7 +136,7 @@ def run_factory(target_count=6000, batch_size=30):
                 out = package_deb_to_mind(deb_file, PKGS_DIR)
                 if out:
                     if out.stat().st_size > 90 * 1024 * 1024:
-                        print(f"    ⚠ {out.name} çok büyük, atlanıyor.")
+                        print(f"    ⚠ {out.name} çok büyük (90MB+), atlanıyor.")
                         out.unlink()
                     else:
                         built_count += 1
@@ -144,14 +161,14 @@ def run_factory(target_count=6000, batch_size=30):
         # Her 5 partide bir Telegram güncellemesi
         if batch_num % 5 == 0 or batch_num == total_batches:
             cur_count = len(list(PKGS_DIR.glob("*.mind")))
-            send_telegram(f"📦 MindOS Fabrika Güncellemesi:\n🚀 Parti {batch_num}/{total_batches} Tamamlandı!\n💾 Güncel Depo: {cur_count} paket")
+            send_telegram(f"📦 MindOS 15K Fabrika Güncellemesi:\n🚀 Parti {batch_num}/{total_batches} Tamamlandı!\n💾 Güncel Depo: {cur_count} paket")
 
         time.sleep(2)
 
-    print("\n🎉 TEBRİKLER! Tüm paketler .mind formatında hazırlanıp GitHub'a pushlandı!")
-    send_telegram(f"🎉 TEBRİKLER! MindOS Sunrise 6.000 Paket Fabrikası Başarıyla Tamamlandı! 🚀👑")
+    print("\n🎉 TEBRİKLER! 15.000 paket hedefi başarıyla tamamlandı!")
+    send_telegram(f"🎉 TEBRİKLER! MindOS Sunrise 15.000 Paket Fabrikası Başarıyla Tamamlandı! 🚀👑")
 
 
 if __name__ == "__main__":
-    count = int(sys.argv[1]) if len(sys.argv) > 1 else 6000
+    count = int(sys.argv[1]) if len(sys.argv) > 1 else 15000
     run_factory(target_count=count)
