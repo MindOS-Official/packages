@@ -194,17 +194,26 @@ def upload_chunk(chunk_tag, chunk_num, total_chunks, chunk_files, total_all_file
         batch_paths = [str(p) for p in batch]
         print(f"  📤 Yükleniyor: {batch[0].name} ... (+{len(batch)-1} dosya)")
 
-        for attempt in range(1, 4):
+        uploaded_success = False
+        while not uploaded_success:
             try:
                 cmd = ["gh", "release", "upload", chunk_tag] + batch_paths + ["-R", REPO_NAME, "--clobber"]
-                subprocess.run(cmd, check=True)
-                uploaded_in_chunk += len(batch)
-                break
+                res = subprocess.run(cmd, capture_output=True, text=True)
+                if res.returncode == 0:
+                    uploaded_in_chunk += len(batch)
+                    uploaded_success = True
+                    time.sleep(1.5)  # Nazik bekleme: burst limitini tetiklememek için
+                else:
+                    err_msg = (res.stderr + res.stdout).strip()
+                    if "rate limit" in err_msg.lower() or "403" in err_msg:
+                        print(f"    ⏳ GitHub Yükleme Kotası/Rate Limit tespit edildi! 120 saniye bekleniyor...")
+                        time.sleep(120)
+                    else:
+                        print(f"    ⚠ Yükleme hatası: {err_msg[:200]} - 10s sonra tekrar deneniyor...")
+                        time.sleep(10)
             except Exception as e:
-                print(f"    ⚠ Yükleme hatası (Deneme {attempt}/3): {e}")
-                time.sleep(3)
-        else:
-            print(f"    ❌ Parti yüklenemedi: {batch[0].name}")
+                print(f"    ⚠ Beklenmedik hata: {e} - 10s sonra tekrar deneniyor...")
+                time.sleep(10)
 
         cur_total_uploaded = cum_uploaded_start + uploaded_in_chunk
         pct = (cur_total_uploaded / total_all_files) * 100
