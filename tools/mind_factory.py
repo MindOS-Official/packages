@@ -1,0 +1,270 @@
+#!/usr/bin/env python3
+"""MindOS sürekli paket fabrikası.
+
+Debian 13 (trixie) deposundaki paketleri .mind biçimine dönüştürür, GitHub Releases
+chunk'larına (v1.0-chunk-NN, en fazla 990 dosya) yükler ve packages.json'a ekler.
+Debian trixie konteynerinde çalışır (MindOS Paradise ile aynı taban).
+
+Her çalıştırmada (en çok kullanılanlar önce, Debian popcon sıralaması):
+  1. Yenileme (--updates adet): Debian'da yeni sürümü çıkmış paketler ile eski Ubuntu
+     tabanlı (origin alanı olmayan) paketler Debian sürümüyle yeniden üretilir,
+  2. Ekleme (--new adet): henüz depoda olmayan Debian paketleri eklenir.
+
+kullanım: mind_factory.py [--new 400] [--updates 150] [--only paket1,paket2] [--dry-run]
+GitHub Actions'ta .github/workflows/package-factory.yml tarafından her gün çalıştırılır.
+"""
+import argparse
+import gzip
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+import urllib.request
+from pathlib import Path
+
+REPO = os.environ.get("MIND_REPO", "MindOS-Official/packages")
+ROOT = Path(__file__).resolve().parent.parent
+INDEX = ROOT / "packages.json"
+MAX_ASSETS = 990
+BATCH = 40
+MAX_SIZE = 1500 * 1024 * 1024  # GitHub asset sınırı 2 GB; büyük paketler atlanır
+MAINTAINER = "MindOS Team <https://github.com/MindOS-Official>"
+ORIGIN = os.environ.get("MIND_ORIGIN", "debian/trixie")
+
+# .mind deposuna alınmayan paketler: kernel, hata ayıklama sembolleri, geçiş paketleri
+SKIP_RE = re.compile(
+    r"^(linux-(image|modules|headers|objects|signatures|buildinfo|tools|cloud-tools|lib-rust|bpf-dev|"
+    r"source|doc|riscv|lowlatency|oem|hwe|gcp|aws|azure|oracle|ibm|kvm|nvidia|intel|realtime)"
+    r"|.*-dbg(sym)?$|.*-dbgsym$)"
+)
+
+
+def log(msg):
+    print(msg, flush=True)
+
+
+def gh(*args, check=True):
+    """gh CLI; ikincil hız sınırına takılırsa bekleyip yeniden dener"""
+    for attempt in range(8):
+        r = subprocess.run(["gh", *args], capture_output=True, text=True)
+        if r.returncode == 0 or not check:
+            return r
+        err = r.stderr.strip()
+        if "rate limit" in err.lower() or "secondary" in err.lower() or "502" in err or "503" in err:
+            wait = 60 * (attempt + 1)
+            log(f"  ⏳ GitHub sınırı, {wait} sn bekleniyor: {err[:120]}")
+            time.sleep(wait)
+            continue
+        raise RuntimeError(f"gh {' '.join(args[:3])}: {err[:400]}")
+    raise RuntimeError("gh: çok fazla yeniden deneme")
+
+
+def asset_name(filename):
+    """GitHub, asset adlarındaki ':' '~' gibi karakterleri '.' yapar"""
+    return re.sub(r"[^A-Za-z0-9._+-]", ".", filename)
+
+
+def newer(a, b):
+    return subprocess.run(["dpkg", "--compare-versions", a, "gt", b]).returncode == 0
+
+
+def available_packages():
+    """apt deposundaki aday paketler: ad -> {version, size, arch}"""
+    out = subprocess.run(["apt-cache", "dumpavail"], capture_output=True, text=True, check=True).stdout
+    pkgs = {}
+    for stanza in out.split("\n\n"):
+        f = {}
+        for line in stanza.splitlines():
+            if line and not line[0].isspace() and ":" in line:
+                k, v = line.split(":", 1)
+                f[k] = v.strip()
+        name, ver = f.get("Package"), f.get("Version")
+        if not name or not ver or f.get("Architecture") not in ("amd64", "all"):
+            continue
+        if SKIP_RE.match(name) or "transitional" in f.get("Description", "").lower():
+            continue
+        if int(f.get("Size", "0") or 0) > MAX_SIZE:
+            continue
+        old = pkgs.get(name)
+        if old is None or newer(ver, old["version"]):
+            pkgs[name] = {"version": ver}
+    return pkgs
+
+
+def popcon_rank():
+    try:
+        with urllib.request.urlopen("https://popcon.debian.org/by_inst.gz", timeout=60) as r:
+            text = gzip.decompress(r.read()).decode("utf-8", "replace")
+    except Exception as e:
+        log(f"  ⚠ popcon alınamadı ({e}), alfabetik sıra kullanılacak")
+        return {}
+    rank = {}
+    for line in text.splitlines():
+        parts = line.split()
+        if len(parts) > 2 and parts[0].isdigit():
+            rank.setdefault(parts[1], int(parts[0]))
+    return rank
+
+
+def deb_to_mind(deb, outdir):
+    """Bir .deb dosyasını .mind paketine dönüştürür; dosya sahipleri root olarak yazılır"""
+    field = lambda k: subprocess.run(["dpkg-deb", "-f", str(deb), k], capture_output=True, text=True).stdout.strip()
+    name, version = field("Package"), field("Version")
+    desc = field("Description").splitlines()[0] if field("Description") else name
+    # Debian bağımlılıkları olduğu gibi saklanır ("a (>= 1) | b"); mindpkg eksik olanları kurar
+    deps = [d.strip() for k in ("Pre-Depends", "Depends") for d in field(k).split(",") if d.strip()]
+    meta = {"name": name, "version": version, "release": "1", "architecture": "x86_64",
+            "description": desc, "maintainer": MAINTAINER, "dependencies": deps, "origin": ORIGIN}
+    filename = f"{name}-{version}-1-x86_64.mind"
+    with tempfile.TemporaryDirectory(dir=outdir) as tmp:
+        tmp = Path(tmp)
+        root = tmp / "root"
+        root.mkdir()
+        subprocess.run(["dpkg-deb", "-x", str(deb), str(root)], check=True)
+        pkg = tmp / "pkg"
+        pkg.mkdir()
+        (pkg / "metadata.json").write_text(json.dumps(meta, indent=4, ensure_ascii=False), encoding="utf-8")
+        subprocess.run(["tar", "--zstd", "-cf", str(pkg / "files.tar.zst"), "--owner=0", "--group=0",
+                        "--numeric-owner", "-C", str(root), "."], check=True)
+        out = Path(outdir) / filename
+        subprocess.run(["tar", "--zstd", "-cf", str(out), "--owner=0", "--group=0", "--numeric-owner",
+                        "-C", str(pkg), "."], check=True)
+    sha = hashlib.sha256(out.read_bytes()).hexdigest()
+    return out, dict(meta, filename=filename, sha256=sha, size=out.stat().st_size)
+
+
+def current_chunk():
+    """Yazılabilir son chunk: (etiket, asset sayısı)"""
+    tags = [t for t in gh("api", f"repos/{REPO}/releases?per_page=100", "--paginate",
+                          "--jq", ".[].tag_name").stdout.split() if re.fullmatch(r"v1\.0-chunk-\d+", t)]
+    last = max(tags, key=lambda t: int(t.rsplit("-", 1)[1]))
+    count = int(gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".assets | length").stdout.strip())
+    if count >= 100:  # .assets ilk 100'ü döndürür; gerçek sayı ayrı sayfalı uçtan alınır
+        rid = gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".id").stdout.strip()
+        count = len(gh("api", f"repos/{REPO}/releases/{rid}/assets?per_page=100", "--paginate",
+                       "--jq", ".[].id").stdout.split())
+    return last, count
+
+
+def next_chunk(tag):
+    n = int(tag.rsplit("-", 1)[1]) + 1
+    new = f"v1.0-chunk-{n:02d}"
+    gh("release", "create", new, "-R", REPO, "--title", f"MindOS Packages Chunk {n:02d}",
+       "--notes", f"MindOS .mind packages (part {n})")
+    log(f"  🏷️ Yeni chunk açıldı: {new}")
+    return new
+
+
+def release_urls(tag):
+    """chunk'taki asset'ler: sha256 -> indirme adresi"""
+    rid = gh("api", f"repos/{REPO}/releases/tags/{tag}", "--jq", ".id").stdout.strip()
+    out = gh("api", f"repos/{REPO}/releases/{rid}/assets?per_page=100", "--paginate",
+             "--jq", '.[] | [.digest, .browser_download_url] | @tsv').stdout
+    return {d.replace("sha256:", ""): u for d, u in (l.split("\t") for l in out.splitlines() if "\t" in l)}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--new", type=int, default=400)
+    ap.add_argument("--updates", type=int, default=150)
+    ap.add_argument("--only", default="", help="yalnızca bu paketler (virgül/boşlukla ayrılmış)")
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args()
+
+    index = json.loads(INDEX.read_text(encoding="utf-8"))
+    by_name = {p["name"]: p for p in index["packages"]}
+    avail = available_packages()
+    rank = popcon_rank()
+    order = lambda n: (rank.get(n, 10 ** 9), n)
+
+    def needs_update(n):
+        old = by_name[n]
+        if old.get("origin") != ORIGIN:  # eski Ubuntu tabanlı paket: Debian sürümüyle değiştirilir
+            return True
+        return newer(avail[n]["version"], str(old.get("version", "0")))
+
+    updates = sorted((n for n in avail if n in by_name and needs_update(n)), key=order)[:args.updates]
+    fresh = sorted((n for n in avail if n not in by_name), key=order)[:args.new]
+    if args.only.strip():  # istenen paketler: depoda olsa da olmasa da yeniden üretilir
+        only = [n for n in re.split(r"[\s,]+", args.only.strip()) if n]
+        missing = [n for n in only if n not in avail]
+        if missing:
+            log(f"  ⚠ Debian'da bulunamadı: {' '.join(missing)}")
+        updates = [n for n in only if n in avail and n in by_name]
+        fresh = [n for n in only if n in avail and n not in by_name]
+    log(f"📦 Depoda {len(by_name)} paket, apt'de {len(avail)} aday. "
+        f"Yenilenecek: {len(updates)}, eklenecek: {len(fresh)}")
+    if args.dry_run:
+        log("Yenilenecek: " + " ".join(updates[:30]))
+        log("Eklenecek:   " + " ".join(fresh[:60]))
+        return
+
+    tag, count = current_chunk()
+    log(f"  Son chunk: {tag} ({count} dosya)")
+    work = Path(tempfile.mkdtemp(prefix="mind-factory-"))
+    added = updated = failed = 0
+    todo = [(n, True) for n in updates] + [(n, False) for n in fresh]
+    for i in range(0, len(todo), BATCH):
+        batch = todo[i:i + BATCH]
+        dl = work / "deb"
+        out = work / "mind"
+        shutil.rmtree(dl, ignore_errors=True)
+        shutil.rmtree(out, ignore_errors=True)
+        dl.mkdir()
+        out.mkdir()
+        built = []
+        for name, is_update in batch:
+            r = subprocess.run(["apt-get", "download", "-q", f"{name}={avail[name]['version']}"],
+                               cwd=dl, capture_output=True, text=True)
+            debs = list(dl.glob(f"{name}_*.deb"))
+            if r.returncode != 0 or not debs:
+                failed += 1
+                continue
+            try:
+                path, meta = deb_to_mind(debs[0], out)
+                built.append((path, meta, is_update))
+            except Exception as e:
+                log(f"  ⚠ {name}: {e}")
+                failed += 1
+            for d in debs:
+                d.unlink()
+        if not built:
+            continue
+        # chunk dolarsa yenisine geç
+        if count + len(built) > MAX_ASSETS:
+            tag, count = next_chunk(tag), 0
+        gh("release", "upload", tag, "-R", REPO, "--clobber", *[str(p) for p, _, _ in built])
+        count += len(built)
+        urls = release_urls(tag)
+        for path, meta, is_update in built:
+            url = urls.get(meta["sha256"])
+            if not url:
+                log(f"  ⚠ {meta['name']}: yüklenen dosya bulunamadı")
+                failed += 1
+                continue
+            by_name[meta["name"]] = dict(meta, url=url, chunk_tag=tag)
+            updated += is_update
+            added += not is_update
+        log(f"  ✓ {min(i + BATCH, len(todo))}/{len(todo)} işlendi → {tag} ({count} dosya)")
+        # her partiden sonra indeksi yaz: iş yarıda kesilse bile yüklenenler kaybolmaz
+        index["packages"] = sorted(by_name.values(), key=lambda p: p["name"])
+        index["total_packages"] = len(index["packages"])
+        index["total_chunks"] = int(tag.rsplit("-", 1)[1])
+        INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
+
+    shutil.rmtree(work, ignore_errors=True)
+    summary = (f"Eklenen: {added}, yenilenen: {updated}, başarısız: {failed}. "
+               f"Depoda toplam {len(by_name)} paket, son chunk {tag}.")
+    log("✅ " + summary)
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
+            f.write(f"### MindOS paket fabrikası\n\n{summary}\n")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

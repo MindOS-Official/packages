@@ -11,6 +11,8 @@ import time
 import shutil
 import threading
 import subprocess
+import tempfile
+import re
 from pathlib import Path
 
 import gi
@@ -65,7 +67,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.fullname = "MindOS User"
         self.username = "mindos"
         self.hostname = "mindos-pc"
-        self.password = "1"
+        self.password = ""
         self.auto_login = True
 
         self.scan_disks_and_os()
@@ -804,8 +806,19 @@ class InstallerWindow(Adw.ApplicationWindow):
             if p1 != p2:
                 self.show_error("Girdiğiniz parolalar birbiriyle eşleşmiyor!")
                 return
-            self.username = self.entry_user.get_text().strip() or "mindos"
-            self.hostname = self.entry_host.get_text().strip() or "mindos-pc"
+            if len(p1) < 4:
+                self.show_error("Parola en az 4 karakter olmalı.")
+                return
+            username = self.entry_user.get_text().strip() or "mindos"
+            hostname = self.entry_host.get_text().strip() or "mindos-pc"
+            if not re.fullmatch(r"[a-z_][a-z0-9_-]{0,31}", username) or username == "root":
+                self.show_error("Kullanıcı adı küçük harf, rakam, '-' ve '_' içerebilir (ör. ahmet).")
+                return
+            if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]{0,62}", hostname):
+                self.show_error("Bilgisayar adı yalnızca harf, rakam ve '-' içerebilir.")
+                return
+            self.username = username
+            self.hostname = hostname
             self.password = p1
             self.auto_login = self.switch_autologin.get_active()
 
@@ -855,10 +868,20 @@ class InstallerWindow(Adw.ApplicationWindow):
     # --------------------------------------------------------------------------
     # Universal Installation Backend Engine
     # --------------------------------------------------------------------------
-    def run_cmd(self, cmd_list, check=True):
+    def run_cmd(self, cmd_list, check=True, input=None):
         if os.geteuid() != 0 and cmd_list[0] not in ["sudo", "pkexec"]:
             cmd_list = ["sudo"] + cmd_list
-        return subprocess.run(cmd_list, check=check)
+        return subprocess.run(cmd_list, check=check, input=input, text=input is not None)
+
+    def write_target(self, dest, content):
+        """Hedef sisteme dosya yazar (tahmin edilebilir /tmp dosyaları yerine güvenli geçici dosya)"""
+        fd, tmp = tempfile.mkstemp(prefix="mindos-installer-")
+        try:
+            with os.fdopen(fd, "w") as f:
+                f.write(content)
+            self.run_cmd(["install", "-m", "0644", tmp, str(dest)], check=True)
+        finally:
+            os.unlink(tmp)
 
     def run_installation(self):
         try:
@@ -967,24 +990,23 @@ class InstallerWindow(Adw.ApplicationWindow):
             if esp_uuid:
                 fstab_content += f"UUID={esp_uuid}     /boot/efi    vfat    defaults            0 2\n"
 
-            with open("/tmp/fstab_target", "w") as f:
-                f.write(fstab_content)
-            self.run_cmd(["cp", "/tmp/fstab_target", str(target_mount / "etc" / "fstab")], check=True)
+            self.write_target(target_mount / "etc" / "fstab", fstab_content)
 
-            with open("/tmp/hostname_target", "w") as f:
-                f.write(f"{self.hostname}\n")
-            self.run_cmd(["cp", "/tmp/hostname_target", str(target_mount / "etc" / "hostname")], check=True)
+            self.write_target(target_mount / "etc" / "hostname", f"{self.hostname}\n")
 
             tz_file = Path(f"/usr/share/zoneinfo/{self.selected_timezone}")
             if tz_file.exists():
                 self.run_cmd(["cp", str(tz_file), str(target_mount / "etc" / "localtime")], check=False)
 
-            with open("/tmp/vconsole_target", "w") as f:
-                f.write(f"KEYMAP={self.selected_layout}\n")
-            self.run_cmd(["cp", "/tmp/vconsole_target", str(target_mount / "etc" / "vconsole.conf")], check=True)
+            self.write_target(target_mount / "etc" / "vconsole.conf", f"KEYMAP={self.selected_layout}\n")
 
-            self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo 'root:{self.password}' | chpasswd"], check=False)
-            self.run_cmd(["chroot", str(target_mount), "sh", "-c", f"echo '{self.username}:{self.password}' | chpasswd"], check=False)
+            # Kullanıcı hesabı oluşturulur; parolalar komut satırına değil chpasswd'nin girdisine yazılır
+            self.run_cmd(["chroot", str(target_mount), "useradd", "-m", "-s", "/bin/bash", self.username], check=False)
+            for group in ("wheel", "sudo", "audio", "video", "input", "plugdev", "netdev"):
+                if self.run_cmd(["chroot", str(target_mount), "getent", "group", group], check=False).returncode == 0:
+                    self.run_cmd(["chroot", str(target_mount), "usermod", "-aG", group, self.username], check=False)
+            self.run_cmd(["chroot", str(target_mount), "chpasswd"], check=False,
+                         input=f"root:{self.password}\n{self.username}:{self.password}\n")
 
             self.update_progress(0.86, "GRUB2 Dual-Boot Önyükleyici kuruluyor (UEFI + BIOS)...")
             for fs in ["dev", "dev/pts", "proc", "sys"]:
@@ -1028,9 +1050,7 @@ menuentry 'MindOS Sunrise (Kurtarma / Recovery Modu)' {{
 }}
 """
             self.run_cmd(["mkdir", "-p", str(target_mount / "boot" / "grub")], check=True)
-            with open("/tmp/grub_cfg_target", "w") as f:
-                f.write(grub_cfg)
-            self.run_cmd(["cp", "/tmp/grub_cfg_target", str(target_mount / "boot" / "grub" / "grub.cfg")], check=True)
+            self.write_target(target_mount / "boot" / "grub" / "grub.cfg", grub_cfg)
 
             self.update_progress(0.96, "Sistem temizliği yapılıyor ve diskler güvenle kapatılıyor...")
             for fs in ["boot/efi", "dev/pts", "dev", "proc", "sys", "run"]:
