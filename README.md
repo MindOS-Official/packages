@@ -22,6 +22,12 @@ package-name-version-release-arch.mind
 sudo mindpkg update
 ```
 
+### Upgrade Everything
+Upgrades mindpkg itself (when a newer release is published), then installed `.mind` packages, then system packages:
+```bash
+sudo mindpkg upgrade
+```
+
 ### Install Packages
 ```bash
 sudo mindpkg install fastfetch htop neofetch tree jq
@@ -41,6 +47,11 @@ sudo mindpkg remove htop
 ```bash
 mindpkg build /path/to/source
 ```
+
+## 🔄 Releasing a new mindpkg
+1. Update `tools/mindpkg` (bump `VERSION`), commit and push.
+2. Run `python3 tools/publish_mindpkg.py` — it pins the release in `packages.json` to that commit with its SHA256.
+3. Commit and push `packages.json`. Every `sudo mindpkg upgrade` then updates itself.
 
 ---
 

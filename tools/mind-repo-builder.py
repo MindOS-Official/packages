@@ -83,9 +83,11 @@ def update_repository_index():
     PKGS_DIR.mkdir(parents=True, exist_ok=True)
     packages_list = []
     existing = []
+    old_index = {}
     if INDEX_FILE.exists():
         with open(INDEX_FILE, "r", encoding="utf-8") as f:
-            existing = json.load(f).get("packages", [])
+            old_index = json.load(f)
+            existing = old_index.get("packages", [])
 
     print("\n🔍 .mind paketleri taranıyor...")
     for mind_file in sorted(PKGS_DIR.glob("*.mind")):
@@ -138,6 +140,8 @@ def update_repository_index():
         "total_packages": len(packages_list),
         "packages": packages_list
     }
+    if "mindpkg" in old_index:  # mindpkg kendini güncelleme kaydı korunur
+        repo_index["mindpkg"] = old_index["mindpkg"]
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         json.dump(repo_index, f, indent=1, ensure_ascii=False)
