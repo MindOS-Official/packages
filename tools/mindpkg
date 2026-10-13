@@ -10,12 +10,13 @@ import sys
 import json
 import shutil
 import hashlib
+import re
 import subprocess
 import urllib.request
 import urllib.error
 from pathlib import Path
 
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 CONFIG_FILE = "/etc/mindpkg/mindpkg.conf"
 REPOS_DIR = "/etc/mindpkg/repos.d"
 DB_DIR = "/var/lib/mindpkg"
@@ -79,6 +80,39 @@ def check_root():
         sys.exit(1)
 
 
+PKG_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.+_-]{0,127}$")
+
+
+def valid_pkg_name(name):
+    """Paket adı dosya yolu ya da komut seçeneği olarak kötüye kullanılamasın"""
+    return bool(PKG_NAME_RE.match(name or ""))
+
+
+def require_pkg_name(name):
+    if not valid_pkg_name(name):
+        print(f"{COLOR_RED}Hata:{COLOR_RESET} Geçersiz paket adı: {name!r}")
+        sys.exit(1)
+
+
+def safe_member_path(member):
+    """Arşiv üyesini mutlak sistem yoluna çevirir; '..' içeren yolları reddeder"""
+    clean = member.strip()
+    while clean.startswith("./"):
+        clean = clean[2:]
+    clean = clean.lstrip("/")
+    if not clean or clean == ".":
+        return None
+    if any(part == ".." for part in clean.split("/")):
+        raise ValueError(f"güvensiz arşiv yolu: {member}")
+    return "/" + clean.rstrip("/")
+
+
+# Kaldırırken asla silinmeyecek dizinler
+PROTECTED_PATHS = {"/", "/bin", "/boot", "/dev", "/etc", "/home", "/lib", "/lib64", "/opt", "/proc", "/root",
+                   "/run", "/sbin", "/srv", "/sys", "/tmp", "/usr", "/usr/bin", "/usr/lib", "/usr/lib64",
+                   "/usr/local", "/usr/local/bin", "/usr/sbin", "/usr/share", "/var", "/var/lib"}
+
+
 def calculate_sha256(filepath):
     h = hashlib.sha256()
     with open(filepath, "rb") as f:
@@ -115,11 +149,15 @@ def download_with_progress(url, dest_path):
         else:
             raise FileNotFoundError(f"Yerel dosya bulunamadı: {local_src}")
 
+    if not url.startswith("https://"):
+        raise ValueError(f"güvensiz adres reddedildi (yalnızca https:// desteklenir): {url}")
+
     if "raw.githubusercontent.com" in url and "/pkgs/" in url:
         url = url.replace("raw.githubusercontent.com", "media.githubusercontent.com/media")
     
     if shutil.which("curl"):
-        res = subprocess.run(["curl", "-sSL", "--fail", "-o", str(dest_path), url], check=False)
+        res = subprocess.run(["curl", "-sSL", "--fail", "--proto", "=https", "--proto-redir", "=https",
+                              "-o", str(dest_path), url], check=False)
         if res.returncode == 0 and dest_path.exists() and dest_path.stat().st_size > 0:
             return
             
@@ -143,7 +181,10 @@ def update_repos():
         dest_file = Path(REPOS_CACHE) / f"{name}.json"
         print(f"  {COLOR_ACCENT}• {name}:{COLOR_RESET} {index_url}")
         try:
-            download_with_progress(index_url, dest_file)
+            tmp_index = dest_file.with_suffix(".json.part")
+            download_with_progress(index_url, tmp_index)
+            json.load(open(tmp_index, encoding="utf-8"))  # bozuk indeksi kabul etme
+            os.replace(tmp_index, dest_file)
             try:
                 with open(dest_file, "r", encoding="utf-8") as df:
                     c = df.read()
@@ -182,8 +223,11 @@ def install_mind_file(file_path):
         with open(meta_file, "r", encoding="utf-8") as f:
             meta = json.load(f)
 
-        pkg_name = meta["name"]
+        pkg_name = meta.get("name", "")
         pkg_ver = meta.get("version", "1.0")
+        if not valid_pkg_name(pkg_name):
+            print(f"{COLOR_RED}Hata:{COLOR_RESET} Paket adı geçersiz: {pkg_name!r}")
+            sys.exit(1)
 
         print(f"{COLOR_GREEN}==>{COLOR_RESET} Kuruluyor: {COLOR_BOLD}{pkg_name} ({pkg_ver}){COLOR_RESET} ...")
 
@@ -191,7 +235,11 @@ def install_mind_file(file_path):
         files_archive = Path(tmpdir) / "files.tar.zst"
         if files_archive.exists():
             listing = subprocess.check_output(["tar", "--zstd", "-tf", str(files_archive)], text=True)
-            paths = ["/" + l.lstrip(".").lstrip("/") for l in listing.splitlines() if l.lstrip(".").lstrip("/")]
+            try:
+                paths = [p for p in (safe_member_path(l) for l in listing.splitlines()) if p]
+            except ValueError as e:
+                print(f"{COLOR_RED}Hata:{COLOR_RESET} Paket reddedildi: {e}")
+                sys.exit(1)
             conflicts = dpkg_owned_conflicts(paths)
             if conflicts and os.environ.get("MINDPKG_FORCE") != "1":
                 print(f"{COLOR_RED}Hata:{COLOR_RESET} {pkg_name} sistem paketlerine ait {len(conflicts)} dosyanın üzerine yazacaktı:")
@@ -212,9 +260,9 @@ def install_mind_file(file_path):
         if files_archive.exists():
             tar_list = subprocess.check_output(["tar", "--zstd", "-tf", str(files_archive)], text=True)
             for line in tar_list.splitlines():
-                clean_line = line.lstrip(".").lstrip("/")
-                if clean_line:
-                    installed_files.append("/" + clean_line)
+                p = safe_member_path(line)
+                if p:
+                    installed_files.append(p)
 
             subprocess.run(["tar", "--zstd", "-xf", str(files_archive), "-C", "/",
                             "--no-same-owner", "--no-overwrite-dir"], check=True)
@@ -305,7 +353,7 @@ def install_from_system(name):
     if not apt_has_candidate(pkg):
         return False
     print(f"{COLOR_GREEN}==>{COLOR_RESET} Sistem deposundan kuruluyor: {COLOR_BOLD}{pkg}{COLOR_RESET} ...")
-    res = subprocess.run(["apt-get", "install", "-y", pkg],
+    res = subprocess.run(["apt-get", "install", "-y", "--", pkg],
                          env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
     if res.returncode != 0:
         print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg}' kurulamadı (apt-get çıkış kodu {res.returncode}).")
@@ -359,6 +407,7 @@ def dpkg_owned_conflicts(paths):
 def install_from_repo_or_name(pkg_name):
     """Depolarda paket adını arar, indirir, SHA256 doğrular ve kurar"""
     check_root()
+    require_pkg_name(pkg_name)
     # Debian tabanlı sistemlerde (MindOS Paradise) önce üreticinin resmi deposu ve
     # sisteme özel derlenmiş Debian paketi denenir; yoksa MindOS .mind deposuna geçilir.
     if shutil.which("apt-get") and install_from_system(pkg_name):
@@ -376,9 +425,12 @@ def install_from_repo_or_name(pkg_name):
             print(f"{COLOR_ACCENT}İpucu:{COLOR_RESET} Bu uygulama Flathub üzerinde olabilir: 'flatpak search {pkg_name}'")
         sys.exit(1)
 
-    url = target_meta.get("url")
-    filename = target_meta.get("filename", f"{pkg_name}.mind")
-    expected_sha256 = target_meta.get("sha256")
+    url = target_meta.get("url") or ""
+    filename = Path(target_meta.get("filename") or f"{pkg_name}.mind").name
+    expected_sha256 = (target_meta.get("sha256") or "").lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", expected_sha256) or not filename.endswith(".mind"):
+        print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg_name}' için depo kaydı eksik ya da geçersiz (SHA256 yok). Güvenlik için kurulmadı.")
+        sys.exit(1)
     cached_file = Path(CACHE_DIR) / filename
 
     print(f"{COLOR_GREEN}==>{COLOR_RESET} İndiriliyor: {COLOR_BOLD}{pkg_name} {target_meta.get('version')}{COLOR_RESET} ...")
@@ -405,6 +457,7 @@ def install_from_repo_or_name(pkg_name):
 def remove_package(pkg_name):
     """Sistemden kurulu bir paketi temiz bir şekilde kaldırır"""
     check_root()
+    require_pkg_name(pkg_name)
     pkg_record = Path(INSTALLED_DIR) / f"{pkg_name}.json"
     if not pkg_record.exists():
         sys_pkg = resolve_vendor_app(pkg_name)[0] or pkg_name
@@ -412,7 +465,7 @@ def remove_package(pkg_name):
                             capture_output=True, text=True).stdout
         if st.startswith("ii") and shutil.which("apt-get"):
             print(f"{COLOR_RED}==>{COLOR_RESET} Sistem paketi kaldırılıyor: {COLOR_BOLD}{sys_pkg}{COLOR_RESET} ...")
-            res = subprocess.run(["apt-get", "remove", "-y", sys_pkg],
+            res = subprocess.run(["apt-get", "remove", "-y", "--", sys_pkg],
                                  env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
             if res.returncode == 0:
                 run_system_triggers()
@@ -426,8 +479,12 @@ def remove_package(pkg_name):
 
     print(f"{COLOR_RED}==>{COLOR_RESET} Kaldırılıyor: {COLOR_BOLD}{pkg_name} ({meta.get('version')}){COLOR_RESET} ...")
 
-    files = meta.get("installed_files", [])
+    files = [f for f in meta.get("installed_files", []) if isinstance(f, str) and f.startswith("/")
+             and ".." not in f.split("/") and f.rstrip("/") not in PROTECTED_PATHS]
+    shared = set(dpkg_owned_conflicts(files))
     for file_path in reversed(files):
+        if file_path in shared:
+            continue  # bu dosya artık bir sistem paketine ait, silinmez
         p = Path(file_path)
         try:
             if p.is_symlink() or p.is_file():
@@ -466,6 +523,7 @@ def list_installed():
 
 def info_package(pkg_name):
     """Paket hakkında detaylı bilgi gösterir"""
+    require_pkg_name(pkg_name)
     pkg_record = Path(INSTALLED_DIR) / f"{pkg_name}.json"
     if pkg_record.exists():
         with open(pkg_record, "r", encoding="utf-8") as f:
