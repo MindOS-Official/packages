@@ -15,7 +15,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-VERSION = "1.1.0"
+VERSION = "1.3.0"
 CONFIG_FILE = "/etc/mindpkg/mindpkg.conf"
 REPOS_DIR = "/etc/mindpkg/repos.d"
 DB_DIR = "/var/lib/mindpkg"
@@ -51,7 +51,7 @@ DEFAULT_CONFIG = {
 
 
 def print_banner():
-    print(f"{COLOR_BANNER}🌅 MindOS Sunrise Package Manager (mindpkg v{VERSION}){COLOR_RESET}")
+    print(f"{COLOR_BANNER}🌅 MindOS Package Manager (mindpkg v{VERSION}){COLOR_RESET}")
     print(f"{COLOR_ACCENT}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{COLOR_RESET}")
 
 
@@ -123,7 +123,7 @@ def download_with_progress(url, dest_path):
         if res.returncode == 0 and dest_path.exists() and dest_path.stat().st_size > 0:
             return
             
-    req = urllib.request.Request(url, headers={"User-Agent": f"mindpkg/{VERSION} (MindOS Sunrise)"})
+    req = urllib.request.Request(url, headers={"User-Agent": f"mindpkg/{VERSION} (MindOS)"})
     with urllib.request.urlopen(req, timeout=30) as response, open(dest_path, "wb") as f:
         shutil.copyfileobj(response, f)
 
@@ -133,7 +133,7 @@ def update_repos():
     check_root()
     cfg = load_config()
     repos = cfg.get("repositories", [])
-    print(f"{COLOR_GREEN}==>{COLOR_RESET} MindOS Sunrise depoları eşitleniyor...")
+    print(f"{COLOR_GREEN}==>{COLOR_RESET} MindOS depoları eşitleniyor...")
     for repo in repos:
         if not repo.get("enabled", True):
             continue
@@ -187,6 +187,19 @@ def install_mind_file(file_path):
 
         print(f"{COLOR_GREEN}==>{COLOR_RESET} Kuruluyor: {COLOR_BOLD}{pkg_name} ({pkg_ver}){COLOR_RESET} ...")
 
+        # Sistem (dpkg) dosyalarının üzerine yazma kontrolü - kancalardan önce
+        files_archive = Path(tmpdir) / "files.tar.zst"
+        if files_archive.exists():
+            listing = subprocess.check_output(["tar", "--zstd", "-tf", str(files_archive)], text=True)
+            paths = ["/" + l.lstrip(".").lstrip("/") for l in listing.splitlines() if l.lstrip(".").lstrip("/")]
+            conflicts = dpkg_owned_conflicts(paths)
+            if conflicts and os.environ.get("MINDPKG_FORCE") != "1":
+                print(f"{COLOR_RED}Hata:{COLOR_RESET} {pkg_name} sistem paketlerine ait {len(conflicts)} dosyanın üzerine yazacaktı:")
+                for c in conflicts[:8]:
+                    print(f"    {c}")
+                print(f"  Sistemi korumak için kurulum durduruldu. Zorlamak için: {COLOR_BOLD}MINDPKG_FORCE=1 mindpkg install ...{COLOR_RESET}")
+                sys.exit(1)
+
         # pre_install hook
         pre_install = Path(tmpdir) / "pre_install.sh"
         if pre_install.exists():
@@ -203,7 +216,8 @@ def install_mind_file(file_path):
                 if clean_line:
                     installed_files.append("/" + clean_line)
 
-            subprocess.run(["tar", "--zstd", "-xf", str(files_archive), "-C", "/"], check=True)
+            subprocess.run(["tar", "--zstd", "-xf", str(files_archive), "-C", "/",
+                            "--no-same-owner", "--no-overwrite-dir"], check=True)
 
         # post_install hook
         post_install = Path(tmpdir) / "post_install.sh"
@@ -221,38 +235,140 @@ def install_mind_file(file_path):
         print(f"{COLOR_GREEN}✓ Tamamlandı:{COLOR_RESET} {pkg_name} ({pkg_ver}) sisteme kuruldu.")
 
 
-def install_from_repo_or_name(pkg_name):
-    """Depolarda paket adını arar, indirir, SHA256 doğrular ve kurar"""
-    check_root()
-    target_meta = None
+# Üçüncü taraf uygulamalar: üreticinin resmi, imzalı apt deposundan kurulur
+VENDOR_APPS = {
+    "google-chrome-stable": {
+        "aliases": ["chrome", "google-chrome"],
+        "source": "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.asc] https://dl.google.com/linux/chrome/deb/ stable main",
+        "list": "/etc/apt/sources.list.d/google-chrome.list",
+        "key_url": "https://dl.google.com/linux/linux_signing_key.pub",
+        "keyring": "/usr/share/keyrings/google-chrome.asc",
+    },
+    "code": {
+        "aliases": ["vscode", "visual-studio-code"],
+        "source": "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.asc] https://packages.microsoft.com/repos/code stable main",
+        "list": "/etc/apt/sources.list.d/vscode.list",
+        "key_url": "https://packages.microsoft.com/keys/microsoft.asc",
+        "keyring": "/usr/share/keyrings/microsoft.asc",
+    },
+}
+_apt_updated = False
+
+# Debian deposunda adı farklı olan paketler
+APT_ALIASES = {
+    "firefox": "firefox-esr",
+}
+
+
+def resolve_vendor_app(name):
+    """Takma adı (chrome, vscode ...) gerçek paket adına çevirir"""
+    for pkg, spec in VENDOR_APPS.items():
+        if name == pkg or name in spec["aliases"]:
+            return pkg, spec
+    return None, None
+
+
+def apt_update_once():
+    global _apt_updated
+    if not _apt_updated:
+        print(f"  {COLOR_ACCENT}Sistem paket listeleri güncelleniyor...{COLOR_RESET}")
+        subprocess.run(["apt-get", "update", "-qq"], check=False)
+        _apt_updated = True
+
+
+def apt_has_candidate(pkg):
+    out = subprocess.run(["apt-cache", "policy", pkg], capture_output=True, text=True,
+                         env={**os.environ, "LANG": "C"}).stdout
+    for line in out.splitlines():
+        if line.strip().startswith("Candidate:"):
+            return line.split(":", 1)[1].strip() not in ("", "(none)")
+    return False
+
+
+def install_from_system(name):
+    """mindpkg deposunda olmayan paketi üretici deposu veya Debian deposundan kurar"""
+    if not shutil.which("apt-get"):
+        return False
+    pkg, spec = resolve_vendor_app(name)
+    if spec:
+        if not Path(spec["keyring"]).exists():
+            print(f"{COLOR_GREEN}==>{COLOR_RESET} Resmi üretici deposu ekleniyor: {COLOR_BOLD}{spec['source'].split()[-3]}{COLOR_RESET}")
+            download_with_progress(spec["key_url"], spec["keyring"])
+            os.chmod(spec["keyring"], 0o644)
+        if not Path(spec["list"]).exists():
+            Path(spec["list"]).write_text(spec["source"] + "\n", encoding="utf-8")
+        global _apt_updated
+        _apt_updated = False
+    else:
+        pkg = APT_ALIASES.get(name, name)
+    apt_update_once()
+    if not apt_has_candidate(pkg):
+        return False
+    print(f"{COLOR_GREEN}==>{COLOR_RESET} Sistem deposundan kuruluyor: {COLOR_BOLD}{pkg}{COLOR_RESET} ...")
+    res = subprocess.run(["apt-get", "install", "-y", pkg],
+                         env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
+    if res.returncode != 0:
+        print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg}' kurulamadı (apt-get çıkış kodu {res.returncode}).")
+        sys.exit(res.returncode)
+    run_system_triggers()
+    print(f"{COLOR_GREEN}✓ Tamamlandı:{COLOR_RESET} {pkg} sisteme kuruldu.")
+    return True
+
+
+def find_in_index(pkg_name):
+    """Yerel depo indekslerinde paketi arar; snap yönlendirme paketlerini yok sayar"""
     for r in Path(REPOS_CACHE).glob("*.json"):
         try:
             with open(r, "r", encoding="utf-8") as f:
                 repo_data = json.load(f)
-            for pkg in repo_data.get("packages", []):
-                if pkg.get("name") == pkg_name:
-                    target_meta = pkg
-                    break
+        except Exception:
+            continue
+        for pkg in repo_data.get("packages", []):
+            if pkg.get("name") == pkg_name and "snap" not in str(pkg.get("version", "")):
+                return pkg
+    return None
+
+
+def dpkg_owned_conflicts(paths):
+    """Sistem paket yöneticisine (dpkg) ait olup üzerine yazılacak dosyaları döndürür"""
+    info = Path("/var/lib/dpkg/info")
+    if not info.is_dir():
+        return []
+    owned = set()
+    for lst in info.glob("*.list"):
+        try:
+            owned.update(lst.read_text(encoding="utf-8", errors="replace").splitlines())
         except Exception:
             pass
-        if target_meta:
-            break
+    merged = {"/bin": "/usr/bin", "/sbin": "/usr/sbin", "/lib": "/usr/lib", "/lib64": "/usr/lib64"}
+    conflicts = []
+    for p in paths:
+        if p.endswith("/") or not os.path.lexists(p) or os.path.isdir(p):
+            continue
+        alts = {p}
+        for short, full in merged.items():
+            if p.startswith(full + "/"):
+                alts.add(short + p[len(full):])
+            elif p.startswith(short + "/"):
+                alts.add(full + p[len(short):])
+        if alts & owned:
+            conflicts.append(p)
+    return conflicts
 
+
+def install_from_repo_or_name(pkg_name):
+    """Depolarda paket adını arar, indirir, SHA256 doğrular ve kurar"""
+    check_root()
+    # Debian tabanlı sistemlerde (MindOS Paradise) önce üreticinin resmi deposu ve
+    # sisteme özel derlenmiş Debian paketi denenir; yoksa MindOS .mind deposuna geçilir.
+    if shutil.which("apt-get") and install_from_system(pkg_name):
+        return
+
+    target_meta = find_in_index(pkg_name)
     if not target_meta:
         print(f"{COLOR_BANNER}Paket yerel önbellekte bulunamadı, depolar güncelleniyor...{COLOR_RESET}")
         update_repos()
-        for r in Path(REPOS_CACHE).glob("*.json"):
-            try:
-                with open(r, "r", encoding="utf-8") as f:
-                    repo_data = json.load(f)
-                for pkg in repo_data.get("packages", []):
-                    if pkg.get("name") == pkg_name:
-                        target_meta = pkg
-                        break
-            except Exception:
-                pass
-            if target_meta:
-                break
+        target_meta = find_in_index(pkg_name)
 
     if not target_meta:
         print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg_name}' resmi MindOS depolarında bulunamadı.")
@@ -267,7 +383,12 @@ def install_from_repo_or_name(pkg_name):
 
     print(f"{COLOR_GREEN}==>{COLOR_RESET} İndiriliyor: {COLOR_BOLD}{pkg_name} {target_meta.get('version')}{COLOR_RESET} ...")
     print(f"  {COLOR_ACCENT}Kaynak:{COLOR_RESET} {url}")
-    download_with_progress(url, cached_file)
+    try:
+        download_with_progress(url, cached_file)
+    except Exception as e:
+        cached_file.unlink(missing_ok=True)
+        print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg_name}' MindOS deposundan indirilemedi: {e}")
+        sys.exit(1)
 
     if expected_sha256:
         print(f"  {COLOR_ACCENT}Doğrulanıyor (SHA256)...{COLOR_RESET}")
@@ -286,6 +407,17 @@ def remove_package(pkg_name):
     check_root()
     pkg_record = Path(INSTALLED_DIR) / f"{pkg_name}.json"
     if not pkg_record.exists():
+        sys_pkg = resolve_vendor_app(pkg_name)[0] or pkg_name
+        st = subprocess.run(["dpkg-query", "-W", "-f=${db:Status-Abbrev}", sys_pkg],
+                            capture_output=True, text=True).stdout
+        if st.startswith("ii") and shutil.which("apt-get"):
+            print(f"{COLOR_RED}==>{COLOR_RESET} Sistem paketi kaldırılıyor: {COLOR_BOLD}{sys_pkg}{COLOR_RESET} ...")
+            res = subprocess.run(["apt-get", "remove", "-y", sys_pkg],
+                                 env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
+            if res.returncode == 0:
+                run_system_triggers()
+                print(f"{COLOR_GREEN}✓ Tamamlandı:{COLOR_RESET} {sys_pkg} sistemden kaldırıldı.")
+            sys.exit(res.returncode)
         print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg_name}' sistemde kurulu değil!")
         sys.exit(1)
 
@@ -438,7 +570,8 @@ def build_package(source_dir, output_file=None):
 
         files_archive = tmp_path / "files.tar.zst"
         if files_dir.exists():
-            subprocess.run(["tar", "--zstd", "-cf", str(files_archive), "-C", str(files_dir), "."], check=True)
+            subprocess.run(["tar", "--zstd", "-cf", str(files_archive), "--owner=0", "--group=0", "--numeric-owner",
+                            "-C", str(files_dir), "."], check=True)
         else:
             subprocess.run(["tar", "--zstd", "-cf", str(files_archive), "--files-from", "/dev/null"], check=True)
 

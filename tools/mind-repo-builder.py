@@ -6,6 +6,7 @@
 import os
 import sys
 import json
+import re
 import hashlib
 import shutil
 import subprocess
@@ -16,7 +17,13 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PKGS_DIR = REPO_ROOT / "pkgs" / "x86_64"
 INDEX_FILE = REPO_ROOT / "packages.json"
-BASE_URL = "https://media.githubusercontent.com/media/MindOS-Official/packages/main/pkgs/x86_64"
+# Paketler git'e değil GitHub Releases'e yüklenir (pkgs/ .gitignore'da)
+BASE_URL = os.environ.get("MIND_BASE_URL", "https://github.com/MindOS-Official/packages/releases/download/v1.0-cloud")
+
+
+def asset_name(filename):
+    """GitHub Releases asset adlarındaki ':' '~' gibi karakterleri '.' yapar"""
+    return re.sub(r"[^A-Za-z0-9._+-]", ".", filename)
 
 
 def calculate_sha256(filepath):
@@ -69,9 +76,16 @@ def create_mind_package(name, version, release, description, rootfs_dir, output_
 
 
 def update_repository_index():
-    """pkgs/x86_64 altındaki tüm .mind paketlerini tarayıp packages.json oluşturur"""
+    """pkgs/x86_64 altındaki .mind paketlerini mevcut packages.json'a ekler/günceller.
+
+    Mevcut indeks asla silinmez: pkgs/ boşsa indeks olduğu gibi kalır.
+    """
     PKGS_DIR.mkdir(parents=True, exist_ok=True)
     packages_list = []
+    existing = []
+    if INDEX_FILE.exists():
+        with open(INDEX_FILE, "r", encoding="utf-8") as f:
+            existing = json.load(f).get("packages", [])
 
     print("\n🔍 .mind paketleri taranıyor...")
     for mind_file in sorted(PKGS_DIR.glob("*.mind")):
@@ -91,7 +105,7 @@ def update_repository_index():
                     meta["filename"] = mind_file.name
                     meta["sha256"] = calculate_sha256(mind_file)
                     meta["size"] = mind_file.stat().st_size
-                    meta["url"] = f"{BASE_URL}/{mind_file.name}"
+                    meta["url"] = f"{BASE_URL}/{asset_name(mind_file.name)}"
                     packages_list.append(meta)
                     print(f"  • {meta['name']} v{meta['version']}-{meta.get('release', '1')} (SHA256: {meta['sha256'][:8]}...)")
             except Exception as e:
@@ -110,6 +124,13 @@ def update_repository_index():
         if not any(p["name"] == alias_name for p in packages_list):
             packages_list.append(alias_pkg)
 
+    if not packages_list:
+        print("\nℹ Yeni paket yok, packages.json değiştirilmedi.")
+        return
+    new_names = {p["name"] for p in packages_list}
+    packages_list = [p for p in existing if p["name"] not in new_names] + packages_list
+    packages_list.sort(key=lambda p: p["name"])
+
     repo_index = {
         "repository": "MindOS Sunrise Official Package Repository",
         "architecture": "x86_64",
@@ -119,7 +140,7 @@ def update_repository_index():
     }
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
-        json.dump(repo_index, f, indent=4)
+        json.dump(repo_index, f, indent=1, ensure_ascii=False)
 
     print(f"\n✅ packages.json başarıyla güncellendi! (Toplam {len(packages_list)} paket)")
 

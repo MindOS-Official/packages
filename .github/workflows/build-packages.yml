@@ -11,9 +11,6 @@ on:
         description: 'Kategori (core, apps, dev, utils)'
         required: false
         default: 'utils'
-  schedule:
-    # Her Pazar gece 03:00'te otomatik senkronizasyon
-    - cron: '0 3 * * 0'
 
 jobs:
   build-and-deploy:
@@ -39,6 +36,17 @@ jobs:
         run: |
           python3 tools/bulk_packager.py "${{ github.event.inputs.packages }}"
 
+      - name: ☁️ Paketleri Releases'e Yükle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          shopt -s nullglob
+          files=(pkgs/x86_64/*.mind)
+          [ ${#files[@]} -eq 0 ] && exit 0
+          gh release view v1.0-cloud >/dev/null 2>&1 || \
+            gh release create v1.0-cloud --title "MindOS Packages (cloud builds)" --notes "Cloud-built .mind packages"
+          gh release upload v1.0-cloud "${files[@]}" --clobber
+
       - name: 📊 packages.json İndeksini Güncelle
         run: |
           python3 tools/mind-repo-builder.py sync
@@ -47,7 +55,7 @@ jobs:
         run: |
           git config --local user.name "MindOS Package Bot"
           git config --local user.email "bot@mindos.org"
-          git add pkgs/ packages.json
+          git add packages.json
           if git diff --staged --quiet; then
             echo "Yeni eklenecek paket bulunamadı."
           else
