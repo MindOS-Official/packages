@@ -17,7 +17,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-VERSION = "1.4.0"
+VERSION = "1.4.1"
 CONFIG_FILE = "/etc/mindpkg/mindpkg.conf"
 REPOS_DIR = "/etc/mindpkg/repos.d"
 DB_DIR = "/var/lib/mindpkg"
@@ -300,6 +300,18 @@ VENDOR_APPS = {
         "key_url": "https://packages.microsoft.com/keys/microsoft.asc",
         "keyring": "/usr/share/keyrings/microsoft.asc",
     },
+    # Steam 32 bit kütüphanelere ihtiyaç duyar: i386 mimarisi eklenir, Valve'ın paketleri kurulur.
+    # Depo dosyası, steam-launcher paketinin kendi kurduğu dosyayla birebir aynıdır (çakışma olmaz).
+    "steam-launcher": {
+        "aliases": ["steam", "steam-installer", "valve-steam"],
+        "source": "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ stable steam\n"
+                  "deb-src [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ stable steam",
+        "list": "/etc/apt/sources.list.d/steam-stable.list",
+        "key_url": "https://repo.steampowered.com/steam/archive/stable/steam.gpg",
+        "keyring": "/usr/share/keyrings/steam.gpg",
+        "foreign_arch": "i386",
+        "packages": ["steam-launcher", "steam-libs-amd64", "steam-libs-i386:i386"],
+    },
 }
 _apt_updated = False
 
@@ -339,9 +351,16 @@ def install_from_system(name):
     if not shutil.which("apt-get"):
         return False
     pkg, spec = resolve_vendor_app(name)
+    packages = [pkg]
     if spec:
+        arch = spec.get("foreign_arch")
+        if arch and arch not in subprocess.run(["dpkg", "--print-foreign-architectures"],
+                                                capture_output=True, text=True).stdout.split():
+            print(f"{COLOR_GREEN}==>{COLOR_RESET} {arch} (32 bit) mimarisi etkinleştiriliyor...")
+            subprocess.run(["dpkg", "--add-architecture", arch], check=True)
+        packages = spec.get("packages", [pkg])
         if not Path(spec["keyring"]).exists():
-            print(f"{COLOR_GREEN}==>{COLOR_RESET} Resmi üretici deposu ekleniyor: {COLOR_BOLD}{spec['source'].split()[-3]}{COLOR_RESET}")
+            print(f"{COLOR_GREEN}==>{COLOR_RESET} Resmi üretici deposu ekleniyor: {COLOR_BOLD}{spec['source'].split(chr(10))[0].split()[-3]}{COLOR_RESET}")
             download_with_progress(spec["key_url"], spec["keyring"])
             os.chmod(spec["keyring"], 0o644)
         if not Path(spec["list"]).exists():
@@ -350,11 +369,13 @@ def install_from_system(name):
         _apt_updated = False
     else:
         pkg = APT_ALIASES.get(name, name)
+        packages = [pkg]
     apt_update_once()
     if not apt_has_candidate(pkg):
         return False
     print(f"{COLOR_GREEN}==>{COLOR_RESET} Sistem deposundan kuruluyor: {COLOR_BOLD}{pkg}{COLOR_RESET} ...")
-    res = subprocess.run(["apt-get", "install", "-y", "--", pkg],
+    res = subprocess.run(["apt-get", "install", "-y", "-o", "Dpkg::Options::=--force-confdef",
+                          "-o", "Dpkg::Options::=--force-confold", "--", *packages],
                          env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
     if res.returncode != 0:
         print(f"{COLOR_RED}Hata:{COLOR_RESET} '{pkg}' kurulamadı (apt-get çıkış kodu {res.returncode}).")
@@ -779,6 +800,8 @@ def upgrade_all(args):
 
 
 def main():
+    # Çıktı bir boruya/dosyaya giderken de mesajlar apt çıktısıyla doğru sırada görünsün (Mind Arc paneli)
+    sys.stdout.reconfigure(line_buffering=True)
     print_banner()
     ensure_directories()
 
