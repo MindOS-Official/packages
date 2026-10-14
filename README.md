@@ -62,7 +62,8 @@ mindpkg build /path/to/source    # needs metadata.json and rootfs/, hooks option
 `.github/workflows/package-factory.yml` runs `tools/mind_factory.py` every day in a `debian:trixie` container:
 1. rebuilds packages that have a newer Debian version, and replaces older Ubuntu-based builds with Debian ones,
 2. adds packages that are not in the repository yet, most-installed first (Debian popcon),
-3. uploads them to the current chunk release (a new chunk is opened when one is full) and commits `packages.json`.
+3. keeps Debian's maintainer scripts (preinst/postinst/prerm/postrm) as mindpkg hooks, so packages that create users, groups or services work,
+4. uploads them to the current chunk release (a new chunk is opened when one is full) and commits `packages.json`.
 
 Run it by hand from the Actions tab: set `new`/`updates`, or list packages in `only` (e.g. `vim htop`).
 

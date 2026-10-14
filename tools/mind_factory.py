@@ -14,6 +14,7 @@ kullanım: mind_factory.py [--new 400] [--updates 150] [--only paket1,paket2] [-
 GitHub Actions'ta .github/workflows/package-factory.yml tarafından her gün çalıştırılır.
 """
 import argparse
+import base64
 import gzip
 import hashlib
 import json
@@ -35,6 +36,27 @@ BATCH = 40
 MAX_SIZE = 1500 * 1024 * 1024  # GitHub asset sınırı 2 GB; büyük paketler atlanır
 MAINTAINER = "MindOS Team <https://github.com/MindOS-Official>"
 ORIGIN = os.environ.get("MIND_ORIGIN", "debian/trixie")
+# 2: Debian kurulum/kaldırma betikleri pakete dahil (format 1 paketler yeniden üretilir)
+FORMAT = 2
+
+# Debian betiği -> .mind kancası, betiğe verilecek argüman
+MAINTSCRIPTS = {"preinst": ("pre_install.sh", "install"), "postinst": ("post_install.sh", "configure"),
+                "prerm": ("pre_remove.sh", "remove"), "postrm": ("post_remove.sh", "remove")}
+
+
+def hook_wrapper(pkg_name, script_name, arg, script_bytes):
+    """Debian betiğini .mind kancasına sarar. Betik hata verirse (ör. dpkg'siz sistemde
+    deb-systemd-helper yoksa) kurulum durmaz, uyarı yazılır; kanca her zaman 0 döner."""
+    b64 = base64.b64encode(script_bytes).decode()
+    return f"""#!/bin/sh
+# {pkg_name}: Debian {script_name} betiği (mind_factory tarafından eklendi)
+mkdir -p /var/lib/mindpkg/tmp; t=$(mktemp -p /var/lib/mindpkg/tmp) || exit 0
+echo '{b64}' | base64 -d > "$t" && chmod 700 "$t"
+DPKG_MAINTSCRIPT_PACKAGE={pkg_name} DPKG_MAINTSCRIPT_NAME={script_name} DPKG_ROOT= \
+DEBIAN_FRONTEND=noninteractive "$t" {arg} || echo "  ⚠ {pkg_name}: {script_name} betiği tamamlanamadı (sistem kendi kendine çalışmaya devam eder)" >&2
+rm -f "$t"
+exit 0
+"""
 
 # .mind deposuna alınmayan paketler: kernel, hata ayıklama sembolleri, geçiş paketleri
 SKIP_RE = re.compile(
@@ -119,7 +141,8 @@ def deb_to_mind(deb, outdir):
     # Debian bağımlılıkları olduğu gibi saklanır ("a (>= 1) | b"); mindpkg eksik olanları kurar
     deps = [d.strip() for k in ("Pre-Depends", "Depends") for d in field(k).split(",") if d.strip()]
     meta = {"name": name, "version": version, "release": "1", "architecture": "x86_64",
-            "description": desc, "maintainer": MAINTAINER, "dependencies": deps, "origin": ORIGIN}
+            "description": desc, "maintainer": MAINTAINER, "dependencies": deps, "origin": ORIGIN,
+            "format": FORMAT}
     filename = f"{name}-{version}-1-x86_64.mind"
     with tempfile.TemporaryDirectory(dir=outdir) as tmp:
         tmp = Path(tmp)
@@ -128,6 +151,16 @@ def deb_to_mind(deb, outdir):
         subprocess.run(["dpkg-deb", "-x", str(deb), str(root)], check=True)
         pkg = tmp / "pkg"
         pkg.mkdir()
+        ctrl = tmp / "control"
+        subprocess.run(["dpkg-deb", "-e", str(deb), str(ctrl)], check=True)
+        hooks = []
+        for script, (hook, arg) in MAINTSCRIPTS.items():
+            src = ctrl / script
+            if src.exists():
+                (pkg / hook).write_text(hook_wrapper(name, script, arg, src.read_bytes()), encoding="utf-8")
+                (pkg / hook).chmod(0o755)
+                hooks.append(script)
+        meta["maintscripts"] = hooks
         (pkg / "metadata.json").write_text(json.dumps(meta, indent=4, ensure_ascii=False), encoding="utf-8")
         subprocess.run(["tar", "--zstd", "-cf", str(pkg / "files.tar.zst"), "--owner=0", "--group=0",
                         "--numeric-owner", "-C", str(root), "."], check=True)
@@ -185,6 +218,8 @@ def main():
     def needs_update(n):
         old = by_name[n]
         if old.get("origin") != ORIGIN:  # eski Ubuntu tabanlı paket: Debian sürümüyle değiştirilir
+            return True
+        if int(old.get("format", 1)) < FORMAT:  # betikleri olmayan eski biçim
             return True
         return newer(avail[n]["version"], str(old.get("version", "0")))
 
