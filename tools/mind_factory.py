@@ -2,7 +2,9 @@
 """MindOS sürekli paket fabrikası.
 
 Debian 13 (trixie) deposundaki paketleri .mind biçimine dönüştürür, GitHub Releases
-chunk'larına (v1.0-chunk-NN, en fazla 990 dosya) yükler ve packages.json'a ekler.
+chunk'larına (v1.0-chunk-NN, en fazla 990 dosya) yükler ve taslak indekse
+(staging/packages.json) ekler. Taslak, geliştirici tools/sign_index.py ile imzalayınca
+packages.json'a geçer; bu sayede GitHub'daki otomasyon imzalı indeksi değiştiremez.
 Debian trixie konteynerinde çalışır (MindOS Paradise ile aynı taban).
 
 Her çalıştırmada (en çok kullanılanlar önce, Debian popcon sıralaması):
@@ -30,7 +32,8 @@ from pathlib import Path
 
 REPO = os.environ.get("MIND_REPO", "MindOS-Official/packages")
 ROOT = Path(__file__).resolve().parent.parent
-INDEX = ROOT / "packages.json"
+INDEX = ROOT / "packages.json"             # imzalı, kullanıcıların okuduğu indeks
+STAGING = ROOT / "staging" / "packages.json"  # fabrikanın yazdığı, henüz imzalanmamış taslak
 MAX_ASSETS = 990
 BATCH = 40
 MAX_SIZE = 1500 * 1024 * 1024  # GitHub asset sınırı 2 GB; büyük paketler atlanır
@@ -209,7 +212,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    index = json.loads(INDEX.read_text(encoding="utf-8"))
+    index = json.loads((STAGING if STAGING.exists() else INDEX).read_text(encoding="utf-8"))
     by_name = {p["name"]: p for p in index["packages"]}
     avail = available_packages()
     rank = popcon_rank()
@@ -290,7 +293,8 @@ def main():
         index["packages"] = sorted(by_name.values(), key=lambda p: p["name"])
         index["total_packages"] = len(index["packages"])
         index["total_chunks"] = int(tag.rsplit("-", 1)[1])
-        INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
+        STAGING.parent.mkdir(exist_ok=True)
+        STAGING.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
 
     shutil.rmtree(work, ignore_errors=True)
     summary = (f"Eklenen: {added}, yenilenen: {updated}, başarısız: {failed}. "

@@ -6,7 +6,7 @@ imzalar ve packages.json'daki "system" listesine ekler. MindOS Paradise'ta
 "sudo mindpkg upgrade" bu listeden daha yeni olanları imzayı doğrulayarak kurar.
 
 kullanım: publish_system.py <paket.deb> [<paket.deb> ...]
-Ardından packages.json ve system.json commit ve push edilir.
+Ardından packages.json, system.json ve .sig dosyaları commit ve push edilir.
 """
 import base64
 import hashlib
@@ -16,7 +16,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from system_meta import write_system_json
+from system_meta import write_index
 
 REPO = "MindOS-Official/packages"
 TAG = "mindos-system"
@@ -56,11 +56,16 @@ def main():
         entry = {"name": name, "version": version, "url": urls[deb.name],
                  "sha256": hashlib.sha256(deb.read_bytes()).hexdigest(), "size": deb.stat().st_size,
                  "sig": base64.b64encode(sig).decode()}
-        system = [e for e in system if e.get("name") != name] + [entry]
+        system = [e for e in system if e.get("name") != name]
+        if name.startswith("linux-image-") and name.endswith("-mindos"):
+            # Yeni kernel sürümü yeni paket adıyla gelir (linux-image-7.3.1-mindos); eski kernel kaydı
+            # kalırsa yeni kurulumlar eski kernel'i de "eksik bileşen" sanıp kurar
+            system = [e for e in system if not (e.get("name", "").startswith("linux-image-")
+                                                and e.get("name", "").endswith("-mindos"))]
+        system.append(entry)
         print(f"system: {name} {version}")
     index["system"] = sorted(system, key=lambda e: e["name"])
-    INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
-    write_system_json(index)
+    write_index(index)
 
 
 if __name__ == "__main__":

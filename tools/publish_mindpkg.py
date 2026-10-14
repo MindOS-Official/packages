@@ -16,7 +16,7 @@ import os
 import subprocess
 from pathlib import Path
 
-from system_meta import write_system_json
+from system_meta import write_index
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "tools" / "mindpkg"
@@ -47,6 +47,5 @@ index["mindpkg"] = {
     "sha256": hashlib.sha256(code).hexdigest(),
     "sig": base64.b64encode(sig).decode(),
 }
-INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
-write_system_json(index)
+write_index(index)
 print(f"packages.json: mindpkg {version} ({commit[:7]})")

@@ -1,7 +1,8 @@
 name: MindOS Package Factory
 
 # Her gün Debian 13 (trixie) deposundan yeni paketleri .mind yapar, Releases chunk'larına
-# yükler ve packages.json'u günceller. Ayrıntılar: tools/mind_factory.py
+# yükler ve taslak indeksi (staging/packages.json) günceller. Kullanıcılara ulaşması için
+# geliştiricinin tools/sign_index.py ile imzalaması gerekir. Ayrıntılar: tools/mind_factory.py
 
 on:
   schedule:
@@ -21,7 +22,7 @@ on:
         required: false
         default: ''
 
-# packages.json'a aynı anda tek iş yazar
+# Taslak indekse aynı anda tek iş yazar
 concurrency:
   group: packages-index
   cancel-in-progress: false
@@ -57,14 +58,14 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           python3 tools/mind_factory.py --new "$IN_NEW" --updates "$IN_UPDATES" --only "$IN_ONLY"
 
-      - name: packages.json'u gönder
+      - name: Taslak indeksi gönder
         if: always()
         run: |
           git config user.name "MindOS Package Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages.json
+          git add staging/packages.json
           if git diff --cached --quiet; then echo "Değişiklik yok."; exit 0; fi
-          git commit -q -m "packages: daily Debian trixie factory run"
+          git commit -q -m "staging: daily Debian trixie factory run"
           for i in 1 2 3 4 5; do
             git pull -q --rebase origin main && git push -q origin main && exit 0
             sleep 15

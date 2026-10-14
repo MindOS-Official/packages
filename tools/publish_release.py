@@ -15,7 +15,7 @@ import datetime
 import json
 import re
 
-from system_meta import ROOT, write_system_json
+from system_meta import ROOT, write_index
 
 ap = argparse.ArgumentParser()
 ap.add_argument("version")
@@ -33,6 +33,5 @@ index["release"] = {
     "date": datetime.date.today().isoformat(),
     "notes": {"tr": a.tr, "en": a.en or a.tr},
 }
-INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
-write_system_json(index)
+write_index(index)
 print(f"release: MindOS Paradise {a.version}")
