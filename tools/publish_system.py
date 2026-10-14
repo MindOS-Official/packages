@@ -6,7 +6,7 @@ imzalar ve packages.json'daki "system" listesine ekler. MindOS Paradise'ta
 "sudo mindpkg upgrade" bu listeden daha yeni olanları imzayı doğrulayarak kurar.
 
 kullanım: publish_system.py <paket.deb> [<paket.deb> ...]
-Ardından packages.json commit ve push edilir.
+Ardından packages.json ve system.json commit ve push edilir.
 """
 import base64
 import hashlib
@@ -15,6 +15,8 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+
+from system_meta import write_system_json
 
 REPO = "MindOS-Official/packages"
 TAG = "mindos-system"
@@ -58,6 +60,7 @@ def main():
         print(f"system: {name} {version}")
     index["system"] = sorted(system, key=lambda e: e["name"])
     INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
+    write_system_json(index)
 
 
 if __name__ == "__main__":

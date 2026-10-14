@@ -3,7 +3,7 @@
 
 1. tools/mindpkg'yi güncelleyip commit ve push edin.
 2. Bu betiği çalıştırın: packages.json'daki "mindpkg" kaydını o commit'e sabitlenmiş
-   adres ve SHA256 ile günceller. Ardından packages.json'u commit ve push edin.
+   adres ve SHA256 ile günceller. Ardından packages.json ve system.json'u commit ve push edin.
 
 Adres commit'e sabitlendiği için içerik sonradan değişemez; mindpkg indirdiği dosyayı
 SHA256 ile doğrulamadan kendini asla değiştirmez.
@@ -15,6 +15,8 @@ import base64
 import os
 import subprocess
 from pathlib import Path
+
+from system_meta import write_system_json
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "tools" / "mindpkg"
@@ -46,4 +48,5 @@ index["mindpkg"] = {
     "sig": base64.b64encode(sig).decode(),
 }
 INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
+write_system_json(index)
 print(f"packages.json: mindpkg {version} ({commit[:7]})")
