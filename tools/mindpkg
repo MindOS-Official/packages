@@ -18,7 +18,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-VERSION = "1.5.1"
+VERSION = "1.6.0"
 CONFIG_FILE = "/etc/mindpkg/mindpkg.conf"
 REPOS_DIR = "/etc/mindpkg/repos.d"
 DB_DIR = "/var/lib/mindpkg"
@@ -886,6 +886,76 @@ def self_update():
                               *[a for a in sys.argv[2:] if a not in ("--no-self-update", "--resumed")]])
 
 
+def system_components():
+    """Depo indekslerindeki MindOS sistem bileşenleri (kernel, MindOS uygulamaları): ad -> en yeni kayıt"""
+    found = {}
+    for r in sorted(Path(REPOS_CACHE).glob("*.json")):
+        try:
+            with open(r, "r", encoding="utf-8") as f:
+                entries = json.load(f).get("system", [])
+        except Exception:
+            continue
+        for e in entries if isinstance(entries, list) else []:
+            name, ver = str(e.get("name", "")), str(e.get("version", ""))
+            if not valid_pkg_name(name) or not re.fullmatch(r"[0-9A-Za-z.+~:-]+", ver):
+                continue
+            if name not in found or is_newer(ver, found[name]["version"]):
+                found[name] = e
+    return found
+
+
+def is_mindos_paradise():
+    try:
+        with open("/etc/os-release", encoding="utf-8") as f:
+            return "MindOS Paradise" in f.read()
+    except OSError:
+        return False
+
+
+def upgrade_system_components():
+    """Kernel ve MindOS uygulamalarını imzalı .deb paketleriyle günceller (yalnızca MindOS Paradise)"""
+    if not (shutil.which("dpkg-query") and shutil.which("apt-get") and is_mindos_paradise()):
+        return
+    comps = system_components()
+    if not comps:
+        return
+    print(f"{COLOR_GREEN}==>{COLOR_RESET} MindOS sistem bileşenleri denetleniyor...")
+    kernel_updated = False
+    for name, e in sorted(comps.items()):
+        ver = str(e["version"])
+        cur = subprocess.run(["dpkg-query", "-W", "-f=${db:Status-Abbrev}${Version}", name],
+                             capture_output=True, text=True).stdout
+        if cur.startswith("ii") and not is_newer(ver, cur[3:].strip() or "0"):
+            continue
+        print(f"  • {COLOR_BOLD}{name}{COLOR_RESET} {cur[3:].strip() if cur.startswith('ii') else '(yeni)'} → {ver}")
+        sha = str(e.get("sha256", "")).lower()
+        url = str(e.get("url", ""))
+        if not re.fullmatch(r"[0-9a-f]{64}", sha):
+            print(f"  {COLOR_RED}⚠ {name}: kayıt geçersiz (SHA256 yok), atlandı.{COLOR_RESET}")
+            continue
+        deb = Path(CACHE_DIR) / f"{name}_{ver.replace(':', '%3a')}.deb"
+        try:
+            download_with_progress(url, deb)
+            if calculate_sha256(deb) != sha:
+                raise ValueError("SHA256 doğrulaması başarısız")
+            verify_release_signature(deb, str(e.get("sig", "")))
+        except Exception as ex:
+            deb.unlink(missing_ok=True)
+            print(f"  {COLOR_RED}⚠ {name} güncellenemedi: {ex}{COLOR_RESET}")
+            continue
+        res = subprocess.run(["apt-get", "install", "-y", "-o", "Dpkg::Options::=--force-confdef",
+                              "-o", "Dpkg::Options::=--force-confold", str(deb.resolve())],
+                             env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"})
+        deb.unlink(missing_ok=True)
+        if res.returncode == 0:
+            print(f"  {COLOR_GREEN}✓ {name} {ver} kuruldu.{COLOR_RESET}")
+            kernel_updated |= name.startswith("linux-image-")
+        else:
+            print(f"  {COLOR_RED}⚠ {name} kurulamadı (apt-get çıkış kodu {res.returncode}).{COLOR_RESET}")
+    if kernel_updated:
+        print(f"  {COLOR_YELLOW}Yeni kernel kuruldu; etkinleşmesi için bilgisayarı yeniden başlatın.{COLOR_RESET}")
+
+
 def upgrade_mind_packages():
     """Kurulu .mind paketlerinden depoda yenisi olanları yükseltir"""
     print(f"{COLOR_GREEN}==>{COLOR_RESET} MindOS (.mind) paketleri denetleniyor...")
@@ -938,6 +1008,8 @@ def upgrade_all(args):
         update_repos()
     if "--no-self-update" not in args:
         self_update()
+    if "--no-apt" not in args:
+        upgrade_system_components()
     upgrade_mind_packages()
     if "--no-apt" not in args:
         upgrade_system_packages()
