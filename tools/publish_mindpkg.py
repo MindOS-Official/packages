@@ -11,6 +11,8 @@ SHA256 ile doğrulamadan kendini asla değiştirmez.
 import hashlib
 import json
 import re
+import base64
+import os
 import subprocess
 from pathlib import Path
 
@@ -28,11 +30,20 @@ if subprocess.run(["git", "-C", str(ROOT), "branch", "-r", "--contains", commit]
                   capture_output=True, text=True).stdout.strip() == "":
     raise SystemExit(f"{commit[:7]} henüz GitHub'a gönderilmemiş; önce push edin.")
 
+# Sürüm, yalnızca geliştiricinin bilgisayarındaki Ed25519 anahtarıyla imzalanır;
+# mindpkg (1.5.1+) imzası tutmayan güncellemeyi kurmaz.
+KEY = Path(os.environ.get("MINDPKG_SIGNING_KEY", Path.home() / ".config/mindos/mindpkg-release.key"))
+if not KEY.exists():
+    raise SystemExit(f"İmza anahtarı yok: {KEY}")
+sig = subprocess.run(["openssl", "pkeyutl", "-sign", "-inkey", str(KEY), "-rawin", "-in", str(SRC)],
+                     capture_output=True, check=True).stdout
+
 index = json.loads(INDEX.read_text(encoding="utf-8"))
 index["mindpkg"] = {
     "version": version,
     "url": f"https://raw.githubusercontent.com/MindOS-Official/packages/{commit}/tools/mindpkg",
     "sha256": hashlib.sha256(code).hexdigest(),
+    "sig": base64.b64encode(sig).decode(),
 }
 INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
 print(f"packages.json: mindpkg {version} ({commit[:7]})")

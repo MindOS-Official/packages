@@ -18,7 +18,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-VERSION = "1.5.0"
+VERSION = "1.5.1"
 CONFIG_FILE = "/etc/mindpkg/mindpkg.conf"
 REPOS_DIR = "/etc/mindpkg/repos.d"
 DB_DIR = "/var/lib/mindpkg"
@@ -819,6 +819,34 @@ def latest_mindpkg_release():
     return best
 
 
+# mindpkg sürümlerini imzalayan anahtar (özel anahtar yalnızca MindOS geliştiricisinde durur).
+# GitHub deposu ele geçirilse bile imzasız ya da başka anahtarla imzalanmış mindpkg kurulmaz.
+RELEASE_PUBKEY = """-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEA0kq80lqdyWdIHD0A1w62Xsrp0QDcSQWEYOSxlz3lMhw=
+-----END PUBLIC KEY-----
+"""
+
+
+def verify_release_signature(path, sig_b64):
+    """Ed25519 imzasını openssl ile doğrular"""
+    import base64
+    if not shutil.which("openssl"):
+        raise ValueError("openssl bulunamadı, imza doğrulanamıyor")
+    try:
+        sig = base64.b64decode(sig_b64, validate=True)
+    except Exception:
+        raise ValueError("imza biçimi bozuk")
+    with tempfile.TemporaryDirectory() as td:
+        pub = Path(td) / "pub.pem"
+        sigf = Path(td) / "sig"
+        pub.write_text(RELEASE_PUBKEY)
+        sigf.write_bytes(sig)
+        r = subprocess.run(["openssl", "pkeyutl", "-verify", "-pubin", "-inkey", str(pub), "-rawin",
+                            "-in", str(path), "-sigfile", str(sigf)], capture_output=True, text=True)
+        if r.returncode != 0:
+            raise ValueError("imza geçersiz (resmi MindOS anahtarıyla imzalanmamış)")
+
+
 def self_update():
     """Yeni mindpkg sürümü varsa indirir, doğrular, kendini değiştirir ve yeni sürümle devam eder"""
     print(f"{COLOR_GREEN}==>{COLOR_RESET} mindpkg güncellemesi denetleniyor...")
@@ -840,6 +868,7 @@ def self_update():
         download_with_progress(url, tmp)
         if calculate_sha256(tmp) != sha:
             raise ValueError("SHA256 doğrulaması başarısız")
+        verify_release_signature(tmp, str(rel.get("sig", "")))
         code = tmp.read_text(encoding="utf-8")
         compile(code, str(tmp), "exec")  # sözdizimi bozuk bir dosya asla kurulmaz
         if f'VERSION = "{new_ver}"' not in code:
