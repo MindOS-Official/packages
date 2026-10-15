@@ -57,11 +57,14 @@ def main():
                  "sha256": hashlib.sha256(deb.read_bytes()).hexdigest(), "size": deb.stat().st_size,
                  "sig": base64.b64encode(sig).decode()}
         system = [e for e in system if e.get("name") != name]
-        if name.startswith("linux-image-") and name.endswith("-mindos"):
-            # Yeni kernel sürümü yeni paket adıyla gelir (linux-image-7.3.1-mindos); eski kernel kaydı
-            # kalırsa yeni kurulumlar eski kernel'i de "eksik bileşen" sanıp kurar
-            system = [e for e in system if not (e.get("name", "").startswith("linux-image-")
-                                                and e.get("name", "").endswith("-mindos"))]
+        for prefix in ("linux-image-", "linux-headers-"):
+            if name.startswith(prefix) and name.endswith("-mindos"):
+                # Yeni kernel sürümü yeni paket adıyla gelir (linux-image-7.3.1-mindos); eski kayıt
+                # kalırsa yeni kurulumlar eski kernel'i de "eksik bileşen" sanıp kurar
+                system = [e for e in system if not (e.get("name", "").startswith(prefix)
+                                                    and e.get("name", "").endswith("-mindos"))]
+        if name.startswith("linux-headers-"):
+            entry["optional"] = True  # herkese kurulmaz; 'mindpkg install linux-headers' ile istenir
         system.append(entry)
         print(f"system: {name} {version}")
     index["system"] = sorted(system, key=lambda e: e["name"])
