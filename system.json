@@ -1,9 +1,9 @@
 {
  "mindpkg": {
-  "version": "1.8.3",
-  "url": "https://raw.githubusercontent.com/MindOS-Official/packages/fc0ff51b3a9fa241e136f274b31fb3a65e5c3b4a/tools/mindpkg",
-  "sha256": "a283332113ed1dd8df4ec828087b4be66af59620feb727870d937ccaa66c3484",
-  "sig": "L23eTauGEoZDsq0FsI7uP0+Bl8qzXZERiK22I6RUA/JIODPeJjEBKz/q9uP3ffj4SP6EdJ2CqFpdd/SiT/weCg=="
+  "version": "1.8.4",
+  "url": "https://raw.githubusercontent.com/MindOS-Official/packages/226eccdff4e8d594d57b46dc0235804448866105/tools/mindpkg",
+  "sha256": "af4797a3e77929b5f854e849a7dfb33aa92060b911864169ae5a0a94cdfc880c",
+  "sig": "MwhWdb+b7FUoGX2Hj/tjiaiTAbdyI5/dqdc2y1RZHdTrQLBKYrF6C6xf7aGnchRGJT2rKDqAOh+8627tig91Bw=="
  },
  "system": [
   {
@@ -34,11 +34,11 @@
   },
   {
    "name": "mindos-apps",
-   "version": "2026.10.15.5",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/mindos-system/mindos-apps_2026.10.15.5_all.deb",
-   "sha256": "78f69c59ab895c59845bdfc91f4db883ce30b99f0c3f8282d7b2c9160aa29c5a",
-   "size": 3443240,
-   "sig": "OuzJNkorAmEPMiDClrXC5JOExvEDbncFOjOljoSlV8KQSJVyX87ov0ElqxnUcrd/ZUEEY0mX03UPtf4Nv2QlDQ=="
+   "version": "2026.10.15.6",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/mindos-system/mindos-apps_2026.10.15.6_all.deb",
+   "sha256": "dd27d30d26b72c394c7e4b5c269a3c1fd300ec0dddba19c716888296d8aa7681",
+   "size": 3443888,
+   "sig": "YxE5+RwgEgmQ0cu1HWWxu8Af0K3VIiwAX9iVBWy6zup4ITbnYgsTUDwBRJvBY+mthfRBL/h1BTzw7KCcWmXSDw=="
   }
  ],
  "release": {
@@ -47,19 +47,27 @@
   "date": "2026-10-15",
   "notes": {
    "tr": [
+    "RTX 50 serisi (Blackwell) NVIDIA kartları ve yeni AMD/Intel ekran kartları desteği",
     "NVIDIA ekran kartları için tek tıkla sürücü kurulumu (Mind Arc → Donanım)",
-    "Güncelleme bildirimleri: yeni sürüm çıkınca haber verilir",
-    "Paket indeksi artık imzalı; değiştirilmiş indeks kabul edilmez",
-    "Gizlilik ayarları: hava durumu ve internet araması yalnızca izinle",
-    "Mind Arc donanım ve çevre birimleri sayfaları düzeltildi",
+    "Broadcom Wi-Fi kartları için sürücü (Mind Arc → Donanım)",
+    "Güvenlik düzeltmeleri (security fixes): otomatik güvenlik güncellemeleri varsayılan olarak açık, mindpkg kurduğu paketleri daha sıkı denetliyor, paket indeksi imzalı",
+    "Güvenlik duvarı anahtarı (Mind Arc → Genel Ayarlar → Güvenlik)",
+    "Windows açılış menüsünde görünüyor; bozuk eski açılış kayıtları temizleniyor",
+    "Pencerelerde alta alma ve tam ekran düğmeleri",
+    "Güncelleme bildirimleri; hava durumu ve internet araması yalnızca izinle",
+    "Mind Arc donanım sayfası ve uykudan sonra touchpad düzeltmeleri",
     "Kernel başlıkları: sudo mindpkg install linux-headers"
    ],
    "en": [
+    "Support for RTX 50 series (Blackwell) NVIDIA cards and new AMD/Intel graphics",
     "One-click NVIDIA driver installation (Mind Arc → Hardware)",
-    "Update notifications when a new release is out",
-    "The package index is now signed; altered indexes are rejected",
-    "Privacy settings: weather and web search only with your consent",
-    "Fixed the Mind Arc hardware and peripherals pages",
+    "Driver for Broadcom Wi-Fi cards (Mind Arc → Hardware)",
+    "Security fixes: automatic security updates on by default, stricter checks on packages mindpkg installs, signed package index",
+    "Firewall switch (Mind Arc → General Settings → Security)",
+    "Windows shows up in the boot menu; broken old boot entries are cleaned up",
+    "Minimize and maximize buttons on windows",
+    "Update notifications; weather and web search only with your consent",
+    "Fixes for the Mind Arc hardware page and the touchpad after sleep",
     "Kernel headers: sudo mindpkg install linux-headers"
    ]
   }
