@@ -22,6 +22,8 @@ REPO = "MindOS-Official/packages"
 TAG = "mindos-system"
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "packages.json"
+# İsteğe bağlı bileşenler: yalnızca 'mindpkg install' ile kurulur, kuruluysa güncellenir
+OPTIONAL = {"broadcom-sta-dkms"}
 KEY = Path(os.environ.get("MINDPKG_SIGNING_KEY", Path.home() / ".config/mindos/mindpkg-release.key"))
 
 
@@ -63,8 +65,8 @@ def main():
                 # kalırsa yeni kurulumlar eski kernel'i de "eksik bileşen" sanıp kurar
                 system = [e for e in system if not (e.get("name", "").startswith(prefix)
                                                     and e.get("name", "").endswith("-mindos"))]
-        if name.startswith("linux-headers-"):
-            entry["optional"] = True  # herkese kurulmaz; 'mindpkg install linux-headers' ile istenir
+        if name.startswith("linux-headers-") or name in OPTIONAL:
+            entry["optional"] = True  # herkese kurulmaz; 'mindpkg install ...' ile istenince kurulur
         system.append(entry)
         print(f"system: {name} {version}")
     index["system"] = sorted(system, key=lambda e: e["name"])
