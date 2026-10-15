@@ -1,11 +1,20 @@
 {
  "mindpkg": {
-  "version": "1.7.0",
-  "url": "https://raw.githubusercontent.com/MindOS-Official/packages/6984466ea9aa4157fb242c67f262aaa2e403eaa7/tools/mindpkg",
-  "sha256": "390e28642bfe4a10a5069b005de17553b233c0be41b2efb7b6e349568935d180",
-  "sig": "yHocWGdq7VvYiahCHeslClS98z73C6eEFaHefqRYOoJYW06X4XvB0YnvxGaK424sTrclf/WZ2y2g8IqPmrsdDQ=="
+  "version": "1.8.0",
+  "url": "https://raw.githubusercontent.com/MindOS-Official/packages/f4199b6fa721f29555b101b43f951eb31379c92b/tools/mindpkg",
+  "sha256": "f1dab34056ed8152f564ddd8ce60fba290aa3c13bfa6e940ee07ec27038f8d03",
+  "sig": "eq9zR4QJI3yjCMi47xYJzC9FdxkZKF4n0WTxBg5GPQ3Voo9A8IKBuIm1uxtaUXjBCQoHMM6EIGDBVCk7oXHACQ=="
  },
  "system": [
+  {
+   "name": "linux-headers-7.2.10-mindos",
+   "version": "7.2.10-3mindos",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/mindos-system/linux-headers-7.2.10-mindos_7.2.10-3mindos_amd64.deb",
+   "sha256": "57f3a69bb39a2a4192e0274069b73d8acf04ffb45fa13352ff1822339713de39",
+   "size": 11275532,
+   "sig": "JkfT8QThxARSgtfenXJ5zZHS4bIk2wMpwhWPFaP+5SB+FVjoHkzd4+LQ+zcwn8ivO+QvwwAEfeY9pzcB8WfQDw==",
+   "optional": true
+  },
   {
    "name": "linux-image-7.2.10-mindos",
    "version": "7.2.10-3mindos",
@@ -16,29 +25,33 @@
   },
   {
    "name": "mindos-apps",
-   "version": "2026.10.14.6",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/mindos-system/mindos-apps_2026.10.14.6_all.deb",
-   "sha256": "c8b278508190218d0c67420f462e253432ce0e07edd492d55d4d86894f0b6603",
-   "size": 3434492,
-   "sig": "Kcof4OJmqy5bMlDatDOy3uBr3F0N7shasQ3uWwczTl4eTOhjG1inV7V7To771FWNTixLcTy2UNQmYTlTqICVDA=="
+   "version": "2026.10.15",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/mindos-system/mindos-apps_2026.10.15_all.deb",
+   "sha256": "be09a64efd5a68f3524f9e1bb841e9b776d88f23abb3a9439c4ef12a25c25ccb",
+   "size": 3439600,
+   "sig": "ZtRvPuGrIO2dJqmsTP/gDW6JJvL+r455f9XvFyw1Vj6c+52R1fHRzTPmUOtofxfduqoN7ATz733/yBpO0LerDg=="
   }
  ],
  "release": {
-  "version": "1.0",
-  "name": "MindOS Paradise 1.0",
-  "date": "2026-10-14",
+  "version": "1.0.1",
+  "name": "MindOS Paradise 1.0.1",
+  "date": "2026-10-15",
   "notes": {
    "tr": [
-    "Yeniden başlatarak güvenli sistem güncellemesi (Mind Arc → Sistem Güncellemesi)",
-    "Bulanık ve yuvarlak köşeli menüler",
-    "Giriş ekranında MindOS avatarı",
-    "Mind Arc artık ekran kapanma süresini değiştirmiyor"
+    "NVIDIA ekran kartları için tek tıkla sürücü kurulumu (Mind Arc → Donanım)",
+    "Güncelleme bildirimleri: yeni sürüm çıkınca haber verilir",
+    "Paket indeksi artık imzalı; değiştirilmiş indeks kabul edilmez",
+    "Gizlilik ayarları: hava durumu ve internet araması yalnızca izinle",
+    "Mind Arc donanım ve çevre birimleri sayfaları düzeltildi",
+    "Kernel başlıkları: sudo mindpkg install linux-headers"
    ],
    "en": [
-    "Safe restart-and-update system updates (Mind Arc → System Update)",
-    "Blurred menus with rounded corners",
-    "MindOS avatar on the login screen",
-    "Mind Arc no longer changes the screen timeout"
+    "One-click NVIDIA driver installation (Mind Arc → Hardware)",
+    "Update notifications when a new release is out",
+    "The package index is now signed; altered indexes are rejected",
+    "Privacy settings: weather and web search only with your consent",
+    "Fixed the Mind Arc hardware and peripherals pages",
+    "Kernel headers: sudo mindpkg install linux-headers"
    ]
   }
  }
