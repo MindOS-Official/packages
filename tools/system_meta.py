@@ -39,11 +39,13 @@ def write_system_json(index):
     sign_file(path)
 
 
-def write_index(index):
-    """packages.json + system.json'u yazar ve ikisini de imzalar"""
-    INDEX.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
-    sign_file(INDEX)
-    write_system_json(index)
+def write_index(index, out_path=None):
+    """packages.json (veya out_path) + system.json'u yazar ve ikisini de imzalar"""
+    target = Path(out_path) if out_path else INDEX
+    target.write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    sign_file(target)
+    if target == INDEX:
+        write_system_json(index)
 
 
 if __name__ == "__main__":

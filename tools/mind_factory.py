@@ -98,7 +98,7 @@ def newer(a, b):
     return subprocess.run(["dpkg", "--compare-versions", a, "gt", b]).returncode == 0
 
 
-def available_packages():
+def available_packages(deb_arch="amd64"):
     """apt deposundaki aday paketler: ad -> {version, size, arch}"""
     out = subprocess.run(["apt-cache", "dumpavail"], capture_output=True, text=True, check=True).stdout
     pkgs = {}
@@ -109,7 +109,7 @@ def available_packages():
                 k, v = line.split(":", 1)
                 f[k] = v.strip()
         name, ver = f.get("Package"), f.get("Version")
-        if not name or not ver or f.get("Architecture") not in ("amd64", "all"):
+        if not name or not ver or f.get("Architecture") not in (deb_arch, "all"):
             continue
         if SKIP_RE.match(name) or "transitional" in f.get("Description", "").lower():
             continue
@@ -117,7 +117,7 @@ def available_packages():
             continue
         old = pkgs.get(name)
         if old is None or newer(ver, old["version"]):
-            pkgs[name] = {"version": ver}
+            pkgs[name] = {"version": ver, "arch": f.get("Architecture")}
     return pkgs
 
 
@@ -136,17 +136,17 @@ def popcon_rank():
     return rank
 
 
-def deb_to_mind(deb, outdir):
+def deb_to_mind(deb, outdir, arch="x86_64"):
     """Bir .deb dosyasını .mind paketine dönüştürür; dosya sahipleri root olarak yazılır"""
     field = lambda k: subprocess.run(["dpkg-deb", "-f", str(deb), k], capture_output=True, text=True).stdout.strip()
     name, version = field("Package"), field("Version")
     desc = field("Description").splitlines()[0] if field("Description") else name
     # Debian bağımlılıkları olduğu gibi saklanır ("a (>= 1) | b"); mindpkg eksik olanları kurar
     deps = [d.strip() for k in ("Pre-Depends", "Depends") for d in field(k).split(",") if d.strip()]
-    meta = {"name": name, "version": version, "release": "1", "architecture": "x86_64",
+    meta = {"name": name, "version": version, "release": "1", "architecture": arch,
             "description": desc, "maintainer": MAINTAINER, "dependencies": deps, "origin": ORIGIN,
             "format": FORMAT}
-    filename = f"{name}-{version}-1-x86_64.mind"
+    filename = f"{name}-{version}-1-{arch}.mind"
     with tempfile.TemporaryDirectory(dir=outdir) as tmp:
         tmp = Path(tmp)
         root = tmp / "root"
@@ -174,10 +174,11 @@ def deb_to_mind(deb, outdir):
     return out, dict(meta, filename=filename, sha256=sha, size=out.stat().st_size)
 
 
-def current_chunk():
+def current_chunk(idx_path=None):
     """Yazılabilir son chunk: (etiket, asset sayısı)"""
     # İndeksteki bilinen en yüksek chunk etiketinden başla; tüm releases geçmişini sayfalamak HTTP 504 verir
-    idx_path = STAGING if STAGING.exists() else INDEX
+    if idx_path is None:
+        idx_path = STAGING if STAGING.exists() else INDEX
     known_chunks = []
     if idx_path.exists():
         try:
@@ -188,14 +189,26 @@ def current_chunk():
     if known_chunks:
         last = max(set(known_chunks), key=lambda t: int(t.rsplit("-", 1)[1]))
     else:
-        tags = [t for t in gh("api", f"repos/{REPO}/releases?per_page=30",
-                              "--jq", ".[].tag_name").stdout.split() if re.fullmatch(r"v1\.0-chunk-\d+", t)]
-        last = max(tags, key=lambda t: int(t.rsplit("-", 1)[1]))
-    count = int(gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".assets | length").stdout.strip())
-    if count >= 100:  # .assets ilk 100'ü döndürür; gerçek sayı ayrı sayfalı uçtan alınır
-        rid = gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".id").stdout.strip()
-        count = len(gh("api", f"repos/{REPO}/releases/{rid}/assets?per_page=100", "--paginate",
-                       "--jq", ".[].id").stdout.split())
+        try:
+            tags = [t for t in gh("api", f"repos/{REPO}/releases?per_page=30",
+                                  "--jq", ".[].tag_name", check=False).stdout.split() if re.fullmatch(r"v1\.0-chunk-\d+", t)]
+        except Exception:
+            tags = []
+        if tags:
+            last = max(tags, key=lambda t: int(t.rsplit("-", 1)[1]))
+        else:
+            last = "v1.0-chunk-01"
+            gh("release", "create", last, "-R", REPO, "--title", "MindOS Packages Chunk 01",
+               "--notes", "MindOS .mind packages (part 1)", check=False)
+            return last, 0
+    try:
+        count = int(gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".assets | length").stdout.strip())
+        if count >= 100:  # .assets ilk 100'ü döndürür; gerçek sayı ayrı sayfalı uçtan alınır
+            rid = gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".id").stdout.strip()
+            count = len(gh("api", f"repos/{REPO}/releases/{rid}/assets?per_page=100", "--paginate",
+                           "--jq", ".[].id").stdout.split())
+    except Exception:
+        count = 0
     return last, count
 
 
@@ -218,15 +231,52 @@ def release_urls(tag):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--arch", choices=["x86_64", "arm64", "aarch64"],
+                    default=os.environ.get("MIND_ARCH", "x86_64"),
+                    help="hedef paket mimarisi (x86_64 veya arm64/aarch64)")
+    ap.add_argument("--repo", default="", help="hedef GitHub deposu (ör: MindOS-Official/packages-arm64)")
     ap.add_argument("--new", type=int, default=400)
     ap.add_argument("--updates", type=int, default=150)
     ap.add_argument("--only", default="", help="yalnızca bu paketler (virgül/boşlukla ayrılmış)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    index = json.loads((STAGING if STAGING.exists() else INDEX).read_text(encoding="utf-8"))
-    by_name = {p["name"]: p for p in index["packages"]}
-    avail = available_packages()
+    arch_name = "aarch64" if args.arch in ("arm64", "aarch64") else "x86_64"
+    deb_arch = "arm64" if arch_name == "aarch64" else "amd64"
+    repo = args.repo or os.environ.get("MIND_REPO") or (
+        "MindOS-Official/packages-arm64" if arch_name == "aarch64" else "MindOS-Official/packages"
+    )
+    global REPO
+    REPO = repo
+    log(f"🚀 MindOS Paket Fabrikası: Mimari={arch_name} (Debian: {deb_arch}), Depo={REPO}")
+
+    # Mimariye göre indeks ve taslak dosya yolları
+    if arch_name == "aarch64":
+        is_dedicated = False
+        if INDEX.exists():
+            try:
+                data = json.loads(INDEX.read_text(encoding="utf-8"))
+                if data.get("architecture") == "aarch64":
+                    is_dedicated = True
+            except Exception:
+                pass
+        if is_dedicated:
+            idx_file, stg_file = INDEX, STAGING
+        else:
+            idx_file, stg_file = ROOT / "packages-arm64.json", ROOT / "staging" / "packages-arm64.json"
+    else:
+        idx_file, stg_file = INDEX, STAGING
+
+    cur_idx_path = stg_file if stg_file.exists() else idx_file
+    index = json.loads(cur_idx_path.read_text(encoding="utf-8")) if cur_idx_path.exists() else {
+        "repository": f"MindOS Sunrise Official Package Repository ({arch_name})",
+        "architecture": arch_name,
+        "version": "1.0",
+        "total_packages": 0,
+        "packages": []
+    }
+    by_name = {p["name"]: p for p in index.get("packages", [])}
+    avail = available_packages(deb_arch)
     rank = popcon_rank()
     order = lambda n: (rank.get(n, 10 ** 9), n)
 
@@ -254,7 +304,7 @@ def main():
         log("Eklenecek:   " + " ".join(fresh[:60]))
         return
 
-    tag, count = current_chunk()
+    tag, count = current_chunk(idx_path=cur_idx_path)
     log(f"  Son chunk: {tag} ({count} dosya)")
     work = Path(tempfile.mkdtemp(prefix="mind-factory-"))
     added = updated = failed = 0
@@ -269,14 +319,18 @@ def main():
         out.mkdir()
         built = []
         for name, is_update in batch:
-            r = subprocess.run(["apt-get", "download", "-q", f"{name}={avail[name]['version']}"],
+            dl_spec = f"{name}:{deb_arch}={avail[name]['version']}" if deb_arch != "amd64" else f"{name}={avail[name]['version']}"
+            r = subprocess.run(["apt-get", "download", "-q", dl_spec],
                                cwd=dl, capture_output=True, text=True)
+            if r.returncode != 0:
+                r = subprocess.run(["apt-get", "download", "-q", f"{name}={avail[name]['version']}"],
+                                   cwd=dl, capture_output=True, text=True)
             debs = list(dl.glob(f"{name}_*.deb"))
             if r.returncode != 0 or not debs:
                 failed += 1
                 continue
             try:
-                path, meta = deb_to_mind(debs[0], out)
+                path, meta = deb_to_mind(debs[0], out, arch=arch_name)
                 built.append((path, meta, is_update))
             except Exception as e:
                 log(f"  ⚠ {name}: {e}")
@@ -305,8 +359,8 @@ def main():
         index["packages"] = sorted(by_name.values(), key=lambda p: p["name"])
         index["total_packages"] = len(index["packages"])
         index["total_chunks"] = int(tag.rsplit("-", 1)[1])
-        STAGING.parent.mkdir(exist_ok=True)
-        STAGING.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
+        stg_file.parent.mkdir(exist_ok=True)
+        stg_file.write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")
 
     shutil.rmtree(work, ignore_errors=True)
     summary = (f"Eklenen: {added}, yenilenen: {updated}, başarısız: {failed}. "

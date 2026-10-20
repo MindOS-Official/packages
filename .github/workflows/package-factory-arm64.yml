@@ -1,0 +1,74 @@
+name: MindOS ARM64 Package Factory
+
+# 4 saatte bir Debian 13 (trixie) arm64 deposundan yeni paketleri .mind yapar,
+# MindOS-Official/packages-arm64 Releases chunk'larına yükler ve taslak indeksi (staging/packages.json) günceller.
+# Geliştiricinin tools/sign_index.py --repo MindOS-Official/packages-arm64 ile imzalaması gerekir.
+
+on:
+  schedule:
+    - cron: '47 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      new:
+        description: 'Eklenecek yeni arm64 paket sayısı'
+        required: false
+        default: '800'
+      updates:
+        description: 'Yenilenecek arm64 paket sayısı'
+        required: false
+        default: '100'
+      only:
+        description: 'Yalnızca bu paketler (boşlukla ayrılmış, ör. "vim htop"); boşsa otomatik seçim'
+        required: false
+        default: ''
+
+# Taslak indekse aynı anda tek iş yazar
+concurrency:
+  group: packages-arm64-index
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  factory-arm64:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    container: debian:trixie
+    env:
+      GH_TOKEN: ${{ github.token }}
+      MIND_REPO: MindOS-Official/packages-arm64
+      MIND_ARCH: aarch64
+    steps:
+      - name: Çoklu mimari ve araçları kur
+        run: |
+          sed -i 's/^Components: main$/Components: main contrib non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources
+          dpkg --add-architecture arm64
+          apt-get update -qq
+          apt-get install -y -qq git gh python3 zstd ca-certificates >/dev/null
+
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: ARM64 paketleri üret ve yükle
+        env:
+          IN_NEW: ${{ github.event.inputs.new || '800' }}
+          IN_UPDATES: ${{ github.event.inputs.updates || '100' }}
+          IN_ONLY: ${{ github.event.inputs.only }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          python3 tools/mind_factory.py --arch arm64 --repo MindOS-Official/packages-arm64 --new "$IN_NEW" --updates "$IN_UPDATES" --only "$IN_ONLY"
+
+      - name: Taslak indeksi gönder
+        if: always()
+        run: |
+          git config user.name "MindOS Package Bot"
+          git add staging/packages*.json
+          if git diff --cached --quiet; then echo "Değişiklik yok."; exit 0; fi
+          git commit -q -m "staging: Debian trixie ARM64 factory run"
+          for i in 1 2 3 4 5; do
+            git pull -q --rebase origin main && git push -q origin main && exit 0
+            sleep 15
+          done
+          exit 1
