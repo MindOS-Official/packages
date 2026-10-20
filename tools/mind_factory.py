@@ -80,7 +80,7 @@ def gh(*args, check=True):
         if r.returncode == 0 or not check:
             return r
         err = r.stderr.strip()
-        if "rate limit" in err.lower() or "secondary" in err.lower() or "502" in err or "503" in err:
+        if any(x in err.lower() for x in ("rate limit", "secondary", "502", "503", "504", "timeout", "timed out")):
             wait = 60 * (attempt + 1)
             log(f"  ⏳ GitHub sınırı, {wait} sn bekleniyor: {err[:120]}")
             time.sleep(wait)
@@ -176,9 +176,21 @@ def deb_to_mind(deb, outdir):
 
 def current_chunk():
     """Yazılabilir son chunk: (etiket, asset sayısı)"""
-    tags = [t for t in gh("api", f"repos/{REPO}/releases?per_page=100", "--paginate",
-                          "--jq", ".[].tag_name").stdout.split() if re.fullmatch(r"v1\.0-chunk-\d+", t)]
-    last = max(tags, key=lambda t: int(t.rsplit("-", 1)[1]))
+    # İndeksteki bilinen en yüksek chunk etiketinden başla; tüm releases geçmişini sayfalamak HTTP 504 verir
+    idx_path = STAGING if STAGING.exists() else INDEX
+    known_chunks = []
+    if idx_path.exists():
+        try:
+            raw = idx_path.read_text(encoding="utf-8")
+            known_chunks = re.findall(r"v1\.0-chunk-\d+", raw)
+        except Exception:
+            pass
+    if known_chunks:
+        last = max(set(known_chunks), key=lambda t: int(t.rsplit("-", 1)[1]))
+    else:
+        tags = [t for t in gh("api", f"repos/{REPO}/releases?per_page=30",
+                              "--jq", ".[].tag_name").stdout.split() if re.fullmatch(r"v1\.0-chunk-\d+", t)]
+        last = max(tags, key=lambda t: int(t.rsplit("-", 1)[1]))
     count = int(gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".assets | length").stdout.strip())
     if count >= 100:  # .assets ilk 100'ü döndürür; gerçek sayı ayrı sayfalı uçtan alınır
         rid = gh("api", f"repos/{REPO}/releases/tags/{last}", "--jq", ".id").stdout.strip()
