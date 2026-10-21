@@ -230,9 +230,21 @@ def release_urls(tag):
 
 
 def main():
+    repo_arch = "x86_64"
+    if "packages-arm64" in str(ROOT) or "packages_arm64" in str(ROOT):
+        repo_arch = "aarch64"
+    elif INDEX.exists():
+        try:
+            d = json.loads(INDEX.read_text(encoding="utf-8"))
+            if d.get("architecture") in ("aarch64", "arm64"):
+                repo_arch = "aarch64"
+        except Exception:
+            pass
+
+    default_arch = os.environ.get("MIND_ARCH", repo_arch)
     ap = argparse.ArgumentParser()
     ap.add_argument("--arch", choices=["x86_64", "arm64", "aarch64"],
-                    default=os.environ.get("MIND_ARCH", "x86_64"),
+                    default=default_arch,
                     help="hedef paket mimarisi (x86_64 veya arm64/aarch64)")
     ap.add_argument("--repo", default="", help="hedef GitHub deposu (ör: MindOS-Official/packages-arm64)")
     ap.add_argument("--new", type=int, default=400)

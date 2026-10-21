@@ -44,12 +44,21 @@ def main():
                     help="taslakta paket sayısı belirgin azaldıysa yine de imzala")
     a = ap.parse_args()
 
-    is_arm = a.arch in ("arm64", "aarch64") or "packages-arm64" in a.repo
+    repo_is_arm = "packages-arm64" in str(ROOT) or "packages_arm64" in str(ROOT)
+    if not repo_is_arm and INDEX.exists():
+        try:
+            data = json.loads(INDEX.read_text(encoding="utf-8"))
+            if data.get("architecture") in ("aarch64", "arm64"):
+                repo_is_arm = True
+        except Exception:
+            pass
+
+    is_arm = a.arch in ("arm64", "aarch64") or "packages-arm64" in a.repo or (not a.arch and not a.repo and repo_is_arm)
     repo = a.repo or ("MindOS-Official/packages-arm64" if is_arm else REPO)
 
     if a.staging:
         staging_path = Path(a.staging)
-    elif is_arm and (ROOT / "staging" / "packages-arm64.json").exists():
+    elif is_arm and not repo_is_arm and (ROOT / "staging" / "packages-arm64.json").exists():
         staging_path = ROOT / "staging" / "packages-arm64.json"
     else:
         staging_path = ROOT / "staging" / "packages.json"
@@ -57,8 +66,9 @@ def main():
     if a.out:
         out_path = Path(a.out)
     elif is_arm:
-        # Ayrı arm64 repo klonunda ana dosya packages.json ise onu kullan; değilse packages-arm64.json
-        if INDEX.exists():
+        if repo_is_arm:
+            out_path = INDEX
+        elif INDEX.exists():
             try:
                 data = json.loads(INDEX.read_text(encoding="utf-8"))
                 if data.get("architecture") == "aarch64":
@@ -104,7 +114,11 @@ def main():
         raise SystemExit("İptal edildi.")
 
     merged = {k: v for k, v in staged.items() if k not in META_KEYS}
-    merged.update({k: current[k] for k in META_KEYS if k in current})
+    for k in META_KEYS:
+        if k in current:
+            merged[k] = current[k]
+        elif k in staged:
+            merged[k] = staged[k]
     write_index(merged, out_path=out_path)
     print(f"✓ {out_path.name} imzalandı ({out_path}.sig). Şimdi commit ve push edin.")
 

@@ -36,7 +36,7 @@ jobs:
     timeout-minutes: 340
     container: debian:trixie
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.ARM64_REPO_TOKEN || secrets.GH_PAT || github.token }}
       MIND_REPO: MindOS-Official/packages-arm64
       MIND_ARCH: aarch64
     steps:
@@ -64,6 +64,7 @@ jobs:
         if: always()
         run: |
           git config user.name "MindOS Package Bot"
+          git config user.email "bot@mindos.org"
           git add staging/packages*.json
           if git diff --cached --quiet; then echo "Değişiklik yok."; exit 0; fi
           git commit -q -m "staging: Debian trixie ARM64 factory run"
