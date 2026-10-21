@@ -101,8 +101,8 @@ def fetch_popcon():
             text = gzip.decompress(r.read()).decode("utf-8", "replace")
         for line in text.splitlines():
             parts = line.split()
-            if len(parts) > 2 and parts[0].isdigit():
-                rank.setdefault(parts[1], int(parts[0]))
+            if len(parts) > 2 and parts[0].isdigit() and parts[2].isdigit():
+                rank.setdefault(parts[1], int(parts[2]))
         cache_file.write_text(json.dumps(rank), encoding="utf-8")
     except Exception as e:
         log(f"  ⚠ popcon alınamadı ({e}), alfabetik sıra kullanılacak")
@@ -301,17 +301,20 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # İndeks yükle veya oluştur (ayrı repo veya ana repo arm64 taslağı)
+    main_packages = ROOT / "packages.json"
     is_dedicated = False
-    if INDEX.exists():
+    if main_packages.exists():
         try:
-            data = json.loads(INDEX.read_text(encoding="utf-8"))
-            if data.get("architecture") == "aarch64":
+            data = json.loads(main_packages.read_text(encoding="utf-8"))
+            if data.get("architecture") in ("aarch64", "arm64"):
                 is_dedicated = True
         except Exception:
             pass
+    elif "packages-arm64" in ROOT.name:
+        is_dedicated = True
 
-    target_staging = STAGING.parent / "packages.json" if is_dedicated else STAGING
-    target_index = INDEX if is_dedicated else (ROOT / "packages-arm64.json")
+    target_staging = ROOT / "staging" / "packages.json" if is_dedicated else (ROOT / "staging" / "packages-arm64.json")
+    target_index = ROOT / "packages.json" if is_dedicated else (ROOT / "packages-arm64.json")
 
     index_path = target_staging if target_staging.exists() else target_index
     if index_path.exists():
