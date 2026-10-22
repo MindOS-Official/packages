@@ -1,4 +1,4 @@
-# 🌅 MindOS Sunrise Official Package Repository
+# 🌅 MindOS Official Package Repository
 
 Official binary package repository for **MindOS** (Sunrise and Paradise).
 
