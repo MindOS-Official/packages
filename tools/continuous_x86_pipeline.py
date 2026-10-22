@@ -94,16 +94,12 @@ def commit_and_push(new_count):
                 break
             log(f"  ⚠ Git push başarısız (deneme {attempt+1}/5), 5 sn sonra yeniden denenecek...")
             time.sleep(5)
-        return pushed
-    return True
-                break
-            log("  ⚠ Git push başarısız, origin/main rebase deneniyor...")
-            subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
-            time.sleep(2)
         if not pushed:
             log("  ✗ Git push tüm denemelere rağmen başarısız oldu!")
+        return pushed
     else:
         log("ℹ İndekste commit edilecek yeni değişiklik yok.")
+        return True
 
 
 def clean_uploaded_files():
@@ -152,7 +148,7 @@ def main():
 
     start_count = get_current_count()
     log("=================================================================")
-    log("🚀 MindOS Kesintisiz Yüksek Başarımlı ARM64 Fabrikası Başlatıldı")
+    log("🚀 MindOS Kesintisiz Yüksek Başarımlı x86_64 Fabrikası Başlatıldı")
     log(f"   Başlangıç Paket Sayısı : {start_count}")
     log(f"   Tur Başına Paket       : {args.batch_size}")
     log(f"   İş Parçacığı           : {args.threads}")
