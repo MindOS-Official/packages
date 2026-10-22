@@ -414,9 +414,28 @@ class PipelinedUploader:
             log(f"  ⚠ Toplam {len(self.failures)} yükleme hatası oluştu.")
 
 
-def get_chunk_tag(package_index):
-    chunk_num = (package_index // MAX_ASSETS) + 1
-    return f"v1.0-chunk-{chunk_num:02d}"
+_CHUNK_ASSET_COUNTS = {}
+
+
+def get_chunk_tag(package_index, existing=None):
+    """En yüksek chunk'tan başlayarak 980 pakete ulaşınca bir sonrakine geçer"""
+    global _CHUNK_ASSET_COUNTS
+    if not _CHUNK_ASSET_COUNTS and existing:
+        for p in existing.values():
+            tag = p.get("chunk_tag")
+            if tag and tag.startswith("v1.0-chunk-"):
+                _CHUNK_ASSET_COUNTS[tag] = _CHUNK_ASSET_COUNTS.get(tag, 0) + 1
+    
+    if not _CHUNK_ASSET_COUNTS:
+        return "v1.0-chunk-37"
+
+    last_tag = max(_CHUNK_ASSET_COUNTS.keys(), key=lambda t: int(t.rsplit("-", 1)[1]))
+    if _CHUNK_ASSET_COUNTS.get(last_tag, 0) >= 980:
+        n = int(last_tag.rsplit("-", 1)[1]) + 1
+        new_tag = f"v1.0-chunk-{n:02d}"
+        _CHUNK_ASSET_COUNTS[new_tag] = 0
+        return new_tag
+    return last_tag
 
 
 def main():
@@ -546,7 +565,7 @@ def main():
                 if ok:
                     success_count += 1
                     record = res
-                    chunk_tag = get_chunk_tag(len(existing) + len(staged_records))
+                    chunk_tag = get_chunk_tag(len(existing) + len(staged_records), existing=existing)
                     record["chunk_tag"] = chunk_tag
                     record["url"] = f"https://github.com/{args.repo}/releases/download/{chunk_tag}/{record['filename']}"
                     staged_records[str(file_or_err)] = record
