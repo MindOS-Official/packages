@@ -307,7 +307,7 @@ def ensure_chunk_release(repo, tag):
         if view.returncode != 0:
             n = int(tag.rsplit("-", 1)[1])
             gh_cmd("release", "create", tag, "-R", repo, "--title", f"MindOS Packages Chunk {n:02d}",
-                   "--notes", f"MindOS ARM64 .mind packages (chunk {n})", check=True)
+                   "--notes", f"MindOS .mind packages (chunk {n})", check=True)
             log(f"  🏷️ GitHub Releases chunk oluşturuldu: {tag}")
         _CHUNK_CREATED.add(tag)
 
@@ -325,12 +325,26 @@ def upload_batch(repo, tag, file_paths):
     except Exception as bulk_err:
         log(f"  ⚠ Toplu yükleme hatası ({bulk_err}); paketler tek tek yükleniyor...")
         succeeded = []
+        cur_tag = tag
         for p in file_paths:
             try:
-                gh_cmd("release", "upload", tag, "-R", repo, "--clobber", str(p), check=True)
+                gh_cmd("release", "upload", cur_tag, "-R", repo, "--clobber", str(p), check=True)
                 succeeded.append(str(p))
             except Exception as single_err:
-                log(f"  ✗ Tekil yükleme başarısız ({Path(p).name}): {single_err}")
+                err_msg = str(single_err)
+                if "file_count limited" in err_msg or "422" in err_msg:
+                    n = int(cur_tag.rsplit("-", 1)[1]) + 1
+                    cur_tag = f"v1.0-chunk-{n:02d}"
+                    log(f"  🏷️ Chunk doldu ({err_msg[:60]}), yeni chunk'a geçiliyor: {cur_tag}")
+                    ensure_chunk_release(repo, cur_tag)
+                    try:
+                        gh_cmd("release", "upload", cur_tag, "-R", repo, "--clobber", str(p), check=True)
+                        succeeded.append(str(p))
+                        continue
+                    except Exception as retry_err:
+                        log(f"  ✗ Yeni chunk yüklemesi de başarısız ({Path(p).name}): {retry_err}")
+                else:
+                    log(f"  ✗ Tekil yükleme başarısız ({Path(p).name}): {single_err}")
         return succeeded
 
 
@@ -414,28 +428,46 @@ class PipelinedUploader:
             log(f"  ⚠ Toplam {len(self.failures)} yükleme hatası oluştu.")
 
 
-_CHUNK_ASSET_COUNTS = {}
+_CURRENT_CHUNK = None
+_CURRENT_CHUNK_COUNT = 0
+_CHUNK_LOCK_TAG = threading.Lock()
 
 
-def get_chunk_tag(package_index, existing=None):
-    """En yüksek chunk'tan başlayarak 980 pakete ulaşınca bir sonrakine geçer"""
-    global _CHUNK_ASSET_COUNTS
-    if not _CHUNK_ASSET_COUNTS and existing:
-        for p in existing.values():
-            tag = p.get("chunk_tag")
-            if tag and tag.startswith("v1.0-chunk-"):
-                _CHUNK_ASSET_COUNTS[tag] = _CHUNK_ASSET_COUNTS.get(tag, 0) + 1
-    
-    if not _CHUNK_ASSET_COUNTS:
-        return "v1.0-chunk-37"
+def get_chunk_tag(package_index=0, existing=None, repo=REPO_DEFAULT):
+    """GitHub Releases üzerinden gerçek asset sayısını sorgulayarak 950'ye ulaşınca yeni chunk açar"""
+    global _CURRENT_CHUNK, _CURRENT_CHUNK_COUNT
+    with _CHUNK_LOCK_TAG:
+        if _CURRENT_CHUNK is None:
+            try:
+                r = subprocess.run(["gh", "release", "list", "-R", repo, "--limit", "1"],
+                                   capture_output=True, text=True)
+                for line in r.stdout.splitlines():
+                    parts = line.split("\t")
+                    if len(parts) >= 3 and "v1.0-chunk-" in parts[2]:
+                        _CURRENT_CHUNK = parts[2].strip()
+                        break
+            except Exception:
+                pass
+            if not _CURRENT_CHUNK:
+                _CURRENT_CHUNK = "v1.0-chunk-38"
 
-    last_tag = max(_CHUNK_ASSET_COUNTS.keys(), key=lambda t: int(t.rsplit("-", 1)[1]))
-    if _CHUNK_ASSET_COUNTS.get(last_tag, 0) >= 980:
-        n = int(last_tag.rsplit("-", 1)[1]) + 1
-        new_tag = f"v1.0-chunk-{n:02d}"
-        _CHUNK_ASSET_COUNTS[new_tag] = 0
-        return new_tag
-    return last_tag
+            try:
+                r_cnt = subprocess.run(["gh", "api", f"repos/{repo}/releases/tags/{_CURRENT_CHUNK}",
+                                       "--jq", ".assets | length"],
+                                       capture_output=True, text=True)
+                _CURRENT_CHUNK_COUNT = int(r_cnt.stdout.strip() or "0")
+            except Exception:
+                _CURRENT_CHUNK_COUNT = 0
+            log(f"  📌 Aktif GitHub chunk: {_CURRENT_CHUNK} ({_CURRENT_CHUNK_COUNT} asset)")
+
+        if _CURRENT_CHUNK_COUNT >= 950:
+            n = int(_CURRENT_CHUNK.rsplit("-", 1)[1]) + 1
+            _CURRENT_CHUNK = f"v1.0-chunk-{n:02d}"
+            _CURRENT_CHUNK_COUNT = 0
+            log(f"  🏷️ Chunk 950 sınırına ulaştı, yeni chunk'a geçiliyor: {_CURRENT_CHUNK}")
+
+        _CURRENT_CHUNK_COUNT += 1
+        return _CURRENT_CHUNK
 
 
 def main():
