@@ -61,7 +61,7 @@ FORMAT = 2
 ARCH = "x86_64"
 
 # Scratch work directory in RAM disk if available
-SHM_DIR = Path("/dev/shm/mindos_arm64_work") if Path("/dev/shm").is_dir() and os.access("/dev/shm", os.W_OK) else None
+SHM_DIR = Path("/dev/shm/mindos_x86_work") if Path("/dev/shm").is_dir() and os.access("/dev/shm", os.W_OK) else None
 if SHM_DIR:
     SHM_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -89,8 +89,8 @@ def get_session():
     if not hasattr(_thread_local, "session"):
         s = requests.Session()
         adapter = requests.adapters.HTTPAdapter(
-            pool_connections=20,
-            pool_maxsize=20,
+            pool_connections=32,
+            pool_maxsize=32,
             max_retries=requests.adapters.Retry(total=3, backoff_factor=0.5, status_forcelist=[500, 502, 503, 504])
         )
         s.mount("http://", adapter)
@@ -314,14 +314,15 @@ def ensure_chunk_release(repo, tag):
 
 def upload_batch(repo, tag, file_paths):
     """Bir grup .mind paketini GitHub Releases chunk'ına yükler.
-    Toplu yükleme başarısız olursa tek tek yüklemeyi dener ve başarılı olanları döner."""
+    Toplu yükleme başarısız olursa tek tek yüklemeyi dener ve başarılı olanları (ve yüklenen chunk'ı) döner."""
+    global _CURRENT_CHUNK, _CURRENT_CHUNK_COUNT
     if not file_paths:
         return []
     ensure_chunk_release(repo, tag)
     log(f"  ⬆️ {len(file_paths)} paket {tag} etiketine yükleniyor...")
     try:
         gh_cmd("release", "upload", tag, "-R", repo, "--clobber", *[str(p) for p in file_paths], check=True)
-        return [str(p) for p in file_paths]
+        return [(str(p), tag) for p in file_paths]
     except Exception as bulk_err:
         log(f"  ⚠ Toplu yükleme hatası ({bulk_err}); paketler tek tek yükleniyor...")
         succeeded = []
@@ -329,7 +330,7 @@ def upload_batch(repo, tag, file_paths):
         for p in file_paths:
             try:
                 gh_cmd("release", "upload", cur_tag, "-R", repo, "--clobber", str(p), check=True)
-                succeeded.append(str(p))
+                succeeded.append((str(p), cur_tag))
             except Exception as single_err:
                 err_msg = str(single_err)
                 if "file_count limited" in err_msg or "422" in err_msg:
@@ -337,9 +338,12 @@ def upload_batch(repo, tag, file_paths):
                     cur_tag = f"v1.0-chunk-{n:02d}"
                     log(f"  🏷️ Chunk doldu ({err_msg[:60]}), yeni chunk'a geçiliyor: {cur_tag}")
                     ensure_chunk_release(repo, cur_tag)
+                    with _CHUNK_LOCK_TAG:
+                        _CURRENT_CHUNK = cur_tag
+                        _CURRENT_CHUNK_COUNT = 1
                     try:
                         gh_cmd("release", "upload", cur_tag, "-R", repo, "--clobber", str(p), check=True)
-                        succeeded.append(str(p))
+                        succeeded.append((str(p), cur_tag))
                         continue
                     except Exception as retry_err:
                         log(f"  ✗ Yeni chunk yüklemesi de başarısız ({Path(p).name}): {retry_err}")
@@ -357,7 +361,7 @@ class PipelinedUploader:
         self.debounce_sec = debounce_sec
         self.queue = queue.Queue()
         self.stop_requested = threading.Event()
-        self.uploaded_files = set()
+        self.uploaded_files = {}  # fpath -> final_chunk_tag
         self.failed_files = set()
         self.failures = []
         self.thread = threading.Thread(target=self._worker, daemon=True)
@@ -409,14 +413,15 @@ class PipelinedUploader:
             by_tag.setdefault(tag, []).append(fpath)
         for tag, flist in by_tag.items():
             succeeded = upload_batch(self.repo, tag, flist)
-            for f in succeeded:
-                self.uploaded_files.add(f)
+            for f, actual_tag in succeeded:
+                self.uploaded_files[f] = actual_tag
                 if self.clean_uploaded:
                     try:
                         Path(f).unlink(missing_ok=True)
                     except Exception:
                         pass
-            failed = set(flist) - set(succeeded)
+            succ_paths = {f for f, _ in succeeded}
+            failed = set(flist) - succ_paths
             for f in failed:
                 self.failed_files.add(f)
                 self.failures.append((tag, f))
@@ -438,18 +443,27 @@ def get_chunk_tag(package_index=0, existing=None, repo=REPO_DEFAULT):
     global _CURRENT_CHUNK, _CURRENT_CHUNK_COUNT
     with _CHUNK_LOCK_TAG:
         if _CURRENT_CHUNK is None:
+            max_local = 1
+            if existing:
+                for p in existing.values():
+                    ct = p.get("chunk_tag", "")
+                    if "v1.0-chunk-" in ct:
+                        try:
+                            max_local = max(max_local, int(ct.rsplit("-", 1)[1]))
+                        except ValueError:
+                            pass
+
+            max_remote = 0
             try:
-                r = subprocess.run(["gh", "release", "list", "-R", repo, "--limit", "1"],
+                r = subprocess.run(["gh", "release", "list", "-R", repo, "--limit", "10"],
                                    capture_output=True, text=True)
-                for line in r.stdout.splitlines():
-                    parts = line.split("\t")
-                    if len(parts) >= 3 and "v1.0-chunk-" in parts[2]:
-                        _CURRENT_CHUNK = parts[2].strip()
-                        break
+                for m in re.finditer(r"v1\.0-chunk-(\d+)", r.stdout):
+                    max_remote = max(max_remote, int(m.group(1)))
             except Exception:
                 pass
-            if not _CURRENT_CHUNK:
-                _CURRENT_CHUNK = "v1.0-chunk-38"
+
+            target_num = max(max_local, max_remote, 38)
+            _CURRENT_CHUNK = f"v1.0-chunk-{target_num:02d}"
 
             try:
                 r_cnt = subprocess.run(["gh", "api", f"repos/{repo}/releases/tags/{_CURRENT_CHUNK}",
@@ -474,7 +488,7 @@ def main():
     ap = argparse.ArgumentParser(description="MindOS High-Throughput x86_64 Package Factory")
     ap.add_argument("--count", type=int, default=500, help="Üretilecek paket sayısı")
     ap.add_argument("--only", default="", help="Yalnızca belirtilen paketler (virgülle ayrılmış)")
-    ap.add_argument("--threads", type=int, default=min(24, os.cpu_count() * 2 if os.cpu_count() else 8), help="İş parçacığı sayısı")
+    ap.add_argument("--threads", type=int, default=24, help="İş parçacığı sayısı (azami verim için 24)")
     ap.add_argument("--out-dir", default=str(ROOT / "out_x86"), help=".mind dosyalarının kaydedileceği klasör")
     ap.add_argument("--upload", action="store_true", help="GitHub Releases'a otomatik chunk yükle")
     ap.add_argument("--no-upload", dest="upload", action="store_false")
@@ -482,7 +496,9 @@ def main():
     ap.add_argument("--no-clean-uploaded", dest="clean_uploaded", action="store_false")
     ap.add_argument("--upload-existing", action="store_true", help="Çıktı klasöründeki mevcut .mind dosyalarını yükle")
     ap.add_argument("--repo", default=REPO_DEFAULT, help="Hedef GitHub deposu")
-    ap.add_argument("--x86-manifest", default=str(ROOT.parent / "MindOS_packages_repo" / "packages.json"), help="x86 deposundaki paketlerin önceliklendirilmesi için packages.json yolu")
+    ap.add_argument("--arm-manifest", default=str(ROOT.parent / "MindOS_packages_arm64_repo" / "packages-arm64.json"),
+                    help="ARM64 deposundaki paketlerle parite sağlamak için packages-arm64.json yolu")
+    ap.add_argument("--x86-manifest", default="", help="(Geriye uyumluluk için alias)")
     ap.add_argument("--dry-run", action="store_true", help="Gerçek indirme yapmadan listele")
     ap.set_defaults(upload=False)
     args = ap.parse_args()
@@ -520,7 +536,7 @@ def main():
     avail = fetch_debian_packages()
     popcon = fetch_popcon()
 
-    log(f"📦 Debian deposunda {len(avail)} paket bulundu. Mevcut arm64 depoda {len(existing)} paket var.")
+    log(f"📦 Debian deposunda {len(avail)} paket bulundu. Mevcut x86_64 depoda {len(existing)} paket var.")
 
     if args.upload_existing:
         files = list(out_dir.glob("*.mind"))
@@ -545,27 +561,31 @@ def main():
         if missing:
             log(f"  ⚠ Bulunamayan paketler: {', '.join(missing)}")
     else:
-        # x86 deposundaki paketleri tespit edip önceliklendir (parite için)
-        x86_priority_set = set()
-        x86_json = Path(args.x86_manifest) if getattr(args, "x86_manifest", None) else None
-        if x86_json and x86_json.exists():
+        # ARM64 deposundaki paketleri tespit edip önceliklendir (parite için)
+        arm_priority_set = set()
+        manifest_path = Path(args.arm_manifest) if args.arm_manifest else None
+        if not manifest_path or not manifest_path.exists():
+            alt = ROOT.parent / "MindOS_packages_arm64_repo" / "packages.json"
+            if alt.exists():
+                manifest_path = alt
+        if manifest_path and manifest_path.exists():
             try:
-                d_x = json.loads(x86_json.read_text(encoding="utf-8"))
-                pkgs = d_x.get("packages", [])
+                d_arm = json.loads(manifest_path.read_text(encoding="utf-8"))
+                pkgs = d_arm.get("packages", [])
                 if isinstance(pkgs, list):
-                    x86_priority_set = {p["name"] if isinstance(p, dict) else p for p in pkgs}
+                    arm_priority_set = {p["name"] if isinstance(p, dict) else p for p in pkgs}
                 elif isinstance(pkgs, dict):
-                    x86_priority_set = set(pkgs.keys())
-                log(f"  🎯 x86 deposundan {len(x86_priority_set)} paket öncelik kümesine eklendi.")
+                    arm_priority_set = set(pkgs.keys())
+                log(f"  🎯 ARM64 deposundan {len(arm_priority_set)} paket öncelik kümesine eklendi (x86 parite hedefi).")
             except Exception as e:
-                log(f"  ⚠ x86 manifestosu okunamadı ({e})")
+                log(f"  ⚠ ARM64 manifestosu okunamadı ({e})")
 
-        # Mevcut depoda olmayanları önce x86'da olup olmamasına, sonra popcon sırasına göre seç
+        # Mevcut depoda olmayanları önce ARM64'te olup olmamasına, sonra popcon sırasına göre seç
         candidates = [p for name, p in avail.items() if name not in existing]
         def sort_key(p):
-            in_x86 = 1 if p["name"] in x86_priority_set else 0
+            in_arm = 1 if p["name"] in arm_priority_set else 0
             pop = popcon.get(p["name"], 0)
-            return (in_x86, pop)
+            return (in_arm, pop)
 
         candidates.sort(key=sort_key, reverse=True)
         candidates = candidates[:args.count]
@@ -618,6 +638,10 @@ def main():
         uploader.close()
         for fpath, record in staged_records.items():
             if fpath in uploader.uploaded_files:
+                actual_tag = uploader.uploaded_files[fpath]
+                if record.get("chunk_tag") != actual_tag:
+                    record["chunk_tag"] = actual_tag
+                    record["url"] = f"https://github.com/{args.repo}/releases/download/{actual_tag}/{record['filename']}"
                 existing[record["name"]] = record
             else:
                 log(f"  ⚠ Paket GitHub'a yüklenemediği için indekse eklenmedi: {record['name']}")
