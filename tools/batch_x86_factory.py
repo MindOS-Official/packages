@@ -280,6 +280,7 @@ def process_package(pkg_info, out_dir):
 
 
 def gh_cmd(*args, check=True):
+    r = None
     for attempt in range(6):
         r = subprocess.run(["gh", *args], capture_output=True, text=True)
         if r.returncode == 0 or not check:
@@ -291,6 +292,8 @@ def gh_cmd(*args, check=True):
             time.sleep(wait)
             continue
         raise RuntimeError(f"gh {' '.join(args[:3])}: {err[:200]}")
+    if check and r is not None and r.returncode != 0:
+        raise RuntimeError(f"gh {' '.join(args[:3])} failed after 6 attempts: {r.stderr.strip()[:200]}")
     return r
 
 
@@ -306,9 +309,15 @@ def ensure_chunk_release(repo, tag):
         view = gh_cmd("release", "view", tag, "-R", repo, check=False)
         if view.returncode != 0:
             n = int(tag.rsplit("-", 1)[1])
-            gh_cmd("release", "create", tag, "-R", repo, "--title", f"MindOS Packages Chunk {n:02d}",
-                   "--notes", f"MindOS .mind packages (chunk {n})", check=True)
-            log(f"  🏷️ GitHub Releases chunk oluşturuldu: {tag}")
+            try:
+                gh_cmd("release", "create", tag, "-R", repo, "--title", f"MindOS Packages Chunk {n:02d}",
+                       "--notes", f"MindOS .mind packages (chunk {n})", check=True)
+                log(f"  🏷️ GitHub Releases chunk oluşturuldu: {tag}")
+            except Exception as e:
+                if "already exists" in str(e).lower() or "422" in str(e).lower():
+                    pass
+                else:
+                    raise
         _CHUNK_CREATED.add(tag)
 
 
@@ -455,23 +464,25 @@ def get_chunk_tag(package_index=0, existing=None, repo=REPO_DEFAULT):
 
             max_remote = 0
             try:
-                r = subprocess.run(["gh", "release", "list", "-R", repo, "--limit", "10"],
+                r = subprocess.run(["gh", "release", "list", "-R", repo, "--limit", "20"],
                                    capture_output=True, text=True)
                 for m in re.finditer(r"v1\.0-chunk-(\d+)", r.stdout):
                     max_remote = max(max_remote, int(m.group(1)))
             except Exception:
                 pass
 
-            target_num = max(max_local, max_remote, 38)
+            target_num = max(max_local, max_remote, 1)
             _CURRENT_CHUNK = f"v1.0-chunk-{target_num:02d}"
 
+            local_cnt = sum(1 for p in existing.values() if p.get("chunk_tag") == _CURRENT_CHUNK) if existing else 0
             try:
                 r_cnt = subprocess.run(["gh", "api", f"repos/{repo}/releases/tags/{_CURRENT_CHUNK}",
                                        "--jq", ".assets | length"],
                                        capture_output=True, text=True)
-                _CURRENT_CHUNK_COUNT = int(r_cnt.stdout.strip() or "0")
+                remote_cnt = int(r_cnt.stdout.strip() or "0")
+                _CURRENT_CHUNK_COUNT = max(local_cnt, remote_cnt)
             except Exception:
-                _CURRENT_CHUNK_COUNT = 0
+                _CURRENT_CHUNK_COUNT = local_cnt
             log(f"  📌 Aktif GitHub chunk: {_CURRENT_CHUNK} ({_CURRENT_CHUNK_COUNT} asset)")
 
         if _CURRENT_CHUNK_COUNT >= 950:
@@ -511,7 +522,6 @@ def main():
 
     # İndeks yükle (packages.json veya staging/packages.json)
     target_staging = ROOT / "staging" / "packages.json"
-    target_staging_dummy = ROOT / "staging" / "packages-amd64.json"
     target_index = ROOT / "packages.json"
 
     index_path = target_staging if target_staging.exists() else target_index
@@ -654,7 +664,7 @@ def main():
     rate = (success_count / (elapsed / 60)) if elapsed > 0 else 0
     log(f"\n📊 İşlem Tamamlandı: {success_count} başarılı, {fail_count} başarısız ({elapsed:.1f} sn, ~{rate:.1f} paket/dakika)")
 
-    # staging indekslerini kaydet (hem packages.json hem packages-amd64.json)
+    # staging indeksini kaydet
     index["packages"] = sorted(existing.values(), key=lambda p: p["name"])
     index["total_packages"] = len(index["packages"])
     index["architecture"] = ARCH
@@ -664,8 +674,7 @@ def main():
     data_bytes = json.dumps(index, indent=1, ensure_ascii=False)
     target_staging.parent.mkdir(parents=True, exist_ok=True)
     target_staging.write_text(data_bytes, encoding="utf-8")
-    target_staging_dummy.write_text(data_bytes, encoding="utf-8")
-    log(f"📝 Taslak indeks güncellendi: {target_staging} & {target_staging_dummy} ({index['total_packages']} paket, {max_chunk_num} chunk)")
+    log(f"📝 Taslak indeks güncellendi: {target_staging} ({index['total_packages']} paket, {max_chunk_num} chunk)")
 
     return 0
 

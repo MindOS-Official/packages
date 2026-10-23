@@ -86,7 +86,12 @@ def commit_and_push(new_count):
         # Rebase & Push
         pushed = False
         for attempt in range(5):
-            subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
+            pull_res = subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
+            if pull_res.returncode != 0:
+                subprocess.run(["git", "rebase", "--abort"], cwd=str(ROOT), capture_output=True)
+                log(f"  ⚠ Git pull --rebase başarısız, rebase iptal edildi (deneme {attempt+1}/5)...")
+                time.sleep(5)
+                continue
             push_res = subprocess.run(["git", "push", "origin", "main"], cwd=str(ROOT))
             if push_res.returncode == 0:
                 log(f"✓ Git push tamamlandı (toplam {new_count} paket)")
