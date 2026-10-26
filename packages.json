@@ -2,7 +2,7 @@
  "repository": "MindOS Sunrise Official Package Repository",
  "architecture": "x86_64",
  "version": "1.0",
- "total_packages": 63779,
+ "total_packages": 63879,
  "packages": [
   {
    "name": "0ad",
@@ -72788,6 +72788,34 @@
    "size": 13218459,
    "chunk_tag": "v1.0-chunk-56",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-56/cpp-14-alpha-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "cpp-14-arc-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU C preprocessor for arc-linux-gnu",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-arc-linux-gnu-base (= 14.2.0-19cross1)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst"
+   ],
+   "filename": "cpp-14-arc-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "365d5ef44ac9d68996dae035020e945e9af75fadc7905980682733c2f88411bc",
+   "size": 13445074,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/cpp-14-arc-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "cpp-14-arm-linux-gnueabi",
@@ -186813,6 +186841,32 @@
    "chunk_tag": "v1.0-chunk-35"
   },
   {
+   "name": "gcc-mingw-w64-bootstrap",
+   "version": "14.2.0-19+27+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Compiler Collection for MinGW-w64",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "binutils-mingw-w64",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.2.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gcc-mingw-w64-bootstrap-14.2.0-19+27+b1-1-x86_64.mind",
+   "sha256": "95c90ddade30531ff8fc55e98c71f37051645577bd10f5acad0bfeddd6474bd7",
+   "size": 128407782,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gcc-mingw-w64-bootstrap-14.2.0-19+27+b1-1-x86_64.mind"
+  },
+  {
    "name": "gcc-mingw-w64-i686",
    "version": "14.2.0-17+27",
    "release": "1",
@@ -191991,6 +192045,26 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-57/gcin-tables-2.9.4+dfsg1-3-1-x86_64.mind"
   },
   {
+   "name": "gcin-voice",
+   "version": "0~20170223-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "gcin voice data",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "gcin-voice-0.20170223-3-1-x86_64.mind",
+   "sha256": "8eabca690db0bdfbfee6af3857ad80d61b5ea0c94ad038cd5fda5fe552789ddd",
+   "size": 7742308,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gcin-voice-0.20170223-3-1-x86_64.mind"
+  },
+  {
    "name": "gcl",
    "version": "2.6.14-19",
    "release": "1",
@@ -193120,6 +193194,35 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gdc-14-i686-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
   },
   {
+   "name": "gdc-14-loongarch64-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU D compiler (version 2) for the loongarch64-linux-gnu architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-loongarch64-linux-gnu-base (>= 14)",
+    "g++-14-loongarch64-linux-gnu (>= 14.2.0-19cross1)",
+    "gdc-14 (>= 14)",
+    "libgphobos-14-dev-loong64-cross (>= 14)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gdc-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "8571f4ca2c4eaeff3a94315d2511ba1cdf5695de3cbf36d9f4e1ab852ed9180e",
+   "size": 15319174,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gdc-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "gdc-14-s390x-linux-gnu",
    "version": "14.2.0",
    "release": "1",
@@ -193238,6 +193341,26 @@
    "chunk_tag": "v1.0-chunk-05"
   },
   {
+   "name": "gdc-i686-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU D compiler (based on GCC) for the i386 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-i686-linux-gnu (>= 4:14.2.0-1)",
+    "gdc-14-i686-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gdc-i686-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "e4c12bfe3f7740d1a5f7d80adfba324dee46f5e822b6d75a198f1003ab5398ad",
+   "size": 761,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gdc-i686-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
    "name": "gdc-mipsel-linux-gnu",
    "version": "4:12.2.0",
    "release": "1",
@@ -193264,6 +193387,26 @@
    "size": 710,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/gdc-mipsisa64r6-linux-gnuabi64-4.12.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-05"
+  },
+  {
+   "name": "gdc-riscv64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU D compiler (based on GCC) for the riscv64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-riscv64-linux-gnu (>= 4:14.2.0-1)",
+    "gdc-14-riscv64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gdc-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "ba75e10276433f9da71af3898759b645890e3eedf547a60148f96548137014bd",
+   "size": 764,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gdc-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
   },
   {
    "name": "gdc-x86-64-linux-gnu",
@@ -196623,6 +196766,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-47/gemma-0.98.5+dfsg-3-1-x86_64.mind"
   },
   {
+   "name": "gemma-doc",
+   "version": "0.98.5+dfsg-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Example folder for GEMMA",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gemma-doc-0.98.5+dfsg-3-1-x86_64.mind",
+   "sha256": "1cffcd9976eb2ab9de53321a662fb3e62a5e4d5477c2a3972e31093e75d23472",
+   "size": 33660719,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gemma-doc-0.98.5+dfsg-3-1-x86_64.mind"
+  },
+  {
    "name": "gemmi",
    "version": "0.6.5+ds-3",
    "release": "1",
@@ -198171,6 +198331,73 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/gf-complete-tools-1.0.2+2017.04.10.git.ea75cdf-9.1+b1-1-x86_64.mind"
   },
   {
+   "name": "gfal2",
+   "version": "2.23.2-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid file access library 2.0",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libgfal2-2t64",
+    "libgfal-transfer2t64"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfal2-2.23.2-1-1-x86_64.mind",
+   "sha256": "3adb0225f8990f35cf3e629f85467c7180cad161da85884ca2040ad5a1cdf70b",
+   "size": 4375,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfal2-2.23.2-1-1-x86_64.mind"
+  },
+  {
+   "name": "gfal2-doc",
+   "version": "2.23.2-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Documentation for gfal2",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfal2-doc-2.23.2-1-1-x86_64.mind",
+   "sha256": "d9a126771425840bd96736e02109e6d7dc1ee47d5843e7a7a895ff2ae2bf653a",
+   "size": 202784,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfal2-doc-2.23.2-1-1-x86_64.mind"
+  },
+  {
+   "name": "gfal2-plugin-gridftp",
+   "version": "2.23.2-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Provides the gridftp support for gfal2",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libgfal2-2t64 (= 2.23.2-1)",
+    "libgfal-transfer2t64 (= 2.23.2-1)",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libglib2.0-0t64 (>= 2.24.0)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-ftp-client2t64 (>= 7)",
+    "libglobus-ftp-control1t64 (>= 8)",
+    "libglobus-gass-copy2t64 (>= 8)",
+    "libglobus-gss-assist3t64 (>= 11)",
+    "libglobus-gssapi-gsi4t64 (>= 13)",
+    "libstdc++6 (>= 14)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfal2-plugin-gridftp-2.23.2-1-1-x86_64.mind",
+   "sha256": "abaf213488c692238572d78836e677963122e371ab6d6a7f5eeeef6a1385f3cc",
+   "size": 95100,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfal2-plugin-gridftp-2.23.2-1-1-x86_64.mind"
+  },
+  {
    "name": "gfal2-plugin-http",
    "version": "2.23.2-1",
    "release": "1",
@@ -198226,6 +198453,32 @@
    "chunk_tag": "v1.0-chunk-05"
   },
   {
+   "name": "gfal2-plugin-srm",
+   "version": "2.23.2-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Provides srm support for gfal2",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libgfal2-2t64 (= 2.23.2-1)",
+    "libgfal-transfer2t64 (= 2.23.2-1)",
+    "libc6 (>= 2.38)",
+    "libgfal-srm-ifce1t64 (>= 1.24.7)",
+    "libglib2.0-0t64 (>= 2.12.0)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gss-assist3t64 (>= 11)",
+    "libglobus-gssapi-gsi4t64 (>= 13)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfal2-plugin-srm-2.23.2-1-1-x86_64.mind",
+   "sha256": "e2d157e8569a8accaec7161d8cb7859ac0357817c41812872cfd6d4596ed2372",
+   "size": 49479,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfal2-plugin-srm-2.23.2-1-1-x86_64.mind"
+  },
+  {
    "name": "gfan",
    "version": "0.7-3",
    "release": "1",
@@ -198247,6 +198500,27 @@
    "size": 2968451,
    "chunk_tag": "v1.0-chunk-40",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-40/gfan-0.7-3-1-x86_64.mind"
+  },
+  {
+   "name": "gfarm-client",
+   "version": "2.7.20+dfsg-1.2+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Gfarm file system clients",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "libgfarm1t64 (>= 2.7.17)",
+    "libgomp1 (>= 6)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfarm-client-2.7.20+dfsg-1.2+b1-1-x86_64.mind",
+   "sha256": "934b5f876df9be6469948dfb96ea920f169f248a9a91708200d99c5600fa2d09",
+   "size": 383247,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfarm-client-2.7.20+dfsg-1.2+b1-1-x86_64.mind"
   },
   {
    "name": "gfarm-doc",
@@ -198345,6 +198619,32 @@
    "size": 87247,
    "chunk_tag": "v1.0-chunk-46",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-46/gffread-0.12.7-8-1-x86_64.mind"
+  },
+  {
+   "name": "gfmd",
+   "version": "2.7.20+dfsg-1.2+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Gfarm file system metadata server",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "libgfarm1t64 (>= 2.7.19)",
+    "libpq5",
+    "adduser"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "postrm"
+   ],
+   "filename": "gfmd-2.7.20+dfsg-1.2+b1-1-x86_64.mind",
+   "sha256": "a3021049cfb373367ddd7ef91cf6f9f56865acd8d5c2908c3a1c77ee45ca6e3d",
+   "size": 624553,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfmd-2.7.20+dfsg-1.2+b1-1-x86_64.mind"
   },
   {
    "name": "gfortran",
@@ -199166,6 +199466,37 @@
    "chunk_tag": "v1.0-chunk-62"
   },
   {
+   "name": "gfortran-14-loongarch64-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran compiler for the loongarch64-linux-gnu architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-loongarch64-linux-gnu-base (= 14.2.0-19cross1)",
+    "gcc-14-loongarch64-linux-gnu (= 14.2.0-19cross1)",
+    "libgfortran-14-dev-loong64-cross (>= 14)",
+    "libc6-dev-loong64-cross (>= 2.23-1~)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst"
+   ],
+   "filename": "gfortran-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "82c1507f16389b4581c814d931696721dcc13b4447d281b311a1fc4efbd1ef47",
+   "size": 14227251,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "gfortran-14-multilib",
    "version": "14.2.0-19",
    "release": "1",
@@ -199322,6 +199653,37 @@
    "size": 14483835,
    "chunk_tag": "v1.0-chunk-81",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-14-s390x-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "gfortran-14-sparc64-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran compiler for the sparc64-linux-gnu architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-sparc64-linux-gnu-base (= 14.2.0-19cross1)",
+    "gcc-14-sparc64-linux-gnu (= 14.2.0-19cross1)",
+    "libgfortran-14-dev-sparc64-cross (>= 14)",
+    "libc6-dev-sparc64-cross (>= 2.23-1~)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst"
+   ],
+   "filename": "gfortran-14-sparc64-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "2cddc805941cb2cda106f1285faff04d1d3d45a2ac64bdcf3d3977325ab054f2",
+   "size": 14459400,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-14-sparc64-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "gfortran-14-x86-64-linux-gnu",
@@ -199510,6 +199872,27 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/gfortran-for-host-4.14.2.0-1-1-x86_64.mind"
   },
   {
+   "name": "gfortran-hppa-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran 95 compiler for the hppa architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-hppa-linux-gnu (= 4:14.2.0-1)",
+    "gcc-hppa-linux-gnu (= 4:14.2.0-1)",
+    "gfortran-14-hppa-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfortran-hppa-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "c8ebb3a4dafa35750311407077f41ac6dca9e3ba402eaa68d56b34b913a79c31",
+   "size": 781,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-hppa-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
    "name": "gfortran-i686-linux-gnu",
    "version": "4:14.2.0-1",
    "release": "1",
@@ -199678,6 +200061,34 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-57/gfortran-mingw-w64-i686-win32-14.2.0-19+27+b1-1-x86_64.mind"
   },
   {
+   "name": "gfortran-mingw-w64-ucrt64",
+   "version": "14.2.0-19+27+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran compiler for MinGW-w64 targeting UCRT Win64",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-mingw-w64-ucrt64 (= 14.2.0-19+27+b1)",
+    "gcc-mingw-w64-ucrt64-runtime (= 14.2.0-19+27+b1)",
+    "gcc-mingw-w64-base (= 14.2.0-19+27+b1)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfortran-mingw-w64-ucrt64-14.2.0-19+27+b1-1-x86_64.mind",
+   "sha256": "fb2652b76c163da5d9ddad7837c0a57ecc4ac77d56f84b3e829fac317cba1c3b",
+   "size": 19234038,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-mingw-w64-ucrt64-14.2.0-19+27+b1-1-x86_64.mind"
+  },
+  {
    "name": "gfortran-mingw-w64-x86-64",
    "version": "14.2.0-17+27",
    "release": "1",
@@ -199821,6 +200232,28 @@
    "chunk_tag": "v1.0-chunk-05"
   },
   {
+   "name": "gfortran-multilib-sparc64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran 95 compiler for the sparc64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-sparc64-linux-gnu (= 4:14.2.0-1)",
+    "gcc-multilib-sparc64-linux-gnu (= 4:14.2.0-1)",
+    "gfortran-sparc64-linux-gnu (= 4:14.2.0-1)",
+    "gfortran-14-multilib-sparc64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfortran-multilib-sparc64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "3afdee6576bec164edd28ba0111747e123ea238181aa54b257b8f9bb8926181c",
+   "size": 666,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-multilib-sparc64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
    "name": "gfortran-powerpc64le-linux-gnu",
    "version": "4:14.2.0-1",
    "release": "1",
@@ -199861,6 +200294,27 @@
    "size": 783,
    "chunk_tag": "v1.0-chunk-68",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/gfortran-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gfortran-s390x-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Fortran 95 compiler for the s390x architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-s390x-linux-gnu (= 4:14.2.0-1)",
+    "gcc-s390x-linux-gnu (= 4:14.2.0-1)",
+    "gfortran-14-s390x-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfortran-s390x-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "aaff5265a7e10811e12c6f887ae5190c6a1819b7afdcd0156fac7caaf5dcccc7",
+   "size": 793,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfortran-s390x-linux-gnu-4.14.2.0-1-1-x86_64.mind"
   },
   {
    "name": "gfortran-sh4-linux-gnu",
@@ -199950,6 +200404,32 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-51/gfs2-utils-3.6.1-1-1-x86_64.mind"
   },
   {
+   "name": "gfsd",
+   "version": "2.7.20+dfsg-1.2+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Gfarm file system daemon",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "libgfarm1t64 (>= 2.7.19)",
+    "libssl3t64 (>= 3.0.0)",
+    "adduser"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "postrm"
+   ],
+   "filename": "gfsd-2.7.20+dfsg-1.2+b1-1-x86_64.mind",
+   "sha256": "38adc0b0cc7bd6638d6ab88283165174cb6bdd4ae4f7cbff19248de7990de62e",
+   "size": 168129,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfsd-2.7.20+dfsg-1.2+b1-1-x86_64.mind"
+  },
+  {
    "name": "gfsecret",
    "version": "0.5.1-1",
    "release": "1",
@@ -199972,6 +200452,71 @@
    "size": 61149,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-66/gfsecret-0.5.1-1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-66"
+  },
+  {
+   "name": "gfsview-batch",
+   "version": "20121130+dfsg-8.1+b5",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "batch-version of viewer for Gerris simulation files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "fonts-tlwg-garuda-otf",
+    "libgfs-dev",
+    "libgfsgl0t64 (= 20121130+dfsg-8.1+b5)",
+    "zenity",
+    "libc6 (>= 2.34)",
+    "libgfs-1.3-2t64 (>= 20131206+dfsg)",
+    "libgl1",
+    "libgl2ps1.4 (>= 1.4.2+dfsg1)",
+    "libglib2.0-0t64 (>= 2.12.0)",
+    "libglu1-mesa | libglu1",
+    "libgts-0.7-5t64 (>= 0.7.6)",
+    "libopenmpi40 (>= 5.0.6)",
+    "libosmesa6 (>= 10.2~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gfsview-batch-20121130+dfsg-8.1+b5-1-x86_64.mind",
+   "sha256": "b39391b5b7e021f52a7dd80037c1b578ea6f9a1078d90b6ffe81d405d7e6ab47",
+   "size": 34943,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gfsview-batch-20121130+dfsg-8.1+b5-1-x86_64.mind"
+  },
+  {
+   "name": "gftl-dev",
+   "version": "1.3.0+is-really-1.2.7-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Containers and iterators for Fortran",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gftl-dev-1.3.0+is-really-1.2.7-1-1-x86_64.mind",
+   "sha256": "d08950d11ecc3c8b1ed293abdc3c1a8bf0167f86b1a7b4a213bfaaa5be8e95e1",
+   "size": 53994,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gftl-dev-1.3.0+is-really-1.2.7-1-1-x86_64.mind"
+  },
+  {
+   "name": "gftl-shared-dev",
+   "version": "1.0.7-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Common gFTL containers of Fortran intrinsic types",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gftl-shared-dev-1.0.7-2-1-x86_64.mind",
+   "sha256": "250d3f8c7ae6250506c6e214ed28fe2a7e641bf89fc07f8b6dfd76f8d643fd5f",
+   "size": 1267109,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gftl-shared-dev-1.0.7-2-1-x86_64.mind"
   },
   {
    "name": "gftools",
@@ -209706,6 +210251,25 @@
    "chunk_tag": "v1.0-chunk-06"
   },
   {
+   "name": "gittuf",
+   "version": "0.9.0-5+b6",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "security layer for Git repositories (program)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gittuf-0.9.0-5+b6-1-x86_64.mind",
+   "sha256": "7bf166fba5b350c6ef4aceb6539b45717be7cf128ead8040fc1f1ba1deef4d07",
+   "size": 24610513,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gittuf-0.9.0-5+b6-1-x86_64.mind"
+  },
+  {
    "name": "gitweb",
    "version": "1:2.47.3-0+deb13u1",
    "release": "1",
@@ -211681,6 +212245,52 @@
    "chunk_tag": "v1.0-chunk-67"
   },
   {
+   "name": "globus-gass-server-ez-progs",
+   "version": "6.2-3+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus Gass Server_ez Programs",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gass-server-ez2t64 (>= 4)",
+    "libglobus-gass-transfer2t64 (>= 7)",
+    "libglobus-gss-assist3t64 (>= 11)",
+    "libglobus-gssapi-gsi4t64 (>= 13)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "globus-gass-server-ez-progs-6.2-3+b1-1-x86_64.mind",
+   "sha256": "fafd1c08d1944f3845f9b3def763322aca6d2dc8cd9c21391ee7462488516b11",
+   "size": 9797,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/globus-gass-server-ez-progs-6.2-3+b1-1-x86_64.mind"
+  },
+  {
+   "name": "globus-gfork-progs",
+   "version": "5.0-5+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - GFork Programs",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gfork0t64 (>= 3)",
+    "libglobus-xio0t64 (>= 5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "globus-gfork-progs-5.0-5+b1-1-x86_64.mind",
+   "sha256": "6e35d2443666baf0ff82e65fe6c6f0ac466191cfeff295f1fc2f4573dcfba572",
+   "size": 16401,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/globus-gfork-progs-5.0-5+b1-1-x86_64.mind"
+  },
+  {
    "name": "globus-gram-job-manager-condor",
    "version": "3.0",
    "release": "1",
@@ -211723,6 +212333,23 @@
    "chunk_tag": "v1.0-chunk-06"
   },
   {
+   "name": "globus-gram-job-manager-scripts-doc",
+   "version": "7.3-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - GRAM Job ManagerScripts Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "globus-gram-job-manager-scripts-doc-7.3-3-1-x86_64.mind",
+   "sha256": "4ffaca376e89ccb7faf98609c78a0302422e7247334bd645f50e986e213eac5f",
+   "size": 18778,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/globus-gram-job-manager-scripts-doc-7.3-3-1-x86_64.mind"
+  },
+  {
    "name": "globus-gram-job-manager-sge",
    "version": "3.3",
    "release": "1",
@@ -211735,6 +212362,38 @@
    "size": 12634,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/globus-gram-job-manager-sge-3.3-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-06"
+  },
+  {
+   "name": "globus-gridftp-server-progs",
+   "version": "13.25-6",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus GridFTP Server Programs",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "init-system-helpers (>= 1.54~)",
+    "libc6 (>= 2.34)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gfork0t64 (>= 3)",
+    "libglobus-gridftp-server6t64 (>= 13)",
+    "libglobus-gssapi-gsi4t64 (>= 13)",
+    "libglobus-xio0t64 (>= 5)",
+    "libltdl7 (>= 2.5.4)",
+    "perl:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "globus-gridftp-server-progs-13.25-6-1-x86_64.mind",
+   "sha256": "6f2663838c973e6b1be049717003bfb55c4cbed1c5d134028f8f96c9fbcae056",
+   "size": 54511,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/globus-gridftp-server-progs-13.25-6-1-x86_64.mind"
   },
   {
    "name": "globus-gsi-cert-utils-progs",
@@ -211805,6 +212464,34 @@
    "chunk_tag": "v1.0-chunk-63"
   },
   {
+   "name": "globus-scheduler-event-generator-progs",
+   "version": "6.5-3+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Scheduler Event Generator Programs",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "init-system-helpers (>= 1.54~)",
+    "libglobus-scheduler-event-generator0t64 (= 6.5-3+b1)",
+    "libc6 (>= 2.34)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-xio0t64 (>= 5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "globus-scheduler-event-generator-progs-6.5-3+b1-1-x86_64.mind",
+   "sha256": "4c4e93181eb5da7c7f3fe2b0c3a8f66f88d3c3c3c6594fa10e9cec2a66c714be",
+   "size": 21271,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/globus-scheduler-event-generator-progs-6.5-3+b1-1-x86_64.mind"
+  },
+  {
    "name": "glogg",
    "version": "1.1.4-1.4",
    "release": "1",
@@ -211843,6 +212530,26 @@
    "size": 96594,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/glogic-2.6-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-06"
+  },
+  {
+   "name": "glome-cli",
+   "version": "0.2-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Generic Low Overhead Message Exchange command line tools",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "glome-cli-0.2-2-1-x86_64.mind",
+   "sha256": "28a91e1d5de7ea7354523b825a4bf251919fea77f48cff34d9689819a184d034",
+   "size": 522262,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/glome-cli-0.2-2-1-x86_64.mind"
   },
   {
    "name": "glosstex",
@@ -212936,6 +213643,36 @@
    "chunk_tag": "v1.0-chunk-06"
   },
   {
+   "name": "gm2-14-loongarch64-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Modula-2 compiler for the loongarch64-linux-gnu architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-loongarch64-linux-gnu-base (>= 14)",
+    "g++-14-loongarch64-linux-gnu (>= 14.2.0-19cross1)",
+    "libgm2-14-dev-loong64-cross (>= 14)",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libstdc++6 (>= 5)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gm2-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "997a98413176b133fff5e5ebc70a8c8833be0d0b90a2d24edca54e852db69672",
+   "size": 13532166,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gm2-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "gm2-14-mips64-linux-gnuabi64",
    "version": "14.2.0",
    "release": "1",
@@ -213109,6 +213846,49 @@
    "size": 4588,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-67/gm2-doc-4.14.2.0-1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-67"
+  },
+  {
+   "name": "gm2-for-host",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Modula-2 compiler for the host architecture, based on the GCC backend",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-x86-64-linux-gnu (= 4:14.2.0-1)",
+    "gm2-x86-64-linux-gnu (= 4:14.2.0-1)",
+    "cpp-for-host (= 4:14.2.0-1)",
+    "gcc-for-host (= 4:14.2.0-1)",
+    "gm2-14-for-host (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gm2-for-host-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "6acfc78779f74a2283b5aa9fe52a835b702ae145107d6075f90d698b608117d9",
+   "size": 666,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gm2-for-host-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gm2-riscv64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Modula-2 compiler (based on GCC) for the riscv64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-riscv64-linux-gnu (= 4:14.2.0-1)",
+    "gm2-14-riscv64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gm2-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "53a50e5c5cd438c4d4ba793d99d81931f753907782ed82eba1c1d42e5fc2c7af",
+   "size": 772,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gm2-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
   },
   {
    "name": "gm2-x86-64-linux-gnu",
@@ -214528,6 +215308,35 @@
    "size": 40675380,
    "chunk_tag": "v1.0-chunk-76",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/gnat-14-i686-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "gnat-14-loongarch64-linux-gnu",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Ada compiler for the loongarch64-linux-gnu architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-loongarch64-linux-gnu-base (= 14.2.0-19cross1)",
+    "gcc-14-loongarch64-linux-gnu (>= 14)",
+    "libgnat-14-loong64-cross (>= 14.2.0-19cross1)",
+    "libc6-dev-loong64-cross (>= 2.23-1~)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gnat-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "d1d94ceda689ec8b0f89bb3f2dd18d2d8331483752d184961b73e8a87a07ac61",
+   "size": 43129355,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gnat-14-loongarch64-linux-gnu-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "gnat-14-m68k-linux-gnu",
@@ -225000,6 +225809,27 @@
    "chunk_tag": "v1.0-chunk-06"
   },
   {
+   "name": "gobjc++-riscv64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C++ compiler for the riscv64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-riscv64-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-riscv64-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc++-14-riscv64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc++-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "137cfcb2fac745e3a7d5d87e86034b9a2f22dd9f9132b6799e2ad9c111ef852a",
+   "size": 646,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc++-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
    "name": "gobjc++-s390x-linux-gnu",
    "version": "4:13.2.0",
    "release": "1",
@@ -225702,6 +226532,48 @@
    "chunk_tag": "v1.0-chunk-66"
   },
   {
+   "name": "gobjc-arc-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the arc architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-arc-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-arc-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-arc-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-arc-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "11891198a71381940895d50164485b35a3361e9121b7e08f7ebb9253ac1d3460",
+   "size": 639,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-arc-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gobjc-arm-linux-gnueabi",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the armel architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-arm-linux-gnueabi (>= 4:14.2.0-1)",
+    "gcc-arm-linux-gnueabi (>= 4:14.2.0-1)",
+    "gobjc-14-arm-linux-gnueabi (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-arm-linux-gnueabi-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "c62fa6996b4659a26e80efdf61779a36866cdad65c091a860bff36f40e5fddd8",
+   "size": 646,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-arm-linux-gnueabi-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
    "name": "gobjc-for-build",
    "version": "4:14.2.0-1",
    "release": "1",
@@ -225770,6 +226642,27 @@
    "size": 578,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/gobjc-i686-linux-gnu-4.13.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-06"
+  },
+  {
+   "name": "gobjc-m68k-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the m68k architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-m68k-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-m68k-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-m68k-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-m68k-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "e354ece5725ab60ad5a30ea0cacdeb39718a08dcfa48c0584e24f51361f9f0ce",
+   "size": 643,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-m68k-linux-gnu-4.14.2.0-1-1-x86_64.mind"
   },
   {
    "name": "gobjc-mingw-w64",
@@ -225969,6 +226862,111 @@
    "size": 602,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/gobjc-multilib-mipsisa64r6el-linux-gnuabi64-4.12.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-06"
+  },
+  {
+   "name": "gobjc-powerpc-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the powerpc architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-powerpc-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-powerpc-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-powerpc-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-powerpc-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "8e1808bfe06680f05769a2b89c15571569bdf3ae4786f63f9da8e783f22686bc",
+   "size": 643,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-powerpc-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gobjc-powerpc64le-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the ppc64el architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-powerpc64le-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-powerpc64le-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-powerpc64le-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-powerpc64le-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "cc26f2e2b0cf1b5c309843e6aa580666e8483dd3463e9317ff8afea4384864c4",
+   "size": 649,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-powerpc64le-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gobjc-riscv64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the riscv64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-riscv64-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-riscv64-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-riscv64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "a36de7276088abb244d68449e95c1c59ca18c4b388521ad570bfe4bfb035b554",
+   "size": 642,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-riscv64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gobjc-sh4-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the sh4 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-sh4-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-sh4-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-sh4-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-sh4-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "f1d5eed8ae767907483ad80e7f60c01d0d956a218e6c17e56ff08229f0aaec73",
+   "size": 637,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-sh4-linux-gnu-4.14.2.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "gobjc-sparc64-linux-gnu",
+   "version": "4:14.2.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Objective-C compiler for the sparc64 architecture",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "cpp-sparc64-linux-gnu (>= 4:14.2.0-1)",
+    "gcc-sparc64-linux-gnu (>= 4:14.2.0-1)",
+    "gobjc-14-sparc64-linux-gnu (>= 14.2.0-6~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "gobjc-sparc64-linux-gnu-4.14.2.0-1-1-x86_64.mind",
+   "sha256": "437f2a70106a80eb3ffbeb35e26b40d6315762b879d86817b9d9ad3d0687bc59",
+   "size": 644,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/gobjc-sparc64-linux-gnu-4.14.2.0-1-1-x86_64.mind"
   },
   {
    "name": "gobjc-x86-64-linux-gnu",
@@ -250938,6 +251936,97 @@
    "size": 429140,
    "chunk_tag": "v1.0-chunk-76",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/golang-gitlab-gitlab-org-api-client-go-dev-0.123.0-2-1-x86_64.mind"
+  },
+  {
+   "name": "golang-gitlab-gitlab-org-gitaly-dev",
+   "version": "16.11.6+ds1-4",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Gitaly golang module",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "golang-github-aws-aws-sdk-go-dev",
+    "golang-github-azure-azure-pipeline-go-dev",
+    "golang-github-azure-azure-storage-blob-go-dev (>= 0.14~)",
+    "golang-github-azure-go-autorest-dev (>= 14.2~)",
+    "golang-github-beevik-ntp-dev",
+    "golang-github-beorn7-perks-dev",
+    "golang-github-burntsushi-toml-dev",
+    "golang-github-client9-reopen-dev",
+    "golang-github-cloudflare-tableflip-dev (>= 1.2~)",
+    "golang-github-containerd-cgroups-dev",
+    "golang-github-davecgh-go-spew-dev",
+    "golang-github-dchest-safefile-dev",
+    "golang-github-felixge-httpsnoop-dev",
+    "golang-github-getsentry-sentry-go-dev",
+    "golang-github-go-logr-logr-dev",
+    "golang-github-go-logr-stdr-dev",
+    "golang-github-git-lfs-git-lfs-dev (>= 3.0~)",
+    "golang-github-golang-protobuf-1-5-dev",
+    "golang-github-google-uuid-dev",
+    "golang-github-google-wire-dev",
+    "golang-github-go-enry-go-license-detector-dev (>= 4.3.0+git20221007~)",
+    "golang-github-hashicorp-golang-lru-dev",
+    "golang-github-hashicorp-yamux-dev (>= 0.0+git20210316.a95892c~)",
+    "golang-github-jackc-pgconn-dev",
+    "golang-github-jackc-pgx-v4-dev",
+    "golang-github-kelseyhightower-envconfig-dev",
+    "golang-github-lib-pq-dev (>= 1.3~)",
+    "golang-github-miekg-dns-dev (>= 1.1.54~)",
+    "golang-github-opencontainers-specs-dev",
+    "golang-github-opentracing-opentracing-go-dev",
+    "golang-github-oklog-ulid-dev (>= 2.0~)",
+    "golang-github-pelletier-go-toml.v2-dev",
+    "golang-github-pmezard-go-difflib-dev",
+    "golang-github-rubenv-sql-migrate-dev",
+    "golang-github-sebest-xff-dev",
+    "golang-github-sirupsen-logrus-dev (>= 1.0~)",
+    "golang-github-stretchr-testify-dev (>= 1.8~)",
+    "golang-gitlab-gitlab-org-gitlab-shell-v14-dev (>= 14.18~)",
+    "golang-golang-x-crypto-dev",
+    "golang-golang-x-net-dev",
+    "golang-golang-x-oauth2-dev (>= 0.0~git20211104.d3ed0bb)",
+    "golang-golang-x-oauth2-google-dev (>= 0.0~git20211104.d3ed0bb)",
+    "golang-golang-x-sync-dev",
+    "golang-golang-x-sys-dev",
+    "golang-golang-x-text-dev",
+    "golang-golang-x-time-dev",
+    "golang-golang-x-tools-dev",
+    "golang-golang-x-xerrors-dev",
+    "golang-google-protobuf-dev (>= 1.33~)",
+    "golang-gopkg-gorp.v1-dev",
+    "golang-gopkg-yaml.v2-dev",
+    "golang-honnef-go-tools-dev",
+    "golang-procfs-dev",
+    "golang-uber-goleak-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "golang-gitlab-gitlab-org-gitaly-dev-16.11.6+ds1-4-1-x86_64.mind",
+   "sha256": "20b18c5194be4ea016f6869b8926811c26e66aa8aa9a1fe2602beb69acb4b638",
+   "size": 103537107,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/golang-gitlab-gitlab-org-gitaly-dev-16.11.6+ds1-4-1-x86_64.mind"
+  },
+  {
+   "name": "golang-gitlab-gitlab-org-gitlab-shell-v14-dev",
+   "version": "14.35.0+ds1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "gitlab-shell golang module",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "golang-gitlab-gitlab-org-gitaly-dev (>= 15.5~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "golang-gitlab-gitlab-org-gitlab-shell-v14-dev-14.35.0+ds1-2-1-x86_64.mind",
+   "sha256": "6a0010d0ef442c6a3e8964c5d4b52fa7d4f31c0fe250c3e17d8033efd2b0b8f1",
+   "size": 3118142,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/golang-gitlab-gitlab-org-gitlab-shell-v14-dev-14.35.0+ds1-2-1-x86_64.mind"
   },
   {
    "name": "golang-glog-dev",
@@ -324391,6 +325480,81 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/lib32gcc-14-dev-mips64-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
+   "name": "lib32gcc-14-dev-mips64el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (32 bit development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib32gcc-s1-mips64el-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mips64el-cross (>= 14.2.0-13cross1)",
+    "lib32gomp1-mips64el-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mips64el-cross (>= 14.2.0-13cross1)",
+    "lib32atomic1-mips64el-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mips64el-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib32gcc-14-dev-mips64el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "3025230dc6fa59ef515c89e029569d27dd9c4eb06fc5b5cb65f9380f5064cb6e",
+   "size": 412977,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib32gcc-14-dev-mips64el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "lib32gcc-14-dev-mips64r6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (32 bit development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib32gcc-s1-mips64r6-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mips64r6-cross (>= 14.2.0-13cross1)",
+    "lib32gomp1-mips64r6-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mips64r6-cross (>= 14.2.0-13cross1)",
+    "lib32atomic1-mips64r6-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mips64r6-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib32gcc-14-dev-mips64r6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "8e1c98437cacfce107a55adade873acf90e9886391913d7e23580bed3546d253",
+   "size": 539583,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib32gcc-14-dev-mips64r6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "lib32gcc-14-dev-mips64r6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (32 bit development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib32gcc-s1-mips64r6el-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mips64r6el-cross (>= 14.2.0-13cross1)",
+    "lib32gomp1-mips64r6el-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mips64r6el-cross (>= 14.2.0-13cross1)",
+    "lib32atomic1-mips64r6el-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mips64r6el-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib32gcc-14-dev-mips64r6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "834aa2ae2d8ef74cffc3f7c274a0315129dea71a9b90faedca4f8028a1384948",
+   "size": 543652,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib32gcc-14-dev-mips64r6el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "lib32gcc-14-dev-sparc64-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -324739,6 +325903,27 @@
    "size": 410057,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/lib32gfortran5-amd64-cross-14.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-21"
+  },
+  {
+   "name": "lib32gfortran5-sparc64-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications (32bit)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "lib32gcc-s1-sparc64-cross (>= 4.3)",
+    "libc6-sparc-sparc64-cross (>= 2.41)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib32gfortran5-sparc64-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "37187744151dd3141fb38b8cff7957a7f52a918e1109995d6d255a0482b2ce1e",
+   "size": 473428,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib32gfortran5-sparc64-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "lib32gfortran5-x32-cross",
@@ -326578,6 +327763,31 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/lib64gcc-14-dev-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
+   "name": "lib64gcc-14-dev-mipsr6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (64bit development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib64gcc-s1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "lib64gomp1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "lib64atomic1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mipsr6-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib64gcc-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "6a8788f27d112b80bfa23232bf73da4b3a9ee1f50eb220a9f6fe3aaafbb22634",
+   "size": 596109,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib64gcc-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "lib64gcc-14-dev-x32-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -327389,6 +328599,48 @@
    "size": 905255,
    "chunk_tag": "v1.0-chunk-78",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/lib64stdc++6-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "lib64stdc++6-mipsr6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (mipsr6) (64bit)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib64gcc-s1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libc6-mips64-mipsr6-cross (>= 2.40)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib64stdc++6-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "7dead82e78ff492b64a8695e61ebc5814bbeee20102a7a0c0b53cc73e0b7ac43",
+   "size": 935646,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib64stdc++6-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "lib64stdc++6-mipsr6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (mipsr6el) (64bit)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib64gcc-s1-mipsr6el-cross (>= 14.2.0-13cross1)",
+    "libc6-mips64-mipsr6el-cross (>= 2.40)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lib64stdc++6-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "e3f33e47fbfd1050a84eb36a366ccdea5a5da257fde1f32c16575c2300867b58",
+   "size": 892941,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/lib64stdc++6-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
    "name": "lib64stdc++6-powerpc-cross",
@@ -420039,6 +421291,44 @@
    "chunk_tag": "v1.0-chunk-28"
   },
   {
+   "name": "libelemental-dev",
+   "version": "2.0.2-1.1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Periodic Table viewer (development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libelemental0t64 (= 2.0.2-1.1+b2)",
+    "libglibmm-2.4-dev",
+    "libpango1.0-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libelemental-dev-2.0.2-1.1+b2-1-x86_64.mind",
+   "sha256": "81b3b4a0e34dd25c1294c9568ef9b7dd90c9eb54690d565f6b02b300d28df3c1",
+   "size": 262496,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libelemental-dev-2.0.2-1.1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "libelemental-doc",
+   "version": "2.0.2-1.1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Periodic Table viewer (API documentation)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libelemental-doc-2.0.2-1.1-1-x86_64.mind",
+   "sha256": "e7389a55665020ee24c76db9fff1574a64447bae35d51aa06874b2a6c0026d4f",
+   "size": 349785,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libelemental-doc-2.0.2-1.1-1-x86_64.mind"
+  },
+  {
    "name": "libelemental0t64",
    "version": "2.0.2-1.1+b2",
    "release": "1",
@@ -449089,6 +450379,26 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/libgeonames-common-0.3.1-2-1-x86_64.mind"
   },
   {
+   "name": "libgeonames-dev",
+   "version": "0.3.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "geonames - library development files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libgeonames0 (= 0.3.1-2)",
+    "libglib2.0-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgeonames-dev-0.3.1-2-1-x86_64.mind",
+   "sha256": "de3a4b43d5dfaa51be45cc7a27510d577f23a85cc349f4be35c7169dd9446cb8",
+   "size": 26183,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgeonames-dev-0.3.1-2-1-x86_64.mind"
+  },
+  {
    "name": "libgeonames0",
    "version": "0.3.1-2",
    "release": "1",
@@ -449108,6 +450418,23 @@
    "size": 863806,
    "chunk_tag": "v1.0-chunk-52",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/libgeonames0-0.3.1-2-1-x86_64.mind"
+  },
+  {
+   "name": "libgeoregression-java",
+   "version": "0.24+ds-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Geometric Regression Library",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgeoregression-java-0.24+ds-1-1-x86_64.mind",
+   "sha256": "3fb642a94b73ee2e8fd6658dad0518d334aa689c79872e346c3fedb45e2276f7",
+   "size": 539748,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgeoregression-java-0.24+ds-1-1-x86_64.mind"
   },
   {
    "name": "libgeos++-dev",
@@ -450175,6 +451502,28 @@
    "chunk_tag": "v1.0-chunk-34"
   },
   {
+   "name": "libgettext-maven-plugin-java",
+   "version": "1.2.9-5",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "plugin to integrate gettext tools into a Maven build",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libmaven-reporting-api-java (>= 4.0.0)",
+    "libmaven-reporting-impl-java (>= 4.0.0)",
+    "libmaven3-core-java (>= 3.8.8)",
+    "libplexus-utils2-java (>= 2.x)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgettext-maven-plugin-java-1.2.9-5-1-x86_64.mind",
+   "sha256": "bba793181190f2ce6827f4d31574985e44405a7592ec0e7991818cc8363988a1",
+   "size": 31116,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgettext-maven-plugin-java-1.2.9-5-1-x86_64.mind"
+  },
+  {
    "name": "libgettext-ocaml",
    "version": "0.5.0+really0.4.2-1+b1",
    "release": "1",
@@ -451129,6 +452478,27 @@
    "chunk_tag": "v1.0-chunk-26"
   },
   {
+   "name": "libgfortran5-alpha-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6.1-alpha-cross (>= 2.41)",
+    "libgcc-s1-alpha-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-alpha-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "1cf13fa102aff4c7a33f3479790d535f9e34252b2edd8c38a07b1b9b948b32fc",
+   "size": 561108,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-alpha-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "libgfortran5-amd64-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -451148,6 +452518,27 @@
    "size": 1097333,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-64/libgfortran5-amd64-cross-14.2.0-19cross1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-64"
+  },
+  {
+   "name": "libgfortran5-arc-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-arc-cross (>= 2.41)",
+    "libgcc-s1-arc-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-arc-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "95a9d122d84f340f31f49a71d53e7ffb539da4b1d1c9b275407c03ef77462d12",
+   "size": 374452,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-arc-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libgfortran5-arm64-cross",
@@ -451213,6 +452604,27 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-74/libgfortran5-armhf-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
+   "name": "libgfortran5-hppa-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-hppa-cross (>= 2.41)",
+    "libgcc-s4-hppa-cross"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-hppa-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "80e4f5e821b4b118f3fb4dc922eb83bbaaf38f364af9d2f5b75cff4bbf1dd29a",
+   "size": 492308,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-hppa-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "libgfortran5-i386-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -451232,6 +452644,27 @@
    "size": 972318,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-64/libgfortran5-i386-cross-14.2.0-19cross1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-64"
+  },
+  {
+   "name": "libgfortran5-m68k-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-m68k-cross (>= 2.41)",
+    "libgcc-s2-m68k-cross"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-m68k-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "d8f7fb338130284678ba4fe2ee6e92555c7e2aa976701147a4a5a48f58cf765e",
+   "size": 437029,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-m68k-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libgfortran5-mips-cross",
@@ -451255,6 +452688,153 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/libgfortran5-mips-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
+   "name": "libgfortran5-mips64-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64-cross (>= 2.40)",
+    "libgcc-s1-mips64-cross (>= 4.5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mips64-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "3c931b499a208e6aaa37bc824ff28c221cc5d092bb601e2089cd8c85c07aa13e",
+   "size": 502813,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mips64-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mips64el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64el-cross (>= 2.40)",
+    "libgcc-s1-mips64el-cross (>= 4.5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mips64el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "cb964b654412cd44973c076293215488fe846132ca22a84b55843cd8128859ce",
+   "size": 502798,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mips64el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mips64r6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64r6-cross (>= 2.40)",
+    "libgcc-s1-mips64r6-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mips64r6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "2fb946272470e578b1eda9ef070c66e1ab40294275bdc876f41c7a78e71e5675",
+   "size": 476061,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mips64r6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mips64r6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64r6el-cross (>= 2.40)",
+    "libgcc-s1-mips64r6el-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mips64r6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "76b266a31d6b800f47637a84a2d6ca440561a363db1d1abea4fa20ab7369a6fe",
+   "size": 473389,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mips64r6el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mipsel-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mipsel-cross (>= 2.40)",
+    "libgcc-s1-mipsel-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mipsel-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "c80683aa4982ac12f427cc95486b08bfac6a9ae75c764bacafdbc22100c9bf83",
+   "size": 416156,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mipsr6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mipsr6-cross (>= 2.40)",
+    "libgcc-s1-mipsr6-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "20f9d5db904e6a43b317a097169cff29a17d4b17bf6836d7d3ef77432a89210f",
+   "size": 391015,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-mipsr6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mipsr6el-cross (>= 2.40)",
+    "libgcc-s1-mipsr6el-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "a1b988a8029bfe4aa54d0d54f9a3a336b8cf2187165a4452f4ab92d2cbb0fc5c",
+   "size": 388075,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "libgfortran5-powerpc-cross",
    "version": "14.2.0",
    "release": "1",
@@ -451267,6 +452847,27 @@
    "size": 541037,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libgfortran5-powerpc-cross-14.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-21"
+  },
+  {
+   "name": "libgfortran5-ppc64-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-ppc64-cross (>= 2.41)",
+    "libgcc-s1-ppc64-cross (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-ppc64-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "29f29615b8908ae98d635f1cdee1f7287db33f77ca44c423df2f72d04bc3f6b5",
+   "size": 620471,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-ppc64-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libgfortran5-ppc64el-cross",
@@ -451372,6 +452973,27 @@
    "size": 506876,
    "chunk_tag": "v1.0-chunk-76",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/libgfortran5-sparc64-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libgfortran5-x32-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Fortran applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-x32-cross (>= 2.41)",
+    "libgcc-s1-x32-cross (>= 4.3)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgfortran5-x32-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "2dd5224b488e0f2bd297fd00b93813ed190f0e0662f1e40c5da02920d63a9139",
+   "size": 1308082,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libgfortran5-x32-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libgfrpc0",
@@ -516790,6 +518412,23 @@
    "chunk_tag": "v1.0-chunk-21"
   },
   {
+   "name": "libglgrib-headers",
+   "version": "1.0-4+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Display GRIB2 fields using OpenGL (headers for glgrib)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglgrib-headers-1.0-4+b3-1-x86_64.mind",
+   "sha256": "5c26233a110f9880f0451ee5aba676ff04e97b6f833bd61974350a9cc7df6635",
+   "size": 55213,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglgrib-headers-1.0-4+b3-1-x86_64.mind"
+  },
+  {
    "name": "libglib-object-introspection-perl",
    "version": "0.051-2+b1",
    "release": "1",
@@ -517317,6 +518956,23 @@
    "chunk_tag": "v1.0-chunk-21"
   },
   {
+   "name": "libglobus-authz-callout-error-doc",
+   "version": "4.2-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus authz error library Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-authz-callout-error-doc-4.2-3-1-x86_64.mind",
+   "sha256": "cca887f15ee6d36cd263f5e11e4a457e3405bc5ca189ecefdf37bf2552f7614f",
+   "size": 117872,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-authz-callout-error-doc-4.2-3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-authz-callout-error0t64",
    "version": "4.2-3+b1",
    "release": "1",
@@ -517332,6 +518988,23 @@
    "size": 4351,
    "chunk_tag": "v1.0-chunk-78",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/libglobus-authz-callout-error0t64-4.2-3+b1-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-authz-doc",
+   "version": "4.6-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus authz library Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-authz-doc-4.6-3-1-x86_64.mind",
+   "sha256": "4bd9782ca7fe47ddd26fbae2fbc5731242d43f26c094e0a44c596ec67812e2c3",
+   "size": 123539,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-authz-doc-4.6-3-1-x86_64.mind"
   },
   {
    "name": "libglobus-authz0t64",
@@ -517615,6 +519288,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-70/libglobus-ftp-control1t64-9.10-3+b1-1-x86_64.mind"
   },
   {
+   "name": "libglobus-gass-cache-doc",
+   "version": "10.3-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus Gass Cache Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gass-cache-doc-10.3-3-1-x86_64.mind",
+   "sha256": "a5bcb20e91df39149d8fbdc7a1f2871b917af3f692e98ada2d1f35083ba6a07a",
+   "size": 137930,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gass-cache-doc-10.3-3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-gass-cache5t64",
    "version": "10.3",
    "release": "1",
@@ -517627,6 +519317,23 @@
    "size": 21742,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/libglobus-gass-cache5t64-10.3-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-05"
+  },
+  {
+   "name": "libglobus-gass-copy-doc",
+   "version": "10.13-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus Gass Copy Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gass-copy-doc-10.13-2-1-x86_64.mind",
+   "sha256": "53e473456ca7e30b6d7f19ab9bb4304797c8cae5f1bb6aba32bc842ba0fb7607",
+   "size": 160658,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gass-copy-doc-10.13-2-1-x86_64.mind"
   },
   {
    "name": "libglobus-gass-copy2t64",
@@ -517822,6 +519529,47 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-79/libglobus-gram-client-doc-14.6-3-1-x86_64.mind"
   },
   {
+   "name": "libglobus-gram-client3t64",
+   "version": "14.6-3+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - GRAM Client Library",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.4)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gram-protocol3t64 (>= 11)",
+    "libglobus-gss-assist3t64 (>= 11)",
+    "libglobus-io3t64 (>= 11)",
+    "libglobus-rsl2t64 (>= 9)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gram-client3t64-14.6-3+b1-1-x86_64.mind",
+   "sha256": "58fde1cafda7f854912a9644f45586ea55be2c9fa0ac1dcaf757dfb87acb19f0",
+   "size": 18001,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gram-client3t64-14.6-3+b1-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-gram-job-manager-callout-error-doc",
+   "version": "4.2-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus GRAM Jobmanager Callout Errors Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gram-job-manager-callout-error-doc-4.2-3-1-x86_64.mind",
+   "sha256": "b1239c503ead2636535d91ca1ad6b7ab8c6f5758dc97f182933ea77126e68db8",
+   "size": 118362,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gram-job-manager-callout-error-doc-4.2-3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-gram-protocol-dev",
    "version": "13.6-3+b1",
    "release": "1",
@@ -517860,6 +519608,30 @@
    "size": 194685,
    "chunk_tag": "v1.0-chunk-79",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-79/libglobus-gram-protocol-doc-13.6-3-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-gram-protocol3t64",
+   "version": "13.6-3+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - GRAM Protocol Library",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.14)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-gss-assist3t64 (>= 11)",
+    "libglobus-gssapi-gsi4t64 (>= 13)",
+    "libglobus-io3t64 (>= 11)",
+    "perl:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gram-protocol3t64-13.6-3+b1-1-x86_64.mind",
+   "sha256": "5a1c8d2e72a5cbd7d359f77b461f97be452b320257a93ce3f8b40c30cac18862",
+   "size": 37846,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gram-protocol3t64-13.6-3+b1-1-x86_64.mind"
   },
   {
    "name": "libglobus-gridftp-server-control0t64",
@@ -517901,6 +519673,23 @@
    "size": 216003,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libglobus-gridftp-server6t64-13.25-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-21"
+  },
+  {
+   "name": "libglobus-gridmap-callout-error-doc",
+   "version": "3.2-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus Gridmap Callout Errors Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-gridmap-callout-error-doc-3.2-3-1-x86_64.mind",
+   "sha256": "98b0008a4815b24201ab4093b421563cf1eda94b3bfd1f39138e455aa342045b",
+   "size": 116479,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-gridmap-callout-error-doc-3.2-3-1-x86_64.mind"
   },
   {
    "name": "libglobus-gridmap-callout-error0t64",
@@ -518620,6 +520409,27 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-69/libglobus-io3t64-12.4-3+b1-1-x86_64.mind"
   },
   {
+   "name": "libglobus-net-manager-dev",
+   "version": "1.7-3+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Network Manager Library Development Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libglobus-net-manager0t64 (= 1.7-3+b3)",
+    "libglobus-common-dev (>= 15.27)",
+    "libglobus-xio-dev (>= 5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-net-manager-dev-1.7-3+b3-1-x86_64.mind",
+   "sha256": "12e8309a359bc55240f4b0d505fdf1565495e4c1b22a888dc29b98794cd67532",
+   "size": 8098,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-net-manager-dev-1.7-3+b3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-net-manager-doc",
    "version": "1.7-3",
    "release": "1",
@@ -518737,6 +520547,43 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-79/libglobus-rsl-doc-11.4-2-1-x86_64.mind"
   },
   {
+   "name": "libglobus-rsl2t64",
+   "version": "11.4-2+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Resource Specification Language Library",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.14)",
+    "libglobus-common0t64 (>= 17)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-rsl2t64-11.4-2+b1-1-x86_64.mind",
+   "sha256": "17381ba19e0d276d87ef3aaebb02c30c37cdd2687de60ea6caa93135b9b1770a",
+   "size": 29565,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-rsl2t64-11.4-2+b1-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-scheduler-event-generator-doc",
+   "version": "6.5-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Scheduler Event Generator Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-scheduler-event-generator-doc-6.5-3-1-x86_64.mind",
+   "sha256": "3c1cde34e97a9635c81dee1a421df039e52d55c6b162ebf225a7ea382e5802da",
+   "size": 120206,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-scheduler-event-generator-doc-6.5-3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-scheduler-event-generator0t64",
    "version": "6.5-3+b1",
    "release": "1",
@@ -518795,6 +520642,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/libglobus-xio-doc-6.6-3-1-x86_64.mind"
   },
   {
+   "name": "libglobus-xio-gridftp-driver-doc",
+   "version": "3.6-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus XIO GridFTP Driver Documentation Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-xio-gridftp-driver-doc-3.6-3-1-x86_64.mind",
+   "sha256": "57e3b82130ee2aa46bb7f2fdb7944d92bcecd605cdc86dc409df149a009bd4ac",
+   "size": 133579,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-xio-gridftp-driver-doc-3.6-3-1-x86_64.mind"
+  },
+  {
    "name": "libglobus-xio-gsi-driver",
    "version": "5.4",
    "release": "1",
@@ -518848,6 +520712,48 @@
    "size": 148386,
    "chunk_tag": "v1.0-chunk-76",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/libglobus-xio-gsi-driver-doc-5.4-3-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-xio-net-manager-driver",
+   "version": "1.7-3+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus XIO Network Manager Driver",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.4)",
+    "libglobus-common0t64 (>= 17)",
+    "libglobus-net-manager0t64 (>= 1.7)",
+    "libglobus-xio0t64 (>= 5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-xio-net-manager-driver-1.7-3+b3-1-x86_64.mind",
+   "sha256": "c38ffbac330a8264feb66a2ee46a3d30ac83d858a39070b715e8e7797db19437",
+   "size": 14654,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-xio-net-manager-driver-1.7-3+b3-1-x86_64.mind"
+  },
+  {
+   "name": "libglobus-xio-net-manager-driver-dev",
+   "version": "1.7-3+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Grid Community Toolkit - Globus XIO Network Manager Driver Development Files",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libglobus-xio-net-manager-driver (= 1.7-3+b3)",
+    "libglobus-net-manager-dev (= 1.7-3+b3)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libglobus-xio-net-manager-driver-dev-1.7-3+b3-1-x86_64.mind",
+   "sha256": "3f4dee2abfabdc09d4a7b91c7efa5c10d72675255fa2d5dd6f3258693aff476d",
+   "size": 4105,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libglobus-xio-net-manager-driver-dev-1.7-3+b3-1-x86_64.mind"
   },
   {
    "name": "libglobus-xio-pipe-driver",
@@ -632973,6 +634879,31 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-76/libn32gcc-14-dev-mips-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
+   "name": "libn32gcc-14-dev-mips64-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (n32 development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib32gcc-s1-mips64-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mips64-cross (>= 14.2.0-13cross1)",
+    "lib32gomp1-mips64-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mips64-cross (>= 14.2.0-13cross1)",
+    "lib32atomic1-mips64-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mips64-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libn32gcc-14-dev-mips64-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "13dd830c4ce1ca483da5448ceb7712f0d27d1320e39f324dc62ed35a8cf4174b",
+   "size": 449608,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libn32gcc-14-dev-mips64-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "libn32gcc-14-dev-mipsel-cross",
    "version": "14.2.0-13cross1",
    "release": "1",
@@ -632993,6 +634924,31 @@
    "size": 448144,
    "chunk_tag": "v1.0-chunk-78",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/libn32gcc-14-dev-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libn32gcc-14-dev-mipsr6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GCC support library (n32 development files)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "lib64gcc-s1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32gcc-s1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "lib64gomp1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32gomp1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "lib64atomic1-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libn32atomic1-mipsr6-cross (>= 14.2.0-13cross1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libn32gcc-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "4056db48162be76e3aaba4555e5cd91253a2c1c31c140a0367b7cdcd91b665e1",
+   "size": 580514,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libn32gcc-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
    "name": "libn32gcc-s1-mips-cross",
@@ -633587,6 +635543,27 @@
    "size": 41288,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/libn32objc4-mipsel-cross-14.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-05"
+  },
+  {
+   "name": "libn32stdc++6-mips-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (mips) (n32)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libn32gcc-s1-mips-cross (>= 14.2.0-13cross1)",
+    "libc6-mipsn32-mips-cross (>= 2.40)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libn32stdc++6-mips-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "299359d46e6fa2b92cbf6e4510c662f330275529987d28c74cc474b5ed21753e",
+   "size": 949565,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libn32stdc++6-mips-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
    "name": "libnabrit-dev",
@@ -648974,6 +650951,27 @@
    "chunk_tag": "v1.0-chunk-27"
   },
   {
+   "name": "libobjc4-arc-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-arc-cross (>= 2.41)",
+    "libgcc-s1-arc-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-arc-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "0d6a4194f49ca2fad2d624fbaa3ccb95df275c7d334b9aaf3f021bf57e3a919b",
+   "size": 37356,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-arc-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
    "name": "libobjc4-arm64-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -649072,6 +651070,69 @@
    "chunk_tag": "v1.0-chunk-05"
   },
   {
+   "name": "libobjc4-m68k-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-m68k-cross (>= 2.41)",
+    "libgcc-s2-m68k-cross"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-m68k-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "06696a079f1f2a7b49951e073d79167c5a250343d760fa241c21f074721b0cb6",
+   "size": 41676,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-m68k-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libobjc4-mips64-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64-cross (>= 2.40)",
+    "libgcc-s1-mips64-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-mips64-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "4077ac5d83cdbdc7bc65b5fc569c3b13061ea2ef7945c9aaf3d897958fecc01c",
+   "size": 45530,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-mips64-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libobjc4-mips64el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mips64el-cross (>= 2.40)",
+    "libgcc-s1-mips64el-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-mips64el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "7bc19ac0edbc9b48d573dae28bde488ec17a11c82407469ff5240ae4556510b7",
+   "size": 45322,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-mips64el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "libobjc4-mips64r6-cross",
    "version": "14.2.0",
    "release": "1",
@@ -649100,6 +651161,27 @@
    "chunk_tag": "v1.0-chunk-05"
   },
   {
+   "name": "libobjc4-mipsel-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mipsel-cross (>= 2.40)",
+    "libgcc-s1-mipsel-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-mipsel-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "7eed6ffb597892d8408cd791d0eb72fc6003649168678e23de86c238bd287f52",
+   "size": 44194,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "libobjc4-mipsr6-cross",
    "version": "14.2.0",
    "release": "1",
@@ -649112,6 +651194,27 @@
    "size": 40327,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/libobjc4-mipsr6-cross-14.2.0-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-05"
+  },
+  {
+   "name": "libobjc4-mipsr6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libc6-mipsr6el-cross (>= 2.40)",
+    "libgcc-s1-mipsr6el-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "77b45f144e942186fc3b667a6e1f843bed4809f728f1d7806b672d3f4c26576e",
+   "size": 43640,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
    "name": "libobjc4-ppc64-cross",
@@ -649168,6 +651271,48 @@
    "size": 44692,
    "chunk_tag": "v1.0-chunk-81",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-s390x-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libobjc4-sh4-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-sh4-cross (>= 2.41)",
+    "libgcc-s1-sh4-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-sh4-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "dcd68af46a19b79d9ac397a0b819aa13df2efa7d0274bd370751c4efe2b5dd62",
+   "size": 44718,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-sh4-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libobjc4-x32-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Runtime library for GNU Objective-C applications",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libc6-x32-cross (>= 2.41)",
+    "libgcc-s1-x32-cross (>= 3.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libobjc4-x32-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "4160441af4c831a634ab6749c5351f1729621779d8e05e337c92a1f22959601b",
+   "size": 44693,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libobjc4-x32-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libobject-accessor-perl",
@@ -797612,6 +799757,50 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-56/libstdc++-14-dev-mipsel-cross-14.2.0-13cross1-1-x86_64.mind"
   },
   {
+   "name": "libstdc++-14-dev-mipsr6-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (development files) (mipsr6)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libgcc-14-dev-mipsr6-cross (= 14.2.0-13cross1)",
+    "libstdc++6-mipsr6-cross (>= 14.2.0-13cross1)",
+    "libc6-dev-mipsr6-cross (>= 2.23-1~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libstdc++-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "cecf30ce90b323e589c619f7ba5ae7ce8f66992d897ee0faffe06018e6ee8464",
+   "size": 4688424,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libstdc++-14-dev-mipsr6-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libstdc++-14-dev-mipsr6el-cross",
+   "version": "14.2.0-13cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (development files) (mipsr6el)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-mipsen (= 14.2.0-13cross1)",
+    "libgcc-14-dev-mipsr6el-cross (= 14.2.0-13cross1)",
+    "libstdc++6-mipsr6el-cross (>= 14.2.0-13cross1)",
+    "libc6-dev-mipsr6el-cross (>= 2.23-1~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libstdc++-14-dev-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "e8dfea3437ac35cfa24949bc4d493c71a9783a9907fe8f5d260ab94f5835e115",
+   "size": 4659511,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libstdc++-14-dev-mipsr6el-cross-14.2.0-13cross1-1-x86_64.mind"
+  },
+  {
    "name": "libstdc++-14-dev-powerpc-cross",
    "version": "14.2.0-19cross1",
    "release": "1",
@@ -797632,6 +799821,28 @@
    "size": 4143822,
    "chunk_tag": "v1.0-chunk-71",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/libstdc++-14-dev-powerpc-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libstdc++-14-dev-ppc64-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (development files) (ppc64)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libgcc-14-dev-ppc64-cross (= 14.2.0-19cross1)",
+    "libstdc++6-ppc64-cross (>= 14.2.0-19cross1)",
+    "libc6-dev-ppc64-cross (>= 2.23-1~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libstdc++-14-dev-ppc64-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "03d49dbf4a9857c80886bc6d77942c44e99302d0d4809820f81c0a68095effd3",
+   "size": 4215524,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libstdc++-14-dev-ppc64-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libstdc++-14-dev-ppc64el-cross",
@@ -797698,6 +799909,28 @@
    "size": 4104001,
    "chunk_tag": "v1.0-chunk-72",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/libstdc++-14-dev-s390x-cross-14.2.0-19cross1-1-x86_64.mind"
+  },
+  {
+   "name": "libstdc++-14-dev-sh4-cross",
+   "version": "14.2.0-19cross1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "GNU Standard C++ Library v3 (development files) (sh4)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "gcc-14-cross-base-ports (= 14.2.0-19cross1)",
+    "libgcc-14-dev-sh4-cross (= 14.2.0-19cross1)",
+    "libstdc++6-sh4-cross (>= 14.2.0-19cross1)",
+    "libc6-dev-sh4-cross (>= 2.23-1~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libstdc++-14-dev-sh4-cross-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "1460cc01e05d22481accf43c483a968cfa6f379e700983191638216da9e404d0",
+   "size": 4014270,
+   "chunk_tag": "v1.0-chunk-81",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-81/libstdc++-14-dev-sh4-cross-14.2.0-19cross1-1-x86_64.mind"
   },
   {
    "name": "libstdc++-14-dev-sparc64-cross",
