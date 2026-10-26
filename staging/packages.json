@@ -2,7 +2,7 @@
  "repository": "MindOS Sunrise Official Package Repository",
  "architecture": "x86_64",
  "version": "1.0",
- "total_packages": 60779,
+ "total_packages": 60879,
  "packages": [
   {
    "name": "0ad",
@@ -713688,6 +713688,115 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-53/librust-petgraph-dev-0.6.4-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-pgp-dev",
+   "version": "0.15.0-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "OpenPGP implementation in Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-aes-0.8+default-dev (>= 0.8.4-~~)",
+    "librust-aes-gcm-0.10+default-dev (>= 0.10.3-~~)",
+    "librust-aes-kw-0.2+default-dev (>= 0.2.1-~~)",
+    "librust-aes-kw-0.2+std-dev (>= 0.2.1-~~)",
+    "librust-argon2-0.5+default-dev",
+    "librust-argon2-0.5+zeroize-dev",
+    "librust-base64-0.22+default-dev | librust-base64-0.21+default-dev (>= 0.21.7-~~)",
+    "librust-bitfield-0.17+default-dev",
+    "librust-block-padding-0.3+default-dev",
+    "librust-blowfish-0.9+default-dev",
+    "librust-bstr-1+std-dev (>= 1.4.0-~~)",
+    "librust-buffer-redux-1-dev",
+    "librust-byteorder-1+default-dev (>= 1.4-~~)",
+    "librust-camellia-0.1+default-dev",
+    "librust-cast5-0.11+default-dev",
+    "librust-cfb-mode-0.8+default-dev (>= 0.8.2-~~)",
+    "librust-chrono-0.4+clock-dev (>= 0.4.39-~~)",
+    "librust-chrono-0.4+std-dev (>= 0.4.39-~~)",
+    "librust-cipher-0.4+default-dev (>= 0.4.2-~~)",
+    "librust-const-oid-0.9+default-dev (>= 0.9.6-~~)",
+    "librust-crc24-0.1+default-dev (>= 0.1.6-~~)",
+    "librust-curve25519-dalek-4+alloc-dev (>= 4.1.3-~~)",
+    "librust-curve25519-dalek-4+precomputed-tables-dev (>= 4.1.3-~~)",
+    "librust-curve25519-dalek-4+zeroize-dev (>= 4.1.3-~~)",
+    "librust-derive-builder-0.20+default-dev",
+    "librust-derive-more-1+debug-dev",
+    "librust-derive-more-1+default-dev",
+    "librust-des-0.8+default-dev",
+    "librust-digest-0.10+default-dev (>= 0.10.7-~~)",
+    "librust-dsa-0.6+default-dev (>= 0.6.3-~~)",
+    "librust-eax-0.5+default-dev",
+    "librust-ecdsa-0.16+default-dev (>= 0.16.9-~~)",
+    "librust-ed25519-dalek-2+fast-dev",
+    "librust-ed25519-dalek-2+std-dev",
+    "librust-ed25519-dalek-2+zeroize-dev",
+    "librust-elliptic-curve-0.13+default-dev",
+    "librust-flate2-1+rust-backend-dev",
+    "librust-generic-array-0.14+default-dev (>= 0.14.6-~~)",
+    "librust-getrandom-0.2+default-dev",
+    "librust-hex-0.4+default-dev",
+    "librust-hkdf-0.12+default-dev (>= 0.12.4-~~)",
+    "librust-idea-0.5+default-dev",
+    "librust-iter-read-1+default-dev",
+    "librust-k256-0.13+default-dev",
+    "librust-k256-0.13+ecdsa-dev",
+    "librust-log-0.4+default-dev (>= 0.4.22-~~)",
+    "librust-md-5-0.10+asm-dev (>= 0.10.5-~~)",
+    "librust-md-5-0.10+default-dev (>= 0.10.5-~~)",
+    "librust-md-5-0.10+oid-dev (>= 0.10.5-~~)",
+    "librust-nom-7+default-dev",
+    "librust-num-bigint-dig-0.8+default-dev (>= 0.8.4-~~)",
+    "librust-num-bigint-dig-0.8+i128-dev (>= 0.8.4-~~)",
+    "librust-num-bigint-dig-0.8+prime-dev (>= 0.8.4-~~)",
+    "librust-num-bigint-dig-0.8+rand-dev (>= 0.8.4-~~)",
+    "librust-num-bigint-dig-0.8+u64-digit-dev (>= 0.8.4-~~)",
+    "librust-num-bigint-dig-0.8+zeroize-dev (>= 0.8.4-~~)",
+    "librust-num-enum-0.5+default-dev (>= 0.5.7-~~)",
+    "librust-num-traits-0.2+default-dev (>= 0.2.19-~~)",
+    "librust-ocb3-0.1+default-dev",
+    "librust-p256-0.13+default-dev",
+    "librust-p256-0.13+ecdh-dev",
+    "librust-p256-0.13+ecdsa-dev",
+    "librust-p384-0.13+default-dev",
+    "librust-p384-0.13+ecdsa-dev",
+    "librust-p521-0.13+default-dev",
+    "librust-p521-0.13+ecdh-dev",
+    "librust-p521-0.13+ecdsa-dev",
+    "librust-rand-0.8+default-dev (>= 0.8.5-~~)",
+    "librust-ripemd-0.1+default-dev (>= 0.1.3-~~)",
+    "librust-ripemd-0.1+oid-dev (>= 0.1.3-~~)",
+    "librust-rsa-0.9+default-dev (>= 0.9.7-~~)",
+    "librust-sha1-0.10+asm-dev (>= 0.10.6-~~)",
+    "librust-sha1-0.10+default-dev (>= 0.10.6-~~)",
+    "librust-sha1-0.10+oid-dev (>= 0.10.6-~~)",
+    "librust-sha1-checked-0.10+default-dev",
+    "librust-sha1-checked-0.10+zeroize-dev",
+    "librust-sha2-0.10+asm-dev (>= 0.10.6-~~)",
+    "librust-sha2-0.10+default-dev (>= 0.10.6-~~)",
+    "librust-sha2-0.10+oid-dev (>= 0.10.6-~~)",
+    "librust-sha3-0.10+default-dev (>= 0.10.5-~~)",
+    "librust-sha3-0.10+oid-dev (>= 0.10.5-~~)",
+    "librust-signature-2+default-dev (>= 2.1-~~)",
+    "librust-smallvec-1+default-dev (>= 1.10.0-~~)",
+    "librust-thiserror-2+default-dev",
+    "librust-twofish-0.7+default-dev",
+    "librust-x25519-dalek-2+alloc-dev (>= 2.0.1-~~)",
+    "librust-x25519-dalek-2+precomputed-tables-dev (>= 2.0.1-~~)",
+    "librust-x25519-dalek-2+static-secrets-dev (>= 2.0.1-~~)",
+    "librust-x25519-dalek-2+zeroize-dev (>= 2.0.1-~~)",
+    "librust-zeroize-1+default-dev (>= 1.7-~~)",
+    "librust-zeroize-1+zeroize-derive-dev (>= 1.7-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pgp-dev-0.15.0-2-1-x86_64.mind",
+   "sha256": "e6a9dcbb19b4f53273f8f6a5e047063a090c278c643bbaa2dcab79f04ce9af6e",
+   "size": 1176195,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pgp-dev-0.15.0-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-phf+phf-macros-dev",
    "version": "0.11.2-1+b2",
    "release": "1",
@@ -713828,6 +713937,47 @@
    "size": 20163,
    "chunk_tag": "v1.0-chunk-53",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-53/librust-phf-generator-dev-0.11.2-2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-phf-macros+unicase--dev",
+   "version": "0.11.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Macros to generate types in the phf crate - feature \"unicase_\"",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-phf-macros-dev (= 0.11.2-1+b2)",
+    "librust-unicase-2+default-dev (>= 2.4.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-phf-macros+unicase--dev-0.11.2-1+b2-1-x86_64.mind",
+   "sha256": "24f136e74ae1879713ce1e88f77211ac864fa3c0f694c39857e5a3380958dc22",
+   "size": 801,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-phf-macros+unicase--dev-0.11.2-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-phf-macros+unicase-dev",
+   "version": "0.11.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Macros to generate types in the phf crate - feature \"unicase\"",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-phf-macros-dev (= 0.11.2-1+b2)",
+    "librust-phf-macros+unicase--dev (= 0.11.2-1+b2)",
+    "librust-phf-shared-0.11+unicase-dev (>= 0.11.2-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-phf-macros+unicase-dev-0.11.2-1+b2-1-x86_64.mind",
+   "sha256": "fc0aa80333e292048f75490c4d75f3fa4a345de3e97a9d43895f6c89af775626",
+   "size": 801,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-phf-macros+unicase-dev-0.11.2-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-phf-macros-dev",
@@ -714057,6 +714207,47 @@
    "size": 5989,
    "chunk_tag": "v1.0-chunk-70",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-70/librust-pipewire-sys-dev-0.8.0-6-1-x86_64.mind"
+  },
+  {
+   "name": "librust-pixman-dev",
+   "version": "0.2.1-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Low-level software library for pixel manipulation, providing features such as image compositing and trapezoid rasterization - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-drm-fourcc-2+default-dev (>= 2.2.0-~~)",
+    "librust-paste-1+default-dev (>= 1.0.14-~~)",
+    "librust-pixman-sys-0.1+default-dev",
+    "librust-thiserror-1+default-dev (>= 1.0.50-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pixman-dev-0.2.1-1+b1-1-x86_64.mind",
+   "sha256": "9d66919346ccd6dd6aa5f45dda679c3b16321951a232ebc57c0ab39f9a0ecc2d",
+   "size": 27125,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pixman-dev-0.2.1-1+b1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-pixman-sys-dev",
+   "version": "0.1.0-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Pixman is a low-level software library for pixel manipulation, providing features such as image compositing and trapezoid rasterization - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libpixman-1-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pixman-sys-dev-0.1.0-1+b1-1-x86_64.mind",
+   "sha256": "41a41fe5660d69ec0d31166c912340eac49b529a640c80f5be5f0ad93fecde8a",
+   "size": 9384,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pixman-sys-dev-0.1.0-1+b1-1-x86_64.mind"
   },
   {
    "name": "librust-pkcs1-dev",
@@ -714431,6 +714622,29 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-50/librust-polling-dev-3.4.0-1-1-x86_64.mind"
   },
   {
+   "name": "librust-poly1305-dev",
+   "version": "0.8.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Poly1305 universal hash function and message authentication code - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-cpufeatures-0.2+default-dev",
+    "librust-opaque-debug-0.3+default-dev",
+    "librust-universal-hash-0.5+std-dev",
+    "librust-universal-hash-0.5-dev",
+    "librust-zeroize-1-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-poly1305-dev-0.8.0-1+b3-1-x86_64.mind",
+   "sha256": "6d350ede5c098862abbc5e96c302ab55f7141c692ccf29c61aa68e59690c6d40",
+   "size": 39437,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-poly1305-dev-0.8.0-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "librust-polyval-dev",
    "version": "0.6.1-1+b3",
    "release": "1",
@@ -714791,6 +715005,25 @@
    "chunk_tag": "v1.0-chunk-63"
   },
   {
+   "name": "librust-pretty-dtoa-dev",
+   "version": "0.3.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Configurable float and double printing - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-ryu-floating-decimal-0.1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pretty-dtoa-dev-0.3.0-1+b2-1-x86_64.mind",
+   "sha256": "65246bbd2208ecc0f19f59b43d9baaff744846f500f3440544feff0fe00646da",
+   "size": 11699,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pretty-dtoa-dev-0.3.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-pretty-env-logger-dev",
    "version": "0.5.0-3+b1",
    "release": "1",
@@ -715053,6 +715286,66 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-38/librust-proc-macro2-dev-1.0.92-1+b1-1-x86_64.mind"
   },
   {
+   "name": "librust-procfs-core-dev",
+   "version": "0.17.0-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Data structures and parsing for the linux procfs pseudo-filesystem - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-backtrace-0.3+default-dev",
+    "librust-bitflags-2+default-dev",
+    "librust-bitflags-2+serde-dev",
+    "librust-chrono-0.4+clock-dev (>= 0.4.20-~~)",
+    "librust-hex-0.4+default-dev",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-procfs-core-dev-0.17.0-1+b1-1-x86_64.mind",
+   "sha256": "b1f92d55c114e55618e1b96e593c33fb19c922e65a3ad22337cc845b913a4c21",
+   "size": 101391,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-procfs-core-dev-0.17.0-1+b1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-procfs-dev",
+   "version": "0.17.0-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Interface to the linux procfs pseudo-filesystem - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-backtrace-0.3+default-dev",
+    "librust-bitflags-2-dev",
+    "librust-chrono-0.4+clock-dev (>= 0.4.20-~~)",
+    "librust-flate2-1+default-dev (>= 1.0.3-~~)",
+    "librust-hex-0.4+default-dev",
+    "librust-procfs-core-0.17+backtrace-dev",
+    "librust-procfs-core-0.17+default-dev",
+    "librust-procfs-core-0.17+serde1-dev",
+    "librust-procfs-core-0.17-dev",
+    "librust-rustix-0.38+default-dev (>= 0.38.19-~~)",
+    "librust-rustix-0.38+fs-dev (>= 0.38.19-~~)",
+    "librust-rustix-0.38+param-dev (>= 0.38.19-~~)",
+    "librust-rustix-0.38+process-dev (>= 0.38.19-~~)",
+    "librust-rustix-0.38+system-dev (>= 0.38.19-~~)",
+    "librust-rustix-0.38+thread-dev (>= 0.38.19-~~)",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-procfs-dev-0.17.0-2-1-x86_64.mind",
+   "sha256": "a252f64e951d7c606150fc3da0971a9c4f456071a5f45ce57ef877b2ccf04910",
+   "size": 80459,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-procfs-dev-0.17.0-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-prodash-dev",
    "version": "28.0.0-4",
    "release": "1",
@@ -715206,6 +715499,53 @@
    "size": 25128,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-61/librust-prost-dev-0.12.6-1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-61"
+  },
+  {
+   "name": "librust-prost-reflect-derive-dev",
+   "version": "0.15.0-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Derive macro for prost-reflect to generate ReflectMessage implementations - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev (>= 1.0.36-~~)",
+    "librust-quote-1+default-dev (>= 1.0.14-~~)",
+    "librust-syn-2+default-dev (>= 2.0.32-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-prost-reflect-derive-dev-0.15.0-1+b1-1-x86_64.mind",
+   "sha256": "4d09f091dcf3d19e50f8a26e563bfc7cda886c63c7f0d1b1a28f443df4931f41",
+   "size": 8145,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-prost-reflect-derive-dev-0.15.0-1+b1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-prost-reflect-dev",
+   "version": "0.15.0-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Protobuf library extending prost with reflection support and dynamic messages - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-base64-0.22+default-dev",
+    "librust-logos-0.14+default-dev",
+    "librust-miette-7+default-dev",
+    "librust-prost-0.12+default-dev",
+    "librust-prost-reflect-derive-0.15+default-dev",
+    "librust-prost-types-0.12+default-dev",
+    "librust-serde-1+default-dev (>= 1.0.132-~~)",
+    "librust-serde-value-0.7+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-prost-reflect-dev-0.15.0-3-1-x86_64.mind",
+   "sha256": "ae297fdaf6426717366aedada963476d2d3afecb72a963f514a23edb8956f846",
+   "size": 104926,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-prost-reflect-dev-0.15.0-3-1-x86_64.mind"
   },
   {
    "name": "librust-prost-types-dev",
@@ -715415,6 +715755,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-49/librust-pulldown-cmark-escape-dev-0.10.1-1-1-x86_64.mind"
   },
   {
+   "name": "librust-pulsectl-rs-dev",
+   "version": "0.3.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Higher level API for libpulse-binding - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libpulse-binding-2+default-dev (>= 2.24.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pulsectl-rs-dev-0.3.2-1+b2-1-x86_64.mind",
+   "sha256": "122fdef363cb2fe64c79f8fe9cfbbac2fdad86794ab88cc3b27cdda8eaa73002",
+   "size": 25854,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pulsectl-rs-dev-0.3.2-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-pure-rust-locales-dev",
    "version": "0.8.1-1",
    "release": "1",
@@ -715571,6 +715930,25 @@
    "size": 74904,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-61/librust-pyo3-ffi-dev-0.22.6-2-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-61"
+  },
+  {
+   "name": "librust-pyo3-filelike-dev",
+   "version": "0.3.0-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rust access to Python file-like objects - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-pyo3+default-dev (>= 0.21.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-pyo3-filelike-dev-0.3.0-2-1-x86_64.mind",
+   "sha256": "0ec799115db310b5917d1882488740120c56f79e71035dc98626ea18f5737b3d",
+   "size": 5003,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-pyo3-filelike-dev-0.3.0-2-1-x86_64.mind"
   },
   {
    "name": "librust-pyo3-log-dev",
@@ -715751,6 +716129,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/librust-qoi-dev-0.4.1-2+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-qrcode-dev",
+   "version": "0.14.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "QR code encoder in Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-image-0.25-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-qrcode-dev-0.14.1-2-1-x86_64.mind",
+   "sha256": "554db2dc5a221b1bb898dc5190243a0ccadac29d934e86315ae7e1a8aa5ec738",
+   "size": 67587,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-qrcode-dev-0.14.1-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-quick-error-dev",
    "version": "2.0.1-1+b2",
    "release": "1",
@@ -715766,6 +716163,30 @@
    "size": 18626,
    "chunk_tag": "v1.0-chunk-49",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-49/librust-quick-error-dev-2.0.1-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-quick-junit-dev",
+   "version": "0.3.6-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Data model and serializer for JUnit/XUnit XML - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-chrono-0.4+std-dev (>= 0.4.35-~~)",
+    "librust-indexmap-2+default-dev (>= 2.2.5-~~)",
+    "librust-quick-xml-0+default-dev (>= 0.31-~~)",
+    "librust-strip-ansi-escapes-0.2+default-dev",
+    "librust-thiserror-1+default-dev (>= 1.0.58-~~)",
+    "librust-uuid-1+default-dev (>= 1.7.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-quick-junit-dev-0.3.6-1-1-x86_64.mind",
+   "sha256": "505dfa13767bd0f63f896f1adf155283ad63789f68afb36944fcc19cfaf1994f",
+   "size": 26353,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-quick-junit-dev-0.3.6-1-1-x86_64.mind"
   },
   {
    "name": "librust-quick-xml-dev",
@@ -715952,6 +716373,29 @@
    "size": 11012,
    "chunk_tag": "v1.0-chunk-71",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/librust-quoted-printable-dev-0.5.1-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-r-description-dev",
+   "version": "0.3.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Parsing and editor for R DESCRIPTION files - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-deb822-lossless+default-dev (>= 0.2.2-~~)",
+    "librust-deb822-lossless+derive-dev (>= 0.2.2-~~)",
+    "librust-rowan+default-dev (>= 0.15.16-~~)",
+    "librust-serde-1+default-dev",
+    "librust-url-2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-r-description-dev-0.3.1-2-1-x86_64.mind",
+   "sha256": "da3dcd6bcd624b13a437059f34033aed4d7e2cfe938c6b8fdfa5503ca10adbcd",
+   "size": 23929,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-r-description-dev-0.3.1-2-1-x86_64.mind"
   },
   {
    "name": "librust-r2d2-dev",
@@ -716288,6 +716732,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-random-dev-0.12.2-2+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-range-traits-dev",
+   "version": "0.3.2-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Ranges related traits - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-ordered-float-4+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-range-traits-dev-0.3.2-1+b1-1-x86_64.mind",
+   "sha256": "e1f08e0666f3df475c2ed5be65102076bdbea1b5e2f6bb27c5c307f0bd561e8f",
+   "size": 7992,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-range-traits-dev-0.3.2-1+b1-1-x86_64.mind"
+  },
+  {
    "name": "librust-ratatui-dev",
    "version": "0.28.1-9",
    "release": "1",
@@ -716505,6 +716968,25 @@
    "size": 11710,
    "chunk_tag": "v1.0-chunk-75",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-rctree-dev-0.3.3-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-realfft-dev",
+   "version": "3.4.0-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Real-to-complex forward FFT and complex-to-real inverse FFT for Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-rustfft-6+default-dev (>= 6.2.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-realfft-dev-3.4.0-1+b1-1-x86_64.mind",
+   "sha256": "92fc552dabf6ba51b790d977f86dd93070b568e44b22cda0d9f8f192fe1bce9c",
+   "size": 16053,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-realfft-dev-3.4.0-1+b1-1-x86_64.mind"
   },
   {
    "name": "librust-redox-syscall-dev",
@@ -717052,6 +717534,49 @@
    "chunk_tag": "v1.0-chunk-65"
   },
   {
+   "name": "librust-rfc822-like-dev",
+   "version": "0.2.3-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "RFC822-like encoding used in control files implemented for serde - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-fmt2io-1+default-dev",
+    "librust-serde-1+default-dev (>= 1.0.126-~~)",
+    "librust-thiserror-1+default-dev (>= 1.0.25-~~)",
+    "librust-unicode-segmentation-1+default-dev (>= 1.7.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rfc822-like-dev-0.2.3-1-1-x86_64.mind",
+   "sha256": "f9abf8852069fc298100b315426f72d17dfa0b22d889f55cded57e0fed5921c0",
+   "size": 17377,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rfc822-like-dev-0.2.3-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rfc822-sanitizer-dev",
+   "version": "0.3.3-2+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rfc822/2822 sanitizer/normalizer - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-chrono-0.4+default-dev",
+    "librust-lazy-static-1+default-dev",
+    "librust-regex-1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rfc822-sanitizer-dev-0.3.3-2+b2-1-x86_64.mind",
+   "sha256": "22a0136a22843df59cf00b0fe407e88d36a74202facccb6e5c88049c3b0c5d37",
+   "size": 34762,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rfc822-sanitizer-dev-0.3.3-2+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-rgb-dev",
    "version": "0.8.50-1+b1",
    "release": "1",
@@ -717071,6 +717596,88 @@
    "size": 25757,
    "chunk_tag": "v1.0-chunk-51",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-51/librust-rgb-dev-0.8.50-1+b1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rhai-codegen-dev",
+   "version": "2.1.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Procedural macros support package for Rhai, a scripting language and engine for Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-syn-2+default-dev",
+    "librust-syn-2+extra-traits-dev",
+    "librust-syn-2+full-dev",
+    "librust-syn-2+parsing-dev",
+    "librust-syn-2+printing-dev",
+    "librust-syn-2+proc-macro-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rhai-codegen-dev-2.1.0-1-1-x86_64.mind",
+   "sha256": "699a6035e7ff0a8bfd6506f48a96af603838de2b40fd721473b8987dc04c09de",
+   "size": 43421,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rhai-codegen-dev-2.1.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rhai-dev",
+   "version": "1.21.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Embedded scripting for Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-ahash-0.8+compile-time-rng-dev (>= 0.8.2-~~)",
+    "librust-ahash-0.8+runtime-rng-dev (>= 0.8.2-~~)",
+    "librust-ahash-0.8+std-dev (>= 0.8.2-~~)",
+    "librust-arbitrary-1+default-dev (>= 1.3.2-~~)",
+    "librust-arbitrary-1+derive-dev (>= 1.3.2-~~)",
+    "librust-bitflags-2-dev",
+    "librust-core-error-0.0.0+alloc-dev",
+    "librust-document-features-0.2+default-dev",
+    "librust-getrandom-0.2+default-dev",
+    "librust-hashbrown-0+default-dev (>= 0.14.0-~~)",
+    "librust-libm-0.2-dev",
+    "librust-no-std-compat-0.4+alloc-dev (>= 0.4.1-~~)",
+    "librust-no-std-compat-0.4+compat-sync-dev (>= 0.4.1-~~)",
+    "librust-num-traits-0.2+libm-dev",
+    "librust-num-traits-0.2+std-dev",
+    "librust-num-traits-0.2-dev",
+    "librust-once-cell-1+alloc-dev (>= 1.20.1-~~)",
+    "librust-once-cell-1+portable-atomic-dev (>= 1.20.1-~~)",
+    "librust-once-cell-1+race-dev (>= 1.20.1-~~)",
+    "librust-once-cell-1+std-dev (>= 1.20.1-~~)",
+    "librust-rhai-codegen-2+default-dev (>= 2.1.0-~~)",
+    "librust-rhai-codegen-2+metadata-dev (>= 2.1.0-~~)",
+    "librust-rust-decimal-1+maths-dev (>= 1.16.0-~~)",
+    "librust-rust-decimal-1+rust-fuzz-dev (>= 1.16.0-~~)",
+    "librust-rustyline-14+default-dev",
+    "librust-serde-1+alloc-dev (>= 1.0.96-~~)",
+    "librust-serde-1+derive-dev (>= 1.0.96-~~)",
+    "librust-serde-json-1+alloc-dev (>= 1.0.45-~~)",
+    "librust-smallvec-1+const-generics-dev (>= 1.7.0-~~)",
+    "librust-smallvec-1+const-new-dev (>= 1.7.0-~~)",
+    "librust-smallvec-1+serde-dev (>= 1.7.0-~~)",
+    "librust-smallvec-1+union-dev (>= 1.7.0-~~)",
+    "librust-smartstring-1+serde-dev",
+    "librust-smartstring-1+std-dev",
+    "librust-smartstring-1-dev",
+    "librust-thin-vec-0.2+serde-dev (>= 0.2.13-~~)",
+    "librust-thin-vec-0.2-dev (>= 0.2.13-~~)",
+    "librust-unicode-xid-0.2-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rhai-dev-1.21.0-1-1-x86_64.mind",
+   "sha256": "190a68deea29f4d0f62fdf43c825835ef415512ed9a0aded41e8ea9f73961e8a",
+   "size": 369582,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rhai-dev-1.21.0-1-1-x86_64.mind"
   },
   {
    "name": "librust-ring-dev",
@@ -717331,6 +717938,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-57/librust-ron-dev-0.7.1-6-1-x86_64.mind"
   },
   {
+   "name": "librust-route-recognizer-dev",
+   "version": "0.3.1-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Recognizes URL patterns with support for dynamic and wildcard segments - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-route-recognizer-dev-0.3.1-1+b3-1-x86_64.mind",
+   "sha256": "dc7b9090aeb19b60b07a98b22166102309d059e3f2531d8d094a5361c4182ebe",
+   "size": 16511,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-route-recognizer-dev-0.3.1-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "librust-rowan-dev",
    "version": "0.16.0-1",
    "release": "1",
@@ -717496,6 +718120,50 @@
    "chunk_tag": "v1.0-chunk-61"
   },
   {
+   "name": "librust-rst-parser-dev",
+   "version": "0.4.1-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "ReStructuredText parser - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anyhow-1+default-dev (>= 1.0.86-~~)",
+    "librust-document-tree-0.4+default-dev (>= 0.4.1-~~)",
+    "librust-pest-2+default-dev (>= 2.1.2-~~)",
+    "librust-pest-derive-2+default-dev (>= 2.1.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rst-parser-dev-0.4.1-1-1-x86_64.mind",
+   "sha256": "5de528ee537eb8e8f87ed06fb4f266923a0dfde10b0348441de1738526faa0db",
+   "size": 28766,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rst-parser-dev-0.4.1-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rst-renderer-dev",
+   "version": "0.4.1-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "ReStructuredText renderer - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anyhow-1+default-dev (>= 1.0.86-~~)",
+    "librust-document-tree-0.4+default-dev (>= 0.4.1-~~)",
+    "librust-serde-json-1+default-dev (>= 1.0.44-~~)",
+    "librust-serde-xml-rs-0.5+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rst-renderer-dev-0.4.1-1-1-x86_64.mind",
+   "sha256": "0059760bd345c560012dc60cc39765765062411234abc964ea9f39f700dc5a82",
+   "size": 10840,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rst-renderer-dev-0.4.1-1-1-x86_64.mind"
+  },
+  {
    "name": "librust-rstest-dev",
    "version": "0.17.0-1+b3",
    "release": "1",
@@ -717578,6 +718246,51 @@
    "size": 12810,
    "chunk_tag": "v1.0-chunk-75",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-rtoolbox-dev-0.0.1-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rubato-dev",
+   "version": "0.16.2-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Asynchronous resampling library intended for audio data - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-log-0.4+default-dev (>= 0.4.18-~~)",
+    "librust-num-complex-0.4+default-dev",
+    "librust-num-integer-0.1+default-dev (>= 0.1.45-~~)",
+    "librust-num-traits-0.2+default-dev",
+    "librust-realfft-3+default-dev (>= 3.3.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rubato-dev-0.16.2-1-1-x86_64.mind",
+   "sha256": "638cec3dbf7a6b444e03f4ed9be6f64c3bceaac5c7248edfc02dbb276bd0a98a",
+   "size": 53292,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rubato-dev-0.16.2-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rusb-dev",
+   "version": "0.9.4-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Accessing USB devices - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev",
+    "librust-libusb1-sys-0.7+default-dev",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rusb-dev-0.9.4-1-1-x86_64.mind",
+   "sha256": "ac83064740ed1102559dc45a1a43bbada7f0c1bf7ead6b203fa3e3abb4cbe37c",
+   "size": 50553,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rusb-dev-0.9.4-1-1-x86_64.mind"
   },
   {
    "name": "librust-rusqlite-dev",
@@ -717898,6 +718611,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-40/librust-rustc-std-workspace-core-dev-1.0.0-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-rustc-std-workspace-std-dev",
+   "version": "1.0.1-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Workaround for rustbuild - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rustc-std-workspace-std-dev-1.0.1-1+b3-1-x86_64.mind",
+   "sha256": "8422bd44804bbf52d314450b487fddc49868c9fec4f27b041f017119d087ea03",
+   "size": 2977,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rustc-std-workspace-std-dev-1.0.1-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "librust-rustc-version-dev",
    "version": "0.4.0-1+b2",
    "release": "1",
@@ -717951,6 +718681,23 @@
    "size": 46612,
    "chunk_tag": "v1.0-chunk-75",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-rustdct-dev-0.7.1-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rustdoc-stripper-dev",
+   "version": "0.1.12-1+b13",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Manipulate rustdoc comments - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rustdoc-stripper-dev-0.1.12-1+b13-1-x86_64.mind",
+   "sha256": "4b929decfa96e690c372581b7d3fa6a9d06ecf6de2b5cc86c2b44795cce984c5",
+   "size": 28675,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rustdoc-stripper-dev-0.1.12-1+b13-1-x86_64.mind"
   },
   {
    "name": "librust-rustfft-dev",
@@ -718062,6 +718809,32 @@
    "size": 421410,
    "chunk_tag": "v1.0-chunk-42",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-42/librust-rustix-dev-0.38.37-4-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rustix-openpty-dev",
+   "version": "0.1.1-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Safe Rust bindings to `openpty` and related functions - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-errno-0.3-dev (>= 0.3.1-~~)",
+    "librust-libc-0.2-dev (>= 0.2.114-~~)",
+    "librust-rustix-0.38+alloc-dev",
+    "librust-rustix-0.38+fs-dev",
+    "librust-rustix-0.38+process-dev",
+    "librust-rustix-0.38+pty-dev",
+    "librust-rustix-0.38+stdio-dev",
+    "librust-rustix-0.38+termios-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rustix-openpty-dev-0.1.1-1+b2-1-x86_64.mind",
+   "sha256": "0b7c1fc9fa06bca61e132484f326bdbcb7d92bdccfa0557889804e2dda1bc9e2",
+   "size": 15043,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rustix-openpty-dev-0.1.1-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-rustls-0.21-dev",
@@ -718244,6 +719017,27 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-55/librust-rustls-webpki-dev-0.102.8-5-1-x86_64.mind"
   },
   {
+   "name": "librust-rustpython-ast-dev",
+   "version": "0.2.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "AST definitions for RustPython - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-num-bigint-0.4+default-dev (>= 0.4.3-~~)",
+    "librust-rustpython-common-0.2+default-dev",
+    "librust-rustpython-compiler-core-0.2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rustpython-ast-dev-0.2.0-1+b3-1-x86_64.mind",
+   "sha256": "7a7b7ee640f95989c7ae685293a65902cc258033627b8a3227ecdbc86d8a0d6b",
+   "size": 28989,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rustpython-ast-dev-0.2.0-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "librust-rustup-dev",
    "version": "1.27.1-3+b1",
    "release": "1",
@@ -718333,6 +719127,26 @@
    "size": 21336,
    "chunk_tag": "v1.0-chunk-45",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-45/librust-rustversion-dev-1.0.14-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-rusty-chromaprint-dev",
+   "version": "0.3.0-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Pure Rust port of Chromaprint - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-rubato-0.16+default-dev",
+    "librust-rustfft-6+default-dev (>= 6.2.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-rusty-chromaprint-dev-0.3.0-1+b1-1-x86_64.mind",
+   "sha256": "59c96b343898af21ba723d440b95787f14207893c1fd09516d2023f9f073d9d6",
+   "size": 30490,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-rusty-chromaprint-dev-0.3.0-1+b1-1-x86_64.mind"
   },
   {
    "name": "librust-rusty-fork+wait-timeout-dev",
@@ -718476,6 +719290,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-40/librust-ryu-dev-1.0.19-1-1-x86_64.mind"
   },
   {
+   "name": "librust-ryu-floating-decimal-dev",
+   "version": "0.1.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Fast floating point to floating decimal conversion - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-no-panic-0.1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-ryu-floating-decimal-dev-0.1.0-1+b2-1-x86_64.mind",
+   "sha256": "c01c228fc798e08eab86d9c976d1d679405f13e1d4be3a7ee6ef0e3ff145453f",
+   "size": 32510,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-ryu-floating-decimal-dev-0.1.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-safe-arch-dev",
    "version": "0.7.4-2.1",
    "release": "1",
@@ -718493,6 +719326,47 @@
    "size": 75615,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-61/librust-safe-arch-dev-0.7.4-2.1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-61"
+  },
+  {
+   "name": "librust-safemem-dev",
+   "version": "0.3.3-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Safe wrappers for memory-accessing functions, like `std::ptr::copy()` - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-safemem-dev-0.3.3-1+b2-1-x86_64.mind",
+   "sha256": "bf882911746f121e9a94773a4e438911723ad42ddb592814684e2b1504fdafcf",
+   "size": 10633,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-safemem-dev-0.3.3-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-salsa-macros-dev",
+   "version": "0.17.0~pre.2-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Procedural macros for the salsa crate - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-heck-0.4+default-dev",
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-syn-1+default-dev",
+    "librust-syn-1+extra-traits-dev",
+    "librust-syn-1+full-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-salsa-macros-dev-0.17.0.pre.2-1+b3-1-x86_64.mind",
+   "sha256": "2ed101aa5dd246f448e657741a83bcbe96beda03568e5c5ed958e8c56273c199",
+   "size": 20417,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-salsa-macros-dev-0.17.0.pre.2-1+b3-1-x86_64.mind"
   },
   {
    "name": "librust-salsa20-dev",
@@ -718940,6 +719814,27 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-section-testing-dev-0.0.4-2+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-select-dev",
+   "version": "0.6.0-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Extract useful data from HTML documents, suitable for web scraping - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bit-set-0.8+default-dev",
+    "librust-html5ever-0.27+default-dev",
+    "librust-markup5ever-rcdom-0.3+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-select-dev-0.6.0-3-1-x86_64.mind",
+   "sha256": "9f13a790e807c31ed7794a2ddcd38eaa75bc8f668f6f13c69ee1eac53c534270",
+   "size": 38350,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-select-dev-0.6.0-3-1-x86_64.mind"
+  },
+  {
    "name": "librust-selectors-dev",
    "version": "0.25.0-2+b2",
    "release": "1",
@@ -719040,6 +719935,47 @@
    "size": 14198,
    "chunk_tag": "v1.0-chunk-70",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-70/librust-send-wrapper-dev-0.6.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-sendfd-dev",
+   "version": "0.4.3-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Send file descriptors along with data over UNIX domain sockets - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev",
+    "librust-tokio-1+default-dev",
+    "librust-tokio-1+net-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-sendfd-dev-0.4.3-1+b2-1-x86_64.mind",
+   "sha256": "c4f14130ce29054dbd4f5d2c3a0df4530893e545d139f9bfce16915e4b433d44",
+   "size": 14322,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-sendfd-dev-0.4.3-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-sensors-dev",
+   "version": "0.2.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rust-friendly interface to lm-sensors - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev",
+    "librust-libsensors-sys-0.2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-sensors-dev-0.2.2-1+b2-1-x86_64.mind",
+   "sha256": "29c5fb6874c95d61c8597d9bcbee3c0a5e77d2e2f58de73e4bbef88045db6a14",
+   "size": 6793,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-sensors-dev-0.2.2-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-sequoia-net-dev",
@@ -719367,6 +720303,29 @@
    "size": 174682,
    "chunk_tag": "v1.0-chunk-40",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-40/librust-serde-json-dev-1.0.139-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-serde-norway-dev",
+   "version": "0.9.38-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "YAML data format for Serde - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-indexmap-2+default-dev (>= 2.2.1-~~)",
+    "librust-itoa-1+default-dev",
+    "librust-ryu-1+default-dev",
+    "librust-serde-1+default-dev (>= 1.0.203-~~)",
+    "librust-unsafe-libyaml-0.2+default-dev (>= 0.2.11-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-serde-norway-dev-0.9.38-1+b2-1-x86_64.mind",
+   "sha256": "b6998c06ffbaec9c34ca1425b1247a227b09ee4a8b9739560db6221c227e10c3",
+   "size": 80694,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-serde-norway-dev-0.9.38-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-serde-path-to-error-dev",
@@ -719755,6 +720714,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/librust-servo-fontconfig-sys-dev-5.1.0-3-1-x86_64.mind"
   },
   {
+   "name": "librust-sftp-dev",
+   "version": "0.2.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "SFTP Implementation - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-byteorder-1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-sftp-dev-0.2.2-1+b2-1-x86_64.mind",
+   "sha256": "2c339852cf44dd98cfb701f0af8c4c13a604288088cec15d2d1b597359437bce",
+   "size": 11536,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-sftp-dev-0.2.2-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-sha1-asm-dev",
    "version": "0.5.1-2+b2",
    "release": "1",
@@ -720025,6 +721003,30 @@
    "size": 23659,
    "chunk_tag": "v1.0-chunk-41",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-41/librust-shlex-dev-1.3.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-shrinkwraprs-dev",
+   "version": "0.3.0-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Auto-derive for Rust conversion traits -- make working with newtypes a breeze - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bitflags-1+default-dev (>= 1.0.1-~~)",
+    "librust-itertools-0+default-dev (>= 0.8.1-~~)",
+    "librust-proc-macro2-1+default-dev (>= 1.0.6-~~)",
+    "librust-quote-1+default-dev (>= 1.0.2-~~)",
+    "librust-syn-1+default-dev (>= 1.0.8-~~)",
+    "librust-syn-1+extra-traits-dev (>= 1.0.8-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-shrinkwraprs-dev-0.3.0-3-1-x86_64.mind",
+   "sha256": "37a89e69f5d6085c843f14fa8f90f62773ba5ef28fb07eb0efcfb2b81e5024a4",
+   "size": 16888,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-shrinkwraprs-dev-0.3.0-3-1-x86_64.mind"
   },
   {
    "name": "librust-signal-hook-dev",
@@ -720411,6 +721413,26 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-74/librust-slug-dev-0.1.4-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-sm3-dev",
+   "version": "0.4.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "SM3 (OSCCA GM/T 0004-2012) hash function - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-digest-0.10+default-dev (>= 0.10.3-~~)",
+    "librust-digest-0.10+std-dev (>= 0.10.3-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-sm3-dev-0.4.2-1+b2-1-x86_64.mind",
+   "sha256": "8c231a55670a296d54ab8d5db92f1eb0e0d727a6eaeafb6fe949a8e52f03a8b5",
+   "size": 13676,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-sm3-dev-0.4.2-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-smallbitvec-dev",
    "version": "2.5.1-1+b2",
    "release": "1",
@@ -720607,6 +721629,26 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-49/librust-smol-str-dev-0.2.0-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-smol-timeout2-dev",
+   "version": "0.6.1-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Way to poll a future until it or a timer completes - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-async-io-2+default-dev",
+    "librust-pin-project-lite-0.2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-smol-timeout2-dev-0.6.1-1+b2-1-x86_64.mind",
+   "sha256": "b29ecb433e3ab9c25d4ed588a96c2d8424f5f077f5b3a87f37331f29ed4c226d",
+   "size": 11340,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-smol-timeout2-dev-0.6.1-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-snafu-derive-dev",
    "version": "0.7.1-1+b2",
    "release": "1",
@@ -720654,6 +721696,23 @@
    "size": 70873,
    "chunk_tag": "v1.0-chunk-72",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/librust-snafu-dev-0.7.1-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-snap-dev",
+   "version": "1.1.1-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Pure Rust implementation of the Snappy compression algorithm - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-snap-dev-1.1.1-1-1-x86_64.mind",
+   "sha256": "3c6f08f7b7c7aa5c32210178d543956d68a45df9c3cde55f514d22db7df3716a",
+   "size": 39741,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-snap-dev-1.1.1-1-1-x86_64.mind"
   },
   {
    "name": "librust-snapbox-dev",
@@ -720754,6 +721813,30 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/librust-socks-dev-0.3.4-6-1-x86_64.mind"
   },
   {
+   "name": "librust-soup3-sys-dev",
+   "version": "0.7.0-3+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Sys functions for the Rust bindings of libsoup3 - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-gio-sys-0.20+default-dev",
+    "librust-glib-sys-0.20+default-dev",
+    "librust-gobject-sys-0.20+default-dev",
+    "librust-libc-0.2+default-dev",
+    "librust-system-deps-7+default-dev",
+    "libsoup-3.0-dev (>= 3.6)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-soup3-sys-dev-0.7.0-3+b1-1-x86_64.mind",
+   "sha256": "185773b631c26422bb1937b46134dfdce4934948a6a0b25464ed0142be16db56",
+   "size": 24822,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-soup3-sys-dev-0.7.0-3+b1-1-x86_64.mind"
+  },
+  {
    "name": "librust-spin-dev",
    "version": "0.9.8-4",
    "release": "1",
@@ -720800,6 +721883,59 @@
    "size": 21003,
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-63/librust-spki-dev-0.7.3-1-1-x86_64.mind",
    "chunk_tag": "v1.0-chunk-63"
+  },
+  {
+   "name": "librust-spytrap-adb-dev",
+   "version": "0.3.5-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Test a phone for stalkerware using adb and usb debugging - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anyhow-1+default-dev (>= 1.0.44-~~)",
+    "librust-bstr-1+default-dev (>= 1.9.1-~~)",
+    "librust-chrono-0.4+clock-dev (>= 0.4.19-~~)",
+    "librust-clap-4+default-dev",
+    "librust-clap-4+derive-dev",
+    "librust-clap-4+env-dev",
+    "librust-clap-complete-4+default-dev (>= 4.2.1-~~)",
+    "librust-crossterm-0.27+default-dev",
+    "librust-crossterm-0.27+event-stream-dev",
+    "librust-dirs-5+default-dev",
+    "librust-env-logger-0.11+default-dev",
+    "librust-forensic-adb-0.8+default-dev",
+    "librust-hex-0.4+default-dev (>= 0.4.3-~~)",
+    "librust-indexmap-2+default-dev",
+    "librust-indexmap-2+serde-dev",
+    "librust-log-0.4+default-dev (>= 0.4.14-~~)",
+    "librust-ratatui-0.28+default-dev",
+    "librust-regex-1+default-dev (>= 1.5.4-~~)",
+    "librust-reqwest-0.12+brotli-dev",
+    "librust-reqwest-0.12+deflate-dev",
+    "librust-reqwest-0.12+gzip-dev",
+    "librust-reqwest-0.12+json-dev",
+    "librust-reqwest-0.12+rustls-tls-native-roots-dev",
+    "librust-serde-1+default-dev (>= 1.0.130-~~)",
+    "librust-serde-1+derive-dev (>= 1.0.130-~~)",
+    "librust-serde-json-1+default-dev (>= 1.0.95-~~)",
+    "librust-serde-yaml-0.9+default-dev",
+    "librust-sha2-0.10+default-dev (>= 0.10.6-~~)",
+    "librust-shell-escape-0.1+default-dev (>= 0.1.5-~~)",
+    "librust-stalkerware-indicators-0.2+default-dev",
+    "librust-tokio-1+default-dev (>= 1.26.0-~~)",
+    "librust-tokio-1+macros-dev (>= 1.26.0-~~)",
+    "librust-tokio-1+process-dev (>= 1.26.0-~~)",
+    "librust-tokio-1+rt-multi-thread-dev (>= 1.26.0-~~)",
+    "librust-tokio-stream-0.1+default-dev (>= 0.1.12-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-spytrap-adb-dev-0.3.5-1-1-x86_64.mind",
+   "sha256": "408fdfc09ceaf62336e6a3e29e08b7744fff8eae2b7aed0d4f5c3cf24c7b6027",
+   "size": 174857,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-spytrap-adb-dev-0.3.5-1-1-x86_64.mind"
   },
   {
    "name": "librust-sqlx-core-dev",
@@ -721449,6 +722585,46 @@
    "chunk_tag": "v1.0-chunk-65"
   },
   {
+   "name": "librust-ssh-format-dev",
+   "version": "0.14.1-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Data format used to communicate with openssh mux server - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bytes-1+default-dev (>= 1.2.1-~~)",
+    "librust-serde-1+default-dev",
+    "librust-ssh-format-error-0.1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-ssh-format-dev-0.14.1-1+b3-1-x86_64.mind",
+   "sha256": "a9cb5476f06d2c1787b98d834c9d0f8579f16e82dc095e909b747c1a88126970",
+   "size": 12431,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-ssh-format-dev-0.14.1-1+b3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-ssh-format-error-dev",
+   "version": "0.1.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Data format used to communicate with openssh mux server - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-serde-1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-ssh-format-error-dev-0.1.0-1+b2-1-x86_64.mind",
+   "sha256": "1f64fee425f3cc3f42b30c57a6861cb398b0a7e071b33e5395385a384819c48a",
+   "size": 4071,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-ssh-format-error-dev-0.1.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-ssh2-dev",
    "version": "0.9.4-1+b2",
    "release": "1",
@@ -721486,6 +722662,32 @@
    "size": 10957,
    "chunk_tag": "v1.0-chunk-41",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-41/librust-stable-deref-trait-dev-1.2.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-stackdriver-logger-dev",
+   "version": "0.8.2-5",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Logger for Google's Stackdriver with a cli-friendly fallback for local development - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-chrono-0.4+clock-dev",
+    "librust-env-logger-0.11+humantime-dev",
+    "librust-env-logger-0.11+regex-dev",
+    "librust-env-logger-0.11-dev",
+    "librust-log-0.4+default-dev",
+    "librust-pretty-env-logger-0.5+default-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-toml-0.5+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-stackdriver-logger-dev-0.8.2-5-1-x86_64.mind",
+   "sha256": "79b2f80e20dc74d4b282f8f02752223570510f01ba8ef48c576eff856de08673",
+   "size": 9769,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-stackdriver-logger-dev-0.8.2-5-1-x86_64.mind"
   },
   {
    "name": "librust-stacker-dev",
@@ -721536,6 +722738,67 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/librust-stackvector-dev-1.1.1-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-stalkerware-indicators-dev",
+   "version": "0.2.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Parser for Echap's stalkerware-indicators repo - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anyhow-1+default-dev (>= 1.0.57-~~)",
+    "librust-log-0.4+default-dev (>= 0.4.16-~~)",
+    "librust-serde-1+default-dev (>= 1.0.136-~~)",
+    "librust-serde-1+derive-dev (>= 1.0.136-~~)",
+    "librust-serde-yaml-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-stalkerware-indicators-dev-0.2.1-2-1-x86_64.mind",
+   "sha256": "51487a6d12faf62c89a4e1198ee77acbe0394ab08117fb6ebd59363126fa22ff",
+   "size": 49948,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-stalkerware-indicators-dev-0.2.1-2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-starship-module-config-derive-dev",
+   "version": "0.1.1-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Cross-shell prompt for astronauts - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-syn-1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-starship-module-config-derive-dev-0.1.1-1+b3-1-x86_64.mind",
+   "sha256": "7edf93948ff42c06b59fb756c5d788984fe4c8edc2415b3b6bcc872f7191ace1",
+   "size": 4103,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-starship-module-config-derive-dev-0.1.1-1+b3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-state-dev",
+   "version": "0.6.0-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Safe and effortless global and thread-local state management - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-state-dev-0.6.0-2-1-x86_64.mind",
+   "sha256": "03f0f8d46e6424325b523a9684d8bb2514d0b0007dddcf8977c9513c63dcede0",
+   "size": 32250,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-state-dev-0.6.0-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-static-assertions-dev",
    "version": "1.1.0-1+b2",
    "release": "1",
@@ -721568,6 +722831,31 @@
    "size": 7301,
    "chunk_tag": "v1.0-chunk-68",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/librust-std-prelude-dev-0.2.12-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-stdweb-derive-dev",
+   "version": "0.5.3-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Derive macros for the `stdweb` crate - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-serde-1+default-dev",
+    "librust-serde-derive-1+default-dev",
+    "librust-syn-1+derive-dev",
+    "librust-syn-1+parsing-dev",
+    "librust-syn-1+printing-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-stdweb-derive-dev-0.5.3-1+b2-1-x86_64.mind",
+   "sha256": "b2e4aaa3bbf6adae6debf1759edac6870b950a9f00534bf102a992fdcdb0735b",
+   "size": 6954,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-stdweb-derive-dev-0.5.3-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-stfu8-dev",
@@ -721746,6 +723034,32 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/librust-strip-ansi-escapes-dev-0.2.1-1-1-x86_64.mind"
   },
   {
+   "name": "librust-strobe-rs-dev",
+   "version": "0.8.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "The Strobe protocol framework in pure Rust - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bitflags-1+default-dev (>= 1.3-~~)",
+    "librust-byteorder-1-dev (>= 1.4-~~)",
+    "librust-keccak-0.1+default-dev",
+    "librust-serde-1+derive-dev",
+    "librust-serde-big-array-0.5+default-dev",
+    "librust-subtle-2-dev (>= 2.4-~~)",
+    "librust-zeroize-1+default-dev (>= 1.5-~~)",
+    "librust-zeroize-1+derive-dev (>= 1.5-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-strobe-rs-dev-0.8.1-2-1-x86_64.mind",
+   "sha256": "7e00751ce530172e8ff1d43bad2c3690211d5fb8f85b426c8ebfc205588f61a9",
+   "size": 64340,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-strobe-rs-dev-0.8.1-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-strsim-0.10-dev",
    "version": "0.10.0-4",
    "release": "1",
@@ -721824,6 +723138,53 @@
    "size": 34826,
    "chunk_tag": "v1.0-chunk-56",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-56/librust-strum-macros-dev-0.26.4-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-subprocess-dev",
+   "version": "0.2.9-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "execution of child processes and pipelines - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev (>= 0.2.78-~~)",
+    "librust-winapi-0.3+default-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+handleapi-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+namedpipeapi-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+processenv-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+processthreadsapi-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+std-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+synchapi-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+winbase-dev (>= 0.3.8-~~)",
+    "librust-winapi-0.3+winerror-dev (>= 0.3.8-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-subprocess-dev-0.2.9-1+b2-1-x86_64.mind",
+   "sha256": "a20aef5b25ef142595edb4a0e6a4700a6348d4b0d936018f79d626bd922c0aa8",
+   "size": 53605,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-subprocess-dev-0.2.9-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-substring-dev",
+   "version": "1.4.5-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Substring method for string types - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-autocfg-1+default-dev (>= 1.0.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-substring-dev-1.4.5-1+b2-1-x86_64.mind",
+   "sha256": "25a07b99b3191537a892b33c4de1308983e9101f977ea20383226ddb196a7696",
+   "size": 10317,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-substring-dev-1.4.5-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-subtle+default-dev",
@@ -722071,6 +723432,30 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-40/librust-sval-serde-dev-2.6.1-1+b3-1-x86_64.mind"
   },
   {
+   "name": "librust-svp-client-dev",
+   "version": "0.2.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Client for the silver-platter protocol - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-log+default-dev (>= 0.4-~~)",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-url-2+default-dev",
+    "librust-url-2+serde-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-svp-client-dev-0.2.0-1+b2-1-x86_64.mind",
+   "sha256": "99d628d1cb7ffc228aa56107f9b3dbdc2f8f017f351a0251cc742c9aa289c3e9",
+   "size": 4568,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-svp-client-dev-0.2.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-swayipc-dev",
    "version": "3.0.3-1",
    "release": "1",
@@ -722112,6 +723497,63 @@
    "size": 14224,
    "chunk_tag": "v1.0-chunk-75",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-swayipc-types-dev-1.3.2-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-swtchr-dev",
+   "version": "0.1.2-6+b4",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Gnome-style window switcher for the Sway window manager - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-async-channel-2+default-dev (>= 2.2.0-~~)",
+    "librust-clap-4+default-dev (>= 4.4-~~)",
+    "librust-clap-4+derive-dev (>= 4.4-~~)",
+    "librust-color-eyre-0.6+default-dev (>= 0.6.2-~~)",
+    "librust-eyre-0.6+default-dev (>= 0.6.8-~~)",
+    "librust-gtk4-0.9+default-dev",
+    "librust-gtk4-0.9+v4-6-dev",
+    "librust-gtk4-layer-shell-0.4+default-dev",
+    "librust-nix-0+default-dev (>= 0.27.0-~~)",
+    "librust-nix-0+user-dev (>= 0.27.0-~~)",
+    "librust-serde-1+default-dev (>= 1.0.197-~~)",
+    "librust-serde-1+derive-dev (>= 1.0.197-~~)",
+    "librust-swayipc-3+default-dev (>= 3.0.2-~~)",
+    "librust-toml-0.8+parse-dev (>= 0.8.8-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-swtchr-dev-0.1.2-6+b4-1-x86_64.mind",
+   "sha256": "0fb1759853bd3ee68958e90f8d9234c402f970bcdf14c9f09a9f207b99049fa3",
+   "size": 1017277,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-swtchr-dev-0.1.2-6+b4-1-x86_64.mind"
+  },
+  {
+   "name": "librust-symbolic-common-dev",
+   "version": "12.8.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Common types and utilities for symbolic, a library to symbolicate and process stack traces from native applications, minidumps or minified JavaScript - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-debugid-0.8+default-dev",
+    "librust-debugid-0.8+serde-dev",
+    "librust-memmap2-0.9+default-dev",
+    "librust-serde-1+default-dev (>= 1.0.154-~~)",
+    "librust-serde-1+derive-dev (>= 1.0.154-~~)",
+    "librust-stable-deref-trait-1+default-dev (>= 1.2.0-~~)",
+    "librust-uuid-1+default-dev (>= 1.3.0-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-symbolic-common-dev-12.8.0-1+b2-1-x86_64.mind",
+   "sha256": "2e5ba3df9c8e7a4978685bbdc464b49596196f7c1786a83a6ad2bbed924a5724",
+   "size": 31315,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-symbolic-common-dev-12.8.0-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-symphonia-bundle-flac-dev",
@@ -722922,6 +724364,42 @@
    "chunk_tag": "v1.0-chunk-66"
   },
   {
+   "name": "librust-tera-dev",
+   "version": "1.20.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Template engine based on Jinja2/Django templates - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-chrono-0.4+clock-dev (>= 0.4.27-~~)",
+    "librust-chrono-0.4+std-dev (>= 0.4.27-~~)",
+    "librust-chrono-0.4+unstable-locales-dev (>= 0.4.27-~~)",
+    "librust-chrono-tz-0.10+default-dev",
+    "librust-globwalk+default-dev (<< 0.10-~~)",
+    "librust-globwalk+default-dev (>= 0.8.1-~~)",
+    "librust-humansize-2+default-dev (>= 2.1-~~)",
+    "librust-lazy-static-1+default-dev (>= 1.4-~~)",
+    "librust-percent-encoding-2+default-dev (>= 2.2-~~)",
+    "librust-pest-2+default-dev (>= 2.5.5-~~)",
+    "librust-pest-derive-2+default-dev (>= 2.5.5-~~)",
+    "librust-rand-0.8+default-dev",
+    "librust-regex-1+default-dev (>= 1.7-~~)",
+    "librust-serde-1+default-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-serde-json-1+preserve-order-dev",
+    "librust-slug-0.1+default-dev",
+    "librust-unic-segment-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tera-dev-1.20.0-1-1-x86_64.mind",
+   "sha256": "cd61e4644eff8fac7cfc4da31e042884b57eb7d69241b54d04cf2a085de2ab67",
+   "size": 125297,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tera-dev-1.20.0-1-1-x86_64.mind"
+  },
+  {
    "name": "librust-term-dev",
    "version": "0.7.0-1",
    "release": "1",
@@ -723113,6 +724591,28 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-74/librust-termtree-dev-0.4.1-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-tesseract-sys-dev",
+   "version": "0.6.1-6",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rust bindings for Tesseract OCR - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bindgen-0.71+default-dev",
+    "librust-leptonica-sys-0.4+default-dev",
+    "librust-pkg-config-0.3+default-dev",
+    "libtesseract-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tesseract-sys-dev-0.6.1-6-1-x86_64.mind",
+   "sha256": "fbe61dc83a039a34f1350cf6d2421368b60209c504d25c4b64b0c6ef5ce11566",
+   "size": 88947,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tesseract-sys-dev-0.6.1-6-1-x86_64.mind"
+  },
+  {
    "name": "librust-test-case-dev",
    "version": "3.3.1-6",
    "release": "1",
@@ -723252,6 +724752,47 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-48/librust-thiserror-1-dev-1.0.69-1+b1-1-x86_64.mind"
   },
   {
+   "name": "librust-thiserror-core-dev",
+   "version": "1.0.38-2+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Derive(Error) - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-thiserror-core-impl-1.0.38+default-dev",
+    "librust-thiserror-core-impl-1.0.38+std-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-thiserror-core-dev-1.0.38-2+b2-1-x86_64.mind",
+   "sha256": "2af1f8e45120415321779c74e7a0bd0d8b894a29a6a9813566bdfc636aa0978e",
+   "size": 23853,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-thiserror-core-dev-1.0.38-2+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-thiserror-core-impl-dev",
+   "version": "1.0.38-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Implementation detail of the `thiserror` crate - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-syn-1+default-dev (>= 1.0.45-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-thiserror-core-impl-dev-1.0.38-1+b2-1-x86_64.mind",
+   "sha256": "6aa1f65165b880a57bf7bb7f2beef364f747321a9ae900d7a48a8851f82436d2",
+   "size": 19511,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-thiserror-core-impl-dev-1.0.38-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-thiserror-dev",
    "version": "2.0.11-1",
    "release": "1",
@@ -723372,6 +724913,29 @@
    "chunk_tag": "v1.0-chunk-63"
   },
   {
+   "name": "librust-thrussh-libsodium-dev",
+   "version": "0.2.1-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Straightforward bindings to libsodium - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-lazy-static-1+default-dev (>= 1.4-~~)",
+    "librust-libc-0.2+default-dev",
+    "librust-libsodium-sys-0.2+default-dev",
+    "librust-pkg-config-0.3+default-dev",
+    "librust-vcpkg-0.2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-thrussh-libsodium-dev-0.2.1-1+b2-1-x86_64.mind",
+   "sha256": "0acb01e10fc4a768806ffc19a92b0b8ac4b7d76cc81f66f5168fd2dbeb92cade",
+   "size": 4512,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-thrussh-libsodium-dev-0.2.1-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-tiff-dev",
    "version": "0.9.0-1+b2",
    "release": "1",
@@ -723391,6 +724955,31 @@
    "size": 1445962,
    "chunk_tag": "v1.0-chunk-52",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/librust-tiff-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-tikv-jemalloc-ctl-dev",
+   "version": "0.6.0-3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Safe wrapper over jemalloc's control and introspection APIs - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+use-std-dev",
+    "librust-libc-0.2-dev",
+    "librust-paste-1+default-dev",
+    "librust-tikv-jemalloc-sys-0.6+default-dev",
+    "librust-tikv-jemalloc-sys-0.6+disable-initial-exec-tls-dev",
+    "librust-tikv-jemalloc-sys-0.6+profiling-dev",
+    "librust-tikv-jemalloc-sys-0.6+stats-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tikv-jemalloc-ctl-dev-0.6.0-3-1-x86_64.mind",
+   "sha256": "ba9c120bdc6d9aadaa627a0e92391398f91a1ced7e1a4919ab0898af933fda66",
+   "size": 26507,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tikv-jemalloc-ctl-dev-0.6.0-3-1-x86_64.mind"
   },
   {
    "name": "librust-tikv-jemalloc-sys-dev",
@@ -723869,6 +725458,57 @@
    "chunk_tag": "v1.0-chunk-63"
   },
   {
+   "name": "librust-tokio-postgres-dev",
+   "version": "0.7.12-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Native, asynchronous PostgreSQL client - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-async-trait-0.1+default-dev",
+    "librust-byteorder-1+default-dev",
+    "librust-bytes-1+default-dev",
+    "librust-fallible-iterator-0.3+default-dev",
+    "librust-futures-channel-0.3+default-dev",
+    "librust-futures-channel-0.3+sink-dev",
+    "librust-futures-util-0.3+default-dev",
+    "librust-futures-util-0.3+sink-dev",
+    "librust-log-0.4+default-dev",
+    "librust-parking-lot-0.12+default-dev",
+    "librust-percent-encoding-2+default-dev",
+    "librust-phf-0.11+default-dev",
+    "librust-pin-project-lite-0.2+default-dev",
+    "librust-postgres-protocol-0.6+default-dev (>= 0.6.7-~~)",
+    "librust-postgres-types-0.2+array-impls-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+default-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-chrono-0-4-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-eui48-1-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-geo-types-0-7-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-jiff-0-1-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-serde-json-1-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-time-0-3-dev (>= 0.2.8-~~)",
+    "librust-postgres-types-0.2+with-uuid-1-dev (>= 0.2.8-~~)",
+    "librust-rand-0.8+default-dev (>= 0.8.5-~~)",
+    "librust-socket2-0.5+all-dev",
+    "librust-socket2-0.5+default-dev",
+    "librust-tokio-1+default-dev (>= 1.27-~~)",
+    "librust-tokio-1+io-util-dev (>= 1.27-~~)",
+    "librust-tokio-1+net-dev (>= 1.27-~~)",
+    "librust-tokio-1+time-dev (>= 1.27-~~)",
+    "librust-tokio-util-0.7+codec-dev",
+    "librust-tokio-util-0.7+default-dev",
+    "librust-whoami-1+default-dev (>= 1.4.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tokio-postgres-dev-0.7.12-1-1-x86_64.mind",
+   "sha256": "88a456ad9208b8a4ba3c923b41193a61eca65f6e42324b1a64ee891e77d6e25d",
+   "size": 96681,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tokio-postgres-dev-0.7.12-1-1-x86_64.mind"
+  },
+  {
    "name": "librust-tokio-rustls-0.24-dev",
    "version": "0.24.1-3+b1",
    "release": "1",
@@ -724001,6 +725641,34 @@
    "size": 27445,
    "chunk_tag": "v1.0-chunk-71",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/librust-tokio-tungstenite-dev-0.24.0-3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-tokio-uring-dev",
+   "version": "0.4.0-3+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Io-uring support for the Tokio asynchronous runtime - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bytes-1+default-dev",
+    "librust-io-uring-0.6+default-dev",
+    "librust-libc-0.2+default-dev (>= 0.2.80-~~)",
+    "librust-scoped-tls-1+default-dev",
+    "librust-slab-0.4+default-dev (>= 0.4.2-~~)",
+    "librust-socket2-0.5+all-dev",
+    "librust-socket2-0.5+default-dev",
+    "librust-tokio-1+default-dev (>= 1.30-~~)",
+    "librust-tokio-1+net-dev (>= 1.30-~~)",
+    "librust-tokio-1+rt-dev (>= 1.30-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tokio-uring-dev-0.4.0-3+b2-1-x86_64.mind",
+   "sha256": "49d0597e98d5b492513993dd9b0ac1b13e8c9fe501c2d6d0ee004050b6801eda",
+   "size": 65006,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tokio-uring-dev-0.4.0-3+b2-1-x86_64.mind"
   },
   {
    "name": "librust-tokio-util-dev",
@@ -724225,6 +725893,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-74/librust-tonic-dev-0.12.3+dfsg-4-1-x86_64.mind"
   },
   {
+   "name": "librust-topological-sort-dev",
+   "version": "0.2.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Performs topological sorting - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-topological-sort-dev-0.2.2-1+b2-1-x86_64.mind",
+   "sha256": "b06842fcdd16a974510bfecccc66b6b2e62aea3e068c38fe0284e86005f91a58",
+   "size": 13707,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-topological-sort-dev-0.2.2-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-tower-dev",
    "version": "0.5.2-2",
    "release": "1",
@@ -724347,6 +726032,28 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-57/librust-tower-service-dev-0.3.3-1-1-x86_64.mind"
   },
   {
+   "name": "librust-tr-dev",
+   "version": "0.1.7-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Tr! macro for localisation - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-gettext-0.4+default-dev",
+    "librust-gettext-rs-0.7+default-dev",
+    "librust-gettext-rs-0.7+gettext-system-dev",
+    "librust-lazy-static-1+default-dev (>= 1.2-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tr-dev-0.1.7-1+b2-1-x86_64.mind",
+   "sha256": "fabb6d95c56b17af821289d068df1eccbc3eb0e0701e96f8fe993061a4ff7ffe",
+   "size": 10748,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tr-dev-0.1.7-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-tracing-attributes-dev",
    "version": "0.1.27-1",
    "release": "1",
@@ -724372,6 +726079,27 @@
    "size": 45855,
    "chunk_tag": "v1.0-chunk-44",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-44/librust-tracing-attributes-dev-0.1.27-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-tracing-chrome-dev",
+   "version": "0.7.2-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Layer for tracing-subscriber that outputs Chrome-style traces - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-serde-json-1+default-dev (>= 1.0.114-~~)",
+    "librust-tracing-core-0.1+default-dev (>= 0.1.32-~~)",
+    "librust-tracing-subscriber-0.3+default-dev (>= 0.3.18-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tracing-chrome-dev-0.7.2-1+b2-1-x86_64.mind",
+   "sha256": "ee332e5a07e0a1bbec7a02271a7b8ae76277ccac63a7fe9a537caecc82d1792c",
+   "size": 11813,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tracing-chrome-dev-0.7.2-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-tracing-core-dev",
@@ -724437,6 +726165,51 @@
    "size": 17868,
    "chunk_tag": "v1.0-chunk-72",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/librust-tracing-error-dev-0.2.0-1+b3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-tracing-futures-dev",
+   "version": "0.2.5-2+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Utilities for instrumenting `futures` with `tracing` - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-futures-0.3+default-dev (>= 0.3.21-~~)",
+    "librust-futures-task-0.3+default-dev",
+    "librust-pin-project-1+default-dev",
+    "librust-tokio-1+default-dev (>= 1.19.2-~~)",
+    "librust-tracing-0.1+std-dev",
+    "librust-tracing-0.1-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tracing-futures-dev-0.2.5-2+b2-1-x86_64.mind",
+   "sha256": "2bc2512c914602d60a509efb5c3df7115871e054e1d0ece4fcec68381fcc3d61",
+   "size": 16740,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tracing-futures-dev-0.2.5-2+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-tracing-journald-dev",
+   "version": "0.3.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rich journald subscriber for `tracing` - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev (>= 0.2.107-~~)",
+    "librust-tracing-core-0.1+default-dev (>= 0.1.10-~~)",
+    "librust-tracing-subscriber-0.3+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tracing-journald-dev-0.3.0-1+b2-1-x86_64.mind",
+   "sha256": "3051edbad50452bd86cd8faba0ac436fee818a5592405519c3990d6fe2b1c2a1",
+   "size": 16934,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tracing-journald-dev-0.3.0-1+b2-1-x86_64.mind"
   },
   {
    "name": "librust-tracing-log-dev",
@@ -724568,6 +726341,30 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-71/librust-transpose-dev-0.2.2-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-trash-dev",
+   "version": "5.2.0-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Moving files and folders to the Recycle Bin - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-chrono-0.4+clock-dev (>= 0.4.31-~~)",
+    "librust-libc-0.2+default-dev (>= 0.2.149-~~)",
+    "librust-log-0.4+default-dev",
+    "librust-once-cell-1+default-dev (>= 1.18.0-~~)",
+    "librust-scopeguard-1+default-dev (>= 1.2.0-~~)",
+    "librust-urlencoding-2+default-dev (>= 2.1.3-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-trash-dev-5.2.0-2-1-x86_64.mind",
+   "sha256": "54e3e2d4e63a0b0fbbb77bc40fc06efe92bcaf7b33620ed21669f95d33635915",
+   "size": 75194,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-trash-dev-5.2.0-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-tree-magic-db-dev",
    "version": "3.0.0-1+b2",
    "release": "1",
@@ -724669,6 +726466,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-49/librust-triomphe-dev-0.1.14-1-1-x86_64.mind"
   },
   {
+   "name": "librust-triple-accel-dev",
+   "version": "0.4.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rust edit distance routines accelerated using SIMD - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-triple-accel-dev-0.4.0-1+b2-1-x86_64.mind",
+   "sha256": "df2e65ad7540dd806f7d65465a5f64195a27741468fa81e5dde3b62919e6daf4",
+   "size": 43523,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-triple-accel-dev-0.4.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-try-lock-dev",
    "version": "0.2.5-1",
    "release": "1",
@@ -724710,6 +726524,44 @@
    "size": 48623,
    "chunk_tag": "v1.0-chunk-70",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-70/librust-trybuild-dev-1.0.104-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-trycmd-dev",
+   "version": "0.14.20-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Snapshot testing for a herd of CLI tests - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anstream-0.6+default-dev (>= 0.6.7-~~)",
+    "librust-glob-0.3+default-dev",
+    "librust-humantime-2+default-dev",
+    "librust-humantime-serde-1+default-dev",
+    "librust-rayon-1+default-dev (>= 1.5.1-~~)",
+    "librust-schemars-0.8+default-dev (>= 0.8.3-~~)",
+    "librust-schemars-0.8+preserve-order-dev (>= 0.8.3-~~)",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-shlex-1+default-dev (>= 1.1.0-~~)",
+    "librust-snapbox-0.4+cmd-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+color-auto-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+color-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+debug-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+diff-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+examples-dev (>= 0.4.16-~~)",
+    "librust-snapbox-0.4+path-dev (>= 0.4.16-~~)",
+    "librust-toml-edit-0+default-dev (>= 0.19-~~)",
+    "librust-toml-edit-0+serde-dev (>= 0.19-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-trycmd-dev-0.14.20-1-1-x86_64.mind",
+   "sha256": "42ede1849443a1f8ae4c3f3b1ac1ca24606b3b85960b37228587ccd6053b3e71",
+   "size": 33303,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-trycmd-dev-0.14.20-1-1-x86_64.mind"
   },
   {
    "name": "librust-ttf-parser-dev",
@@ -724962,6 +726814,25 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-42/librust-typenum-dev-1.17.0-3-1-x86_64.mind"
   },
   {
+   "name": "librust-tz-rs-dev",
+   "version": "0.6.14-1+b1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Pure Rust reimplementation of libc functions localtime, gmtime and mktime - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-const-fn-0.4+default-dev (>= 0.4.4-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-tz-rs-dev-0.6.14-1+b1-1-x86_64.mind",
+   "sha256": "1dddcf327472af25b3930aca4d6aff2e8f8026ed97a948f288333ea4f1d57c5e",
+   "size": 52053,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-tz-rs-dev-0.6.14-1+b1-1-x86_64.mind"
+  },
+  {
    "name": "librust-ucd-trie-dev",
    "version": "0.1.5-1+b2",
    "release": "1",
@@ -725191,6 +727062,156 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-74/librust-unic-emoji-char-dev-0.9.0-1+b3-1-x86_64.mind"
   },
   {
+   "name": "librust-unic-langid-dev",
+   "version": "0.9.0-2+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "API for managing Unicode Language Identifiers - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-unic-langid-impl-0.9+default-dev",
+    "librust-unic-langid-impl-0.9+likelysubtags-dev",
+    "librust-unic-langid-impl-0.9+serde-dev",
+    "librust-unic-langid-macros-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-langid-dev-0.9.0-2+b2-1-x86_64.mind",
+   "sha256": "0c685a57fa3b76297631e8fc8790d2058e92d64714d106028e3a9d77c60791b1",
+   "size": 5821,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-langid-dev-0.9.0-2+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-langid-impl-dev",
+   "version": "0.9.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "API for managing Unicode Language Identifiers - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-serde-1+default-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-tinystr-0.3+default-dev (>= 0.3.2-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-langid-impl-dev-0.9.0-1+b2-1-x86_64.mind",
+   "sha256": "5c241a9b0a5251a3fc6a4ff472f12a08a111fde89fe4f689f5f7567ccc9e1f7a",
+   "size": 41051,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-langid-impl-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-langid-macros-dev",
+   "version": "0.9.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "API for managing Unicode Language Identifiers - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro-hack-0.5+default-dev",
+    "librust-tinystr-0.3+default-dev (>= 0.3.2-~~)",
+    "librust-unic-langid-impl-0.9+default-dev",
+    "librust-unic-langid-macros-impl-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-langid-macros-dev-0.9.0-1+b2-1-x86_64.mind",
+   "sha256": "4398403d85b0205f6e749fed582e564dbeb4e9797caab16299087f4920208ab6",
+   "size": 3593,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-langid-macros-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-langid-macros-impl-dev",
+   "version": "0.9.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "API for managing Unicode Language Identifiers - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro-hack-0.5+default-dev",
+    "librust-quote-1+default-dev",
+    "librust-syn-1+parsing-dev",
+    "librust-syn-1+proc-macro-dev",
+    "librust-unic-langid-impl-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-langid-macros-impl-dev-0.9.0-1+b2-1-x86_64.mind",
+   "sha256": "3de12040efbbbe6fd4b927b42d29b0f1a1bf920ce9c3245ca83576bddff084ec",
+   "size": 4307,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-langid-macros-impl-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-segment-dev",
+   "version": "0.9.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "UNIC — Unicode Text Segmentation Algorithms - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-unic-ucd-segment-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-segment-dev-0.9.0-1+b2-1-x86_64.mind",
+   "sha256": "e94ff1aa77bfea21230792eb7a45e0711e33a648736f56d1a54e7d26fd874b4c",
+   "size": 37407,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-segment-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-ucd-category-dev",
+   "version": "0.9.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "UNIC — Unicode Character Database — General Category - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-matches-0.1+default-dev",
+    "librust-unic-char-property-0.9+default-dev",
+    "librust-unic-char-range-0.9+default-dev",
+    "librust-unic-ucd-version-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-ucd-category-dev-0.9.0-1+b3-1-x86_64.mind",
+   "sha256": "98d496a363d6bf140619672d7931652b6ece1985fc36fe94bdb17641d52801ae",
+   "size": 27534,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-ucd-category-dev-0.9.0-1+b3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unic-ucd-segment-dev",
+   "version": "0.9.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "UNIC — Unicode Character Database — Segmentation Properties - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-unic-char-property-0.9+default-dev",
+    "librust-unic-char-range-0.9+default-dev",
+    "librust-unic-ucd-version-0.9+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unic-ucd-segment-dev-0.9.0-1+b2-1-x86_64.mind",
+   "sha256": "bc9a4e063f3a0417b7fe30f879554ccbe26d5dcac18a31a243738bc20b6ed000",
+   "size": 34420,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unic-ucd-segment-dev-0.9.0-1+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-unic-ucd-version-dev",
    "version": "0.9.0-1+b2",
    "release": "1",
@@ -725265,6 +727286,23 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/librust-unicode-bom-dev-2.0.3-1-1-x86_64.mind"
   },
   {
+   "name": "librust-unicode-categories-dev",
+   "version": "0.1.1-2+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Query Unicode category membership for chars - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unicode-categories-dev-0.1.1-2+b2-1-x86_64.mind",
+   "sha256": "b7237f32269debb5fd81344242647ff768eaecad73181d1895a8fb366ce87109",
+   "size": 60033,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unicode-categories-dev-0.1.1-2+b2-1-x86_64.mind"
+  },
+  {
    "name": "librust-unicode-ident-dev",
    "version": "1.0.13-1",
    "release": "1",
@@ -725317,6 +727355,23 @@
    "size": 92484,
    "chunk_tag": "v1.0-chunk-54",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-54/librust-unicode-linebreak-dev-0.1.4-2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-unicode-names2-dev",
+   "version": "0.6.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Map characters to and from their name given in the Unicode standard - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-unicode-names2-dev-0.6.0-1+b3-1-x86_64.mind",
+   "sha256": "3291b5e3284058393241c72a4f21b1be98b95a4faa7e836c3c01b8af0b688daf",
+   "size": 562303,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-unicode-names2-dev-0.6.0-1+b3-1-x86_64.mind"
   },
   {
    "name": "librust-unicode-normalization-dev",
@@ -725608,6 +727663,77 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-54/librust-untrusted-dev-0.9.0-2+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-upstream-ontologist-dev",
+   "version": "0.2.4-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Tracking of upstream project metadata - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-async-trait-0.1+default-dev (>= 0.1.83-~~)",
+    "librust-breezyshim+auto-initialize-dev (>= 0.1.227-~~)",
+    "librust-chrono-0.4+default-dev",
+    "librust-clap-4+default-dev",
+    "librust-clap-4+derive-dev",
+    "librust-clap-4+env-dev",
+    "librust-configparser-3+default-dev",
+    "librust-debbugs-0.1+default-dev",
+    "librust-debcargo-2+default-dev (>= 2.7-~~)",
+    "librust-debian-changelog-0.2+default-dev",
+    "librust-debian-control-0.1+default-dev",
+    "librust-debian-copyright-0.1+default-dev",
+    "librust-debian-watch-0.2+default-dev",
+    "librust-debversion-0.4+default-dev",
+    "librust-distro-info-0.4+default-dev",
+    "librust-env-logger+default-dev (>= 0.10-~~)",
+    "librust-futures-0.3+default-dev (>= 0.3.30-~~)",
+    "librust-gix-config+default-dev (>= 0.20-~~)",
+    "librust-html5ever+default-dev (>= 0.26-~~)",
+    "librust-lazy-regex-3+default-dev",
+    "librust-lazy-static-1+default-dev",
+    "librust-log-0.4+default-dev",
+    "librust-makefile-lossless-0.2+default-dev",
+    "librust-maplit-1+default-dev",
+    "librust-opam-file-rs-0.1+default-dev",
+    "librust-percent-encoding-2+default-dev",
+    "librust-pulldown-cmark+default-dev (>= 0.9-~~)",
+    "librust-pyo3+default-dev (<< 0.24-~~)",
+    "librust-pyo3+default-dev (>= 0.22-~~)",
+    "librust-pyproject-toml-0.13+default-dev",
+    "librust-python-pkginfo+default-dev (>= 0.5-~~)",
+    "librust-quote-1+default-dev (>= 1.0.40-~~)",
+    "librust-r-description+default-dev (>= 0.2.2-~~)",
+    "librust-regex-1+default-dev",
+    "librust-reqwest+blocking-dev (>= 0.11-~~)",
+    "librust-reqwest+json-dev (>= 0.11-~~)",
+    "librust-rst-parser-0.4+default-dev",
+    "librust-rst-renderer-0.4+default-dev",
+    "librust-rust-ini+default-dev (>= 0.18-~~)",
+    "librust-select-0.6+default-dev",
+    "librust-semver-1+default-dev",
+    "librust-semver-1+serde-dev",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-serde-yaml-0.9+default-dev",
+    "librust-shlex-1+default-dev (>= 1.1.0-~~)",
+    "librust-textwrap+default-dev (>= 0.16-~~)",
+    "librust-tokio-1+default-dev (>= 1.43.0-~~)",
+    "librust-tokio-1+full-dev (>= 1.43.0-~~)",
+    "librust-toml+default-dev (>= 0.8-~~)",
+    "librust-url-2+default-dev",
+    "librust-xmltree+default-dev (>= 0.10-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-upstream-ontologist-dev-0.2.4-1-1-x86_64.mind",
+   "sha256": "d68d73061cc73b1b5f9caf9880f899c61a7e4ebca81b874f35f7015d67c5cbd0",
+   "size": 186417,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-upstream-ontologist-dev-0.2.4-1-1-x86_64.mind"
+  },
+  {
    "name": "librust-ureq-dev",
    "version": "3.0.11+~0.4.1-3",
    "release": "1",
@@ -725652,6 +727778,47 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/librust-ureq-dev-3.0.11+.0.4.1-3-1-x86_64.mind"
   },
   {
+   "name": "librust-urid-derive-dev",
+   "version": "0.1.1-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Procedural macros for urid - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-proc-macro2-1+default-dev (>= 1.0.9-~~)",
+    "librust-quote-1+default-dev (>= 1.0.2-~~)",
+    "librust-syn-1+default-dev (>= 1.0.5-~~)",
+    "librust-syn-1+full-dev (>= 1.0.5-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-urid-derive-dev-0.1.1-1+b3-1-x86_64.mind",
+   "sha256": "f6a78bb97fdfaa3099f42461dc56f118acb50218469542d9c00660b9382dabb3",
+   "size": 9544,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-urid-derive-dev-0.1.1-1+b3-1-x86_64.mind"
+  },
+  {
+   "name": "librust-urid-dev",
+   "version": "0.1.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Idiomatic URID support - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-urid-derive-0.1+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-urid-dev-0.1.0-1+b3-1-x86_64.mind",
+   "sha256": "a61f9f82d13bc9ff8bdf30d151333e8e1f4388319a0a2b1b3cf79fea98999543",
+   "size": 14486,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-urid-dev-0.1.0-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "librust-url-dev",
    "version": "2.5.4-3",
    "release": "1",
@@ -725694,6 +727861,30 @@
    "size": 8198,
    "chunk_tag": "v1.0-chunk-68",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-68/librust-urlencoding-dev-2.1.3-1+b2-1-x86_64.mind"
+  },
+  {
+   "name": "librust-usb-ids-dev",
+   "version": "1.2025.1-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Rust wrappers for the USB ID Repository - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-nom-7-dev",
+    "librust-phf-0.11+default-dev",
+    "librust-phf-codegen-0.11+default-dev",
+    "librust-proc-macro2-1+default-dev",
+    "librust-quote-1+default-dev",
+    "usb.ids"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-usb-ids-dev-1.2025.1-1-1-x86_64.mind",
+   "sha256": "23d78b1ba1a5ed03e765a1be81193453ea7b00788a7b6d6b9dc405ae65e16314",
+   "size": 18405,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-usb-ids-dev-1.2025.1-1-1-x86_64.mind"
   },
   {
    "name": "librust-utf-8-dev",
@@ -726016,6 +728207,36 @@
    "chunk_tag": "v1.0-chunk-61"
   },
   {
+   "name": "librust-vergen-dev",
+   "version": "8.3.2-6",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Generate 'cargo:env' instructions in 'build.rs' - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-anyhow-1+default-dev (>= 1.0.72-~~)",
+    "librust-cargo-metadata-0.19+default-dev",
+    "librust-cfg-if-1+default-dev",
+    "librust-git2-0-dev (>= 0.19.0-~~)",
+    "librust-regex-1+default-dev (>= 1.9.1-~~)",
+    "librust-rustc-version-0.4+default-dev",
+    "librust-rustversion-1+default-dev (>= 1.0.14-~~)",
+    "librust-sysinfo-0.30-dev (>= 0.30.4-~~)",
+    "librust-time-0.3+default-dev (>= 0.3.23-~~)",
+    "librust-time-0.3+formatting-dev (>= 0.3.23-~~)",
+    "librust-time-0.3+local-offset-dev (>= 0.3.23-~~)",
+    "librust-time-0.3+parsing-dev (>= 0.3.23-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-vergen-dev-8.3.2-6-1-x86_64.mind",
+   "sha256": "e06143cf751809b527a83b698f2dad38cae521cd0998753df94a1e4e830db7c3",
+   "size": 56091,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-vergen-dev-8.3.2-6-1-x86_64.mind"
+  },
+  {
    "name": "librust-version-check-dev",
    "version": "0.9.5-1",
    "release": "1",
@@ -726074,6 +728295,92 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-72/librust-version-ranges-dev-0.1.0-1+b2-1-x86_64.mind"
   },
   {
+   "name": "librust-vhost-dev",
+   "version": "0.13.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Pure rust library for vdpa, vhost and vhost-user - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-bitflags-2+default-dev (>= 2.4-~~)",
+    "librust-libc-0.2+default-dev (>= 0.2.39-~~)",
+    "librust-uuid-1+default-dev (>= 1.8.0-~~)",
+    "librust-uuid-1+fast-rng-dev (>= 1.8.0-~~)",
+    "librust-uuid-1+v4-dev (>= 1.8.0-~~)",
+    "librust-vm-memory-0.16+backend-mmap-dev",
+    "librust-vm-memory-0.16+default-dev",
+    "librust-vm-memory-0.16+xen-dev",
+    "librust-vmm-sys-util-0.12+default-dev (>= 0.12.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-vhost-dev-0.13.0-1-1-x86_64.mind",
+   "sha256": "188a8d59495e681ffc5973b2bc2eb07315b785fce322da3c946311e1cfe8dee3",
+   "size": 228541,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-vhost-dev-0.13.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-vhost-user-backend-dev",
+   "version": "0.17.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Framework to build vhost-user backend service daemon - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-libc-0.2+default-dev (>= 0.2.39-~~)",
+    "librust-log-0.4+default-dev (>= 0.4.17-~~)",
+    "librust-vhost-0.13+default-dev",
+    "librust-vhost-0.13+vhost-user-backend-dev",
+    "librust-vhost-0.13+xen-dev",
+    "librust-virtio-bindings-0.2+default-dev (>= 0.2.1-~~)",
+    "librust-virtio-queue-0.14+default-dev",
+    "librust-vm-memory-0.16+backend-atomic-dev",
+    "librust-vm-memory-0.16+backend-bitmap-dev",
+    "librust-vm-memory-0.16+backend-mmap-dev",
+    "librust-vm-memory-0.16+default-dev",
+    "librust-vm-memory-0.16+xen-dev",
+    "librust-vmm-sys-util-0.12+default-dev (>= 0.12.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-vhost-user-backend-dev-0.17.0-1-1-x86_64.mind",
+   "sha256": "c16f77b5739b1c0d1f1705f5d1b8a57967bd29c1009cd1f042a67f03d106c4e5",
+   "size": 38469,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-vhost-user-backend-dev-0.17.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-vid-dup-finder-lib-dev",
+   "version": "0.1.1-2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Find near-duplicate video files - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-ffmpeg-cmdline-utils-0.1+default-dev (>= 0.1.2-~~)",
+    "librust-image-0.25+default-dev",
+    "librust-rand-0.8+default-dev",
+    "librust-rayon-1+default-dev (>= 1.5-~~)",
+    "librust-rustdct-0.7+default-dev",
+    "librust-serde-1+default-dev",
+    "librust-serde-1+derive-dev",
+    "librust-serde-json-1+default-dev",
+    "librust-thiserror-1+default-dev",
+    "librust-transpose-0.2+default-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-vid-dup-finder-lib-dev-0.1.1-2-1-x86_64.mind",
+   "sha256": "e46c4f5c7b8484195a6bea8910845c31e1a6e273974cdb75f3091c33bb0b349a",
+   "size": 2422779,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-vid-dup-finder-lib-dev-0.1.1-2-1-x86_64.mind"
+  },
+  {
    "name": "librust-virtio-bindings-dev",
    "version": "0.2.4-1",
    "release": "1",
@@ -726089,6 +728396,54 @@
    "size": 25267,
    "chunk_tag": "v1.0-chunk-75",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-75/librust-virtio-bindings-dev-0.2.4-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-virtio-queue-dev",
+   "version": "0.14.0-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Virtio queue implementation - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-log-0.4+default-dev (>= 0.4.17-~~)",
+    "librust-virtio-bindings-0.2+default-dev (>= 0.2.4-~~)",
+    "librust-vm-memory-0.16+default-dev",
+    "librust-vmm-sys-util-0.12+default-dev (>= 0.12.1-~~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-virtio-queue-dev-0.14.0-1-1-x86_64.mind",
+   "sha256": "be1754af57c543705ee13e5b1bab2374cbe51fd14d926e2f0528191874dd9211",
+   "size": 166698,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-virtio-queue-dev-0.14.0-1-1-x86_64.mind"
+  },
+  {
+   "name": "librust-vm-memory-dev",
+   "version": "0.16.1-4",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Safe abstractions for accessing the VM physical memory - Rust source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "librust-arc-swap-1+default-dev",
+    "librust-bitflags-2+default-dev (>= 2.4.0-~~)",
+    "librust-libc-0.2+default-dev (>= 0.2.39-~~)",
+    "librust-thiserror-1+default-dev (>= 1.0.40-~~)",
+    "librust-vmm-sys-util-0.12+default-dev (>= 0.12.1-~~)",
+    "librust-winapi-0.3+default-dev",
+    "librust-winapi-0.3+errhandlingapi-dev",
+    "librust-winapi-0.3+sysinfoapi-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librust-vm-memory-dev-0.16.1-4-1-x86_64.mind",
+   "sha256": "82be10120e79dd324d6b23daec98b0e98a258c094317a85daa789b65c7de692f",
+   "size": 104459,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/librust-vm-memory-dev-0.16.1-4-1-x86_64.mind"
   },
   {
    "name": "librust-vmm-sys-util-dev",
@@ -971770,6 +974125,29 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-47/proxytunnel-1.12.3-1-1-x86_64.mind"
   },
   {
+   "name": "prr",
+   "version": "0.20.0-1+b3",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Mailing list style code reviews for GitHub",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.39)",
+    "libgcc-s1 (>= 4.2)",
+    "libgit2-1.9 (>= 1.9.0)",
+    "libssh2-1t64 (>= 1.2.5)",
+    "libssl3t64 (>= 3.0.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "prr-0.20.0-1+b3-1-x86_64.mind",
+   "sha256": "42baf7edc71d8c1519f5ae6917dacccfe1900b959bbe1c30ea21feb7051510f7",
+   "size": 3381142,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/prr-0.20.0-1+b3-1-x86_64.mind"
+  },
+  {
    "name": "prt",
    "version": "0.22-2",
    "release": "1",
@@ -1140747,6 +1143125,29 @@
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/rebound-2.0.0-2-1-x86_64.mind"
   },
   {
+   "name": "rebuildctl",
+   "version": "0.23.1-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Client for rebuilderd server",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libbz2-1.0",
+    "libc6 (>= 2.39)",
+    "libgcc-s1 (>= 4.2)",
+    "liblzma5 (>= 5.1.1alpha+20120614)",
+    "libzstd1 (>= 1.5.5)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "rebuildctl-0.23.1-1-1-x86_64.mind",
+   "sha256": "2520a1acea25c87fece93540b50904f9fad02ead484eaa548b9ddebd899ddaff",
+   "size": 3455025,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/rebuildctl-0.23.1-1-1-x86_64.mind"
+  },
+  {
    "name": "rebuilderd-worker",
    "version": "0.23.1-1",
    "release": "1",
@@ -1145456,6 +1147857,35 @@
    "size": 27076,
    "chunk_tag": "v1.0-chunk-39",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-39/rinse-4.2-1-x86_64.mind"
+  },
+  {
+   "name": "ripasso-cursive",
+   "version": "0.8.0-1+b2",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Curses based password manager",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libbz2-1.0",
+    "libc6 (>= 2.39)",
+    "libgcc-s1 (>= 4.2)",
+    "libgit2-1.9 (>= 1.9.0)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libgpg-error0 (>= 1.14)",
+    "libgpgme11t64 (>= 1.23.2)",
+    "libhogweed6t64",
+    "libnettle8t64 (>= 3.9~)",
+    "libssh2-1t64 (>= 1.2.5)",
+    "libssl3t64 (>= 3.0.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ripasso-cursive-0.8.0-1+b2-1-x86_64.mind",
+   "sha256": "0586bacdf81ce62b0534b4ed67cc637d7e7599319a47b71776f6ddbb1c1104b7",
+   "size": 5186775,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/ripasso-cursive-0.8.0-1+b2-1-x86_64.mind"
   },
   {
    "name": "ripcalc",
@@ -1150628,6 +1153058,29 @@
    "size": 2871794,
    "chunk_tag": "v1.0-chunk-70",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-70/rsop-0.6.4-1-1-x86_64.mind"
+  },
+  {
+   "name": "rsopv",
+   "version": "0.6.4-1",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Stateless OpenPGP Verification-only (SOPV) CLI (rpgp and rpgpie)",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "rsopv-0.6.4-1-1-x86_64.mind",
+   "sha256": "f558db091990f21a5658013451e60c98f50751acee9acf69f36793678b3c5706",
+   "size": 2083019,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/rsopv-0.6.4-1-1-x86_64.mind"
   },
   {
    "name": "rspamd",
@@ -1174196,6 +1176649,26 @@
    "size": 6083437,
    "chunk_tag": "v1.0-chunk-58",
    "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-58/rustc-web-1.96.0+dfsg1-1.deb13u1+b1-1-x86_64.mind"
+  },
+  {
+   "name": "rustdoc-stripper",
+   "version": "0.1.12-1+b13",
+   "release": "1",
+   "architecture": "x86_64",
+   "description": "Strip rustdoc comments from source code",
+   "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 4.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "rustdoc-stripper-0.1.12-1+b13-1-x86_64.mind",
+   "sha256": "5e6b4ebd254ca5f54509fca11af70d522213c3a5a2f99fcfc801e612e9014637",
+   "size": 291761,
+   "chunk_tag": "v1.0-chunk-78",
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-78/rustdoc-stripper-0.1.12-1+b13-1-x86_64.mind"
   },
   {
    "name": "rustfilt",
