@@ -2476,17 +2476,30 @@
   },
   {
    "name": "acm",
-   "version": "6.0",
+   "version": "6.0+20200416-1.2",
    "release": "1",
    "architecture": "x86_64",
-   "description": "Multi-player classic air combat simulator",
+   "description": "Multi-player classic aerial combat simulation",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "acm-6.0-1-x86_64.mind",
-   "sha256": "f174e9ec84d1c13fd2ef0ca01dc74b219debb5b74c2724775a0d754f448bd0c1",
-   "size": 635050,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-01/acm-6.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-01"
+   "dependencies": [
+    "libasound2t64 (>= 1.0.16)",
+    "libc6 (>= 2.34)",
+    "libx11-6",
+    "tk"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "acm-6.0+20200416-1.2-1-x86_64.mind",
+   "sha256": "88fd004c58de14500b19d16676ba0228f24c9956eda40731f276a667566e76fc",
+   "size": 676681,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/acm-6.0%2B20200416-1.2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "acme",
@@ -30005,17 +30018,22 @@
   },
   {
    "name": "bbe",
-   "version": "0.2.2",
+   "version": "0.2.2-6",
    "release": "1",
    "architecture": "x86_64",
    "description": "sed-like editor for binary files",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "bbe-0.2.2-1-x86_64.mind",
-   "sha256": "97ce3e822c98fa58501cb965510a0101d4fb233625ef6dcdad9c7eefb803157c",
-   "size": 34920,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-01/bbe-0.2.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-01"
+   "dependencies": [
+    "libc6 (>= 2.38)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "bbe-0.2.2-6-1-x86_64.mind",
+   "sha256": "ad5ef5272193cea7e06cdf155fcaae930b44dc6b799bf5606a2e630bcedf2534",
+   "size": 37276,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/bbe-0.2.2-6-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "bbmail",
@@ -31386,17 +31404,20 @@
   },
   {
    "name": "bespokesynth-data",
-   "version": "1.2.1",
+   "version": "1.3.0+dfsg-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "software modular synthesizer - data files",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "bespokesynth-data-1.2.1-1-x86_64.mind",
-   "sha256": "4e5bbfa075208368b000d2e459667b8642643602bd0fd5ea2d66690e5c88cd7c",
-   "size": 17012019,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-01/bespokesynth-data-1.2.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-01"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "bespokesynth-data-1.3.0+dfsg-2-1-x86_64.mind",
+   "sha256": "f2300ea5b777d1e564441196f98ef557e19c309ad17be078b16a6019ba9adf48",
+   "size": 16863714,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/bespokesynth-data-1.3.0%2Bdfsg-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "bettercap",
@@ -64109,17 +64130,30 @@
   },
   {
    "name": "clangd-18",
-   "version": "1:18.1.3",
+   "version": "1:18.1.8-18+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Language server that provides IDE-like features to editors",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "clangd-18-1:18.1.3-1-x86_64.mind",
-   "sha256": "37365338e4da1ba0c0dacc5e7191fca9df53f92cbc2b0ed23e9631106fe02983",
-   "size": 7074910,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-01/clangd-18-1.18.1.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-01"
+   "dependencies": [
+    "libabsl20240722 (>= 20240722.0-1)",
+    "libc6 (>= 2.38)",
+    "libclang-cpp18 (>= 1:18.1.8)",
+    "libgrpc++1.51t64 (>= 1.51.1)",
+    "libgrpc29t64 (>= 1.51.1)",
+    "libllvm18 (= 1:18.1.8-18+b1)",
+    "libprotobuf32t64 (>= 3.21.12)",
+    "libstdc++6 (>= 13.1)",
+    "libclang-common-18-dev (= 1:18.1.8-18+b1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "clangd-18-1:18.1.8-18+b1-1-x86_64.mind",
+   "sha256": "b20f416549588023f8758ad9a807f0c0694f45b757e44f76683156f7b4bc0b38",
+   "size": 7028174,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/clangd-18-1.18.1.8-18%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "clangd-19",
@@ -78670,17 +78704,23 @@
   },
   {
    "name": "cpuidtool",
-   "version": "0.6.4",
+   "version": "0.7.1+repack1-0.2",
    "release": "1",
    "architecture": "x86_64",
    "description": "C library for x86/x86_64 CPU detection and feature extraction (tool)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "cpuidtool-0.6.4-1-x86_64.mind",
-   "sha256": "aa26eb0de347fa2e3fa8791e52da9e1328440980ec58cedf812c7d04eeb82986",
-   "size": 13021,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-02/cpuidtool-0.6.4-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-02"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libcpuid17 (>= 0.7.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "cpuidtool-0.7.1+repack1-0.2-1-x86_64.mind",
+   "sha256": "f27a15df0e38eabe5ad263d4265447b4490e02b06d57a44fc91c478965704ba2",
+   "size": 18939,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/cpuidtool-0.7.1%2Brepack1-0.2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "cpuinfo",
@@ -136803,17 +136843,26 @@
   },
   {
    "name": "etw",
-   "version": "3.6",
+   "version": "3.6+svn162-6+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "arcade-style soccer game",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "etw-3.6-1-x86_64.mind",
-   "sha256": "5baf81082a37a00a19d3fddb7561aa8418c1b8c7ce4270572380b7d1e4b815ee",
-   "size": 197143,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-02/etw-3.6-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-02"
+   "dependencies": [
+    "etw-data (>= 3.6+svn162-6)",
+    "libc6 (>= 2.34)",
+    "libglib2.0-0t64 (>= 2.12.0)",
+    "libgtk2.0-0t64 (>= 2.8.0)",
+    "libsdl1.2debian (>= 1.2.15)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "etw-3.6+svn162-6+b1-1-x86_64.mind",
+   "sha256": "87ab760d8b38147b96d9d68574fe0126d562d49ab7bd89eacc37f736877d8a48",
+   "size": 195133,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/etw-3.6%2Bsvn162-6%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "etw-data",
@@ -156052,17 +156101,33 @@
   },
   {
    "name": "flamerobin",
-   "version": "0.9.10.ds.2",
+   "version": "0.9.13.ds.2-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "graphical database administration tool for Firebird DBMS",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "flamerobin-0.9.10.ds.2-1-x86_64.mind",
-   "sha256": "da8e8d87062c6e16eac94e1819e4fe79a28bf2fb3c04d39fcbd9286edc9eb426",
-   "size": 1604633,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-03/flamerobin-0.9.10.ds.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-03"
+   "dependencies": [
+    "dpkg (>= 1.17.14)",
+    "libc6 (>= 2.38)",
+    "libfbclient2 (>= 2.5.0.25784~ReleaseCandidate1.ds2)",
+    "libgcc-s1 (>= 3.0)",
+    "libstdc++6 (>= 14)",
+    "libwxbase3.2-1t64 (>= 3.2.6+dfsg)",
+    "libwxgtk3.2-1t64 (>= 3.2.6+dfsg)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst",
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "flamerobin-0.9.13.ds.2-2-1-x86_64.mind",
+   "sha256": "57a09d3708d8fbf88feb00ff6a0b34bd3f93590e846b2c994661a8bdefc84831",
+   "size": 1865847,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/flamerobin-0.9.13.ds.2-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "flameshot",
@@ -174853,17 +174918,26 @@
   },
   {
    "name": "frobby",
-   "version": "0.9.5",
+   "version": "0.9.5-4+b3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Computations with monomial ideals",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "frobby-0.9.5-1-x86_64.mind",
-   "sha256": "8f26a38381e32996922c01c1646193bdbfa5a58526fc7629307a7b4c920b955b",
-   "size": 569951,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-03/frobby-0.9.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-03"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 3.0)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libgmpxx4ldbl (>= 2:6.3.0+dfsg)",
+    "libstdc++6 (>= 14)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "frobby-0.9.5-4+b3-1-x86_64.mind",
+   "sha256": "c41c72b304a09e8c2e03b4c5d095cc14610b7ac3044ed8a05ed37fb7404859bf",
+   "size": 673788,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/frobby-0.9.5-4%2Bb3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "frog",
@@ -180253,17 +180327,33 @@
   },
   {
    "name": "g++-14-arm-linux-gnueabi",
-   "version": "14.2.0",
+   "version": "14.2.0-19cross1",
    "release": "1",
    "architecture": "x86_64",
    "description": "GNU C++ compiler for arm-linux-gnueabi architecture",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "g++-14-arm-linux-gnueabi-14.2.0-1-x86_64.mind",
-   "sha256": "2986f183e45c3cb9aacf236d52c06663e1dd5f0d3541158114c949f261c96ce6",
-   "size": 15652725,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-03/g%2B%2B-14-arm-linux-gnueabi-14.2.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-03"
+   "dependencies": [
+    "gcc-14-arm-linux-gnueabi-base (= 14.2.0-19cross1)",
+    "gcc-14-arm-linux-gnueabi (= 14.2.0-19cross1)",
+    "libstdc++-14-dev-armel-cross (>= 14)",
+    "libc6 (>= 2.38)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.2.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst"
+   ],
+   "filename": "g++-14-arm-linux-gnueabi-14.2.0-19cross1-1-x86_64.mind",
+   "sha256": "c84f59cdfe594859680347e0f58a69e792c3aa9dd54f3673ab4c9ae258ccf860",
+   "size": 14931077,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/g%2B%2B-14-arm-linux-gnueabi-14.2.0-19cross1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "g++-14-arm-linux-gnueabihf",
@@ -194933,17 +195023,37 @@
   },
   {
    "name": "gcc-14-mipsel-linux-gnu",
-   "version": "14.2.0",
+   "version": "14.2.0-13cross1",
    "release": "1",
    "architecture": "x86_64",
    "description": "GNU C compiler for the mipsel-linux-gnu architecture",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "gcc-14-mipsel-linux-gnu-14.2.0-1-x86_64.mind",
-   "sha256": "addbcd159625340c94e7d068c33bb3fb28f868625c1b40659033546e9af8afde",
-   "size": 26765947,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-04/gcc-14-mipsel-linux-gnu-14.2.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-04"
+   "dependencies": [
+    "cpp-14-mipsel-linux-gnu (= 14.2.0-13cross1)",
+    "gcc-14-mipsel-linux-gnu-base (= 14.2.0-13cross1)",
+    "libcc1-0 (>= 14)",
+    "binutils-mipsel-linux-gnu (>= 2.39)",
+    "libgcc-14-dev-mipsel-cross (>= 14.2.0-13cross1)",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libgmp10 (>= 2:6.3.0+dfsg)",
+    "libisl23 (>= 0.15)",
+    "libmpc3 (>= 1.1.0)",
+    "libmpfr6 (>= 3.1.3)",
+    "libstdc++6 (>= 5)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "preinst"
+   ],
+   "filename": "gcc-14-mipsel-linux-gnu-14.2.0-13cross1-1-x86_64.mind",
+   "sha256": "b4a625c88a41c3bdfda8ead8be983304c7e510744d60866383217237eec2f104",
+   "size": 25624927,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/gcc-14-mipsel-linux-gnu-14.2.0-13cross1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "gcc-14-mipsel-linux-gnu-base",
@@ -326422,17 +326532,31 @@
   },
   {
    "name": "hol-light",
-   "version": "20231021",
+   "version": "1:3.0.0-2+b7",
    "release": "1",
    "architecture": "x86_64",
    "description": "HOL Light theorem prover",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "hol-light-20231021-1-x86_64.mind",
-   "sha256": "f87bf8e255d5015ff07fe4e2654371252b294031a9bf4592c674fcfdf42c8653",
-   "size": 8587285,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/hol-light-20231021-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "camlp5",
+    "camlp5-4new7",
+    "libcamlp-streams-ocaml-dev-0lin0",
+    "libcompiler-libs-ocaml-dev-4b6d0",
+    "libstdlib-ocaml-dev-m4xw9",
+    "libzarith-ocaml-dev-h79v1",
+    "ocaml-5.3.0"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "postrm"
+   ],
+   "filename": "hol-light-1:3.0.0-2+b7-1-x86_64.mind",
+   "sha256": "f54e745eec9f71904001ac469a0e69a314612c099a503c949edda685f3230cab",
+   "size": 8968540,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/hol-light-1.3.0.0-2%2Bb7-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "hol88",
@@ -339727,17 +339851,28 @@
   },
   {
    "name": "indi-eqmod",
-   "version": "1.0",
+   "version": "1.0+20230126190232-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "INDI EQMod Driver",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "indi-eqmod-1.0-1-x86_64.mind",
-   "sha256": "bc772c06549299f1e04bb709c09929b57ba9ddc7a0bb124d82994f12392abf61",
-   "size": 237060,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/indi-eqmod-1.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libahp-gt1 (>= 1.6.0)",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libindialignmentdriver1 (>= 1.9.9+dfsg)",
+    "libindidriver1 (>= 1.9.9+dfsg)",
+    "libnova-0.16-0t64 (>= 0.16)",
+    "libstdc++6 (>= 11)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "indi-eqmod-1.0+20230126190232-2-1-x86_64.mind",
+   "sha256": "bb2f78fdcc4dcb05ee3d499f2a968962d15127a5684d80be1bf30963b8aa3b9c",
+   "size": 242367,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/indi-eqmod-1.0%2B20230126190232-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "indi-ffmv",
@@ -344622,17 +344757,23 @@
   },
   {
    "name": "iraf-mscred",
-   "version": "5.05",
+   "version": "5.05+2018.07.09-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "CCD mosaic reduction package for IRAF",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "iraf-mscred-5.05-1-x86_64.mind",
-   "sha256": "cc2266cc7a30a3650c787ee5d258498d07bd48f12a221d7850512e845850fdf3",
-   "size": 5511861,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/iraf-mscred-5.05-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "iraf",
+    "libc6 (>= 2.38)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "iraf-mscred-5.05+2018.07.09-4-1-x86_64.mind",
+   "sha256": "3315063804a6a4ae6e81a9671796f6e7eb7f8afda6a1be576bf28c423c8b4108",
+   "size": 5423965,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/iraf-mscred-5.05%2B2018.07.09-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "iraf-noao",
@@ -356564,13 +356705,13 @@
   },
   {
    "name": "kamailio-utils-modules",
-   "version": "6.0.1-1+deb13u1",
+   "version": "6.0.1-1+deb13u2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Utility functions for the Kamailio SIP server",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [
-    "kamailio (= 6.0.1-1+deb13u1)",
+    "kamailio (= 6.0.1-1+deb13u2)",
     "libc6 (>= 2.14)",
     "libcurl4t64 (>= 7.16.2)",
     "libxml2 (>= 2.7.4)"
@@ -356578,11 +356719,11 @@
    "origin": "debian/trixie",
    "format": 2,
    "maintscripts": [],
-   "filename": "kamailio-utils-modules-6.0.1-1+deb13u1-1-x86_64.mind",
-   "sha256": "64e28aa5f86773cbf23cd9fc890c0efdbbe5782e421a99e4a1bbd18c6863670a",
-   "size": 483938,
-   "chunk_tag": "v1.0-chunk-52",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/kamailio-utils-modules-6.0.1-1+deb13u1-1-x86_64.mind"
+   "filename": "kamailio-utils-modules-6.0.1-1+deb13u2-1-x86_64.mind",
+   "sha256": "e63209ac0ec9e02914ee4cf3d4f7a3de93089578e3f5dcf1b699fa255fb04089",
+   "size": 436123,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/kamailio-utils-modules-6.0.1-1%2Bdeb13u2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "kamailio-websocket-modules",
@@ -419295,17 +419436,22 @@
   },
   {
    "name": "libblocksruntime0",
-   "version": "0.4.1",
+   "version": "0.4.1-1.1+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Blocks Runtime library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libblocksruntime0-0.4.1-1-x86_64.mind",
-   "sha256": "80727222303a19ceae1f0250e217dc435ea5d1a84e5a19e51bc3ed5c79696f70",
-   "size": 7021,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libblocksruntime0-0.4.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libc6 (>= 2.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libblocksruntime0-0.4.1-1.1+b1-1-x86_64.mind",
+   "sha256": "8a05b45356349beda3c2851f39fb939ff23fa18a354e8db35ea87d5a6fa9315c",
+   "size": 7693,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libblocksruntime0-0.4.1-1.1%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libbloom-dev",
@@ -442902,17 +443048,26 @@
   },
   {
    "name": "libcheshire-clojure",
-   "version": "5.11.0",
+   "version": "5.11.0-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "fast JSON encoding for Clojure",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libcheshire-clojure-5.11.0-1-x86_64.mind",
-   "sha256": "39be1d9e7401dad72dd28d76b2c2bde58d98eada982a3078b931eb838a69027f",
-   "size": 36060,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libcheshire-clojure-5.11.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libclojure-java",
+    "libjackson2-core-java",
+    "libjackson2-dataformat-cbor",
+    "libjackson2-dataformat-smile",
+    "libtigris-clojure"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libcheshire-clojure-5.11.0-4-1-x86_64.mind",
+   "sha256": "f9a6cc365c7c5a71ea26be5877382425ef0d53a1ec28257cb15a5d1b64f7b12e",
+   "size": 37153,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libcheshire-clojure-5.11.0-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libchewing3",
@@ -447274,17 +447429,24 @@
   },
   {
    "name": "libclaw-dynamic-library1t64",
-   "version": "1.7.4",
+   "version": "1.7.4-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Class to ease the manipulation of dynamic libraries",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libclaw-dynamic-library1t64-1.7.4-1-x86_64.mind",
-   "sha256": "8ddbf1b96c6a6c3773156e0465158b8b6d0b9318d2cbddb8b201dc6e3ab720a8",
-   "size": 5404,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libclaw-dynamic-library1t64-1.7.4-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 3.0)",
+    "libstdc++6 (>= 5.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libclaw-dynamic-library1t64-1.7.4-3-1-x86_64.mind",
+   "sha256": "27dccd0fdb75273d7a3abdf78a92749578cd62ff149a15ed02f5f1b873be5fd3",
+   "size": 11470,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libclaw-dynamic-library1t64-1.7.4-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libclaw-graphic-dev",
@@ -631121,17 +631283,27 @@
   },
   {
    "name": "libgsmsd8t64",
-   "version": "1.42.0",
+   "version": "1.42.0-10",
    "release": "1",
    "architecture": "x86_64",
    "description": "SMS daemon helper library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libgsmsd8t64-1.42.0-1-x86_64.mind",
-   "sha256": "60879451e6b84d540f3b2f593f743de32631c509d21be5d979b56d8b3ac06fb1",
-   "size": 55447,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libgsmsd8t64-1.42.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libc6 (>= 2.33)",
+    "libdbi1t64 (>= 0.8.4)",
+    "libgammu8t64 (>= 1.42.0)",
+    "libmariadb3 (>= 3.0.0)",
+    "libodbc2 (>= 2.3.1)",
+    "libpq5"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libgsmsd8t64-1.42.0-10-1-x86_64.mind",
+   "sha256": "5746698392cedf896b3563c6d9da3d5f2ea2d266ab485af5206c75b582273a9e",
+   "size": 136013,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libgsmsd8t64-1.42.0-10-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libgsoap-2.8.135",
@@ -649861,17 +650033,22 @@
   },
   {
    "name": "libimage-metadata-jpeg-perl",
-   "version": "0.159",
+   "version": "0.159-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Perl extension for showing/modifying JPEG (meta)data",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libimage-metadata-jpeg-perl-0.159-1-x86_64.mind",
-   "sha256": "d3c82add600439e0d0ab655a1ad90dabb2fb7f8d70b1bc50462cc089725458ae",
-   "size": 230817,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/libimage-metadata-jpeg-perl-0.159-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-05"
+   "dependencies": [
+    "perl:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libimage-metadata-jpeg-perl-0.159-1-1-x86_64.mind",
+   "sha256": "95d3ecbae267e4d5ba9d83d46f81b460adbd365502b6e52f757932556ce1e18c",
+   "size": 275855,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libimage-metadata-jpeg-perl-0.159-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libimage-png-libpng-perl",
@@ -689458,17 +689635,30 @@
   },
   {
    "name": "libkkc2",
-   "version": "0.3.5",
+   "version": "0.3.5-11",
    "release": "1",
    "architecture": "x86_64",
    "description": "Japanese Kana Kanji input library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libkkc2-0.3.5-1-x86_64.mind",
-   "sha256": "e8277ea3eb688462725b0f037b2018e639d9109a20e4b838975943caa4d193bc",
-   "size": 188104,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/libkkc2-0.3.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libkkc-common",
+    "libkkc-data",
+    "skkdic",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libgee-0.8-2 (>= 0.8.3)",
+    "libglib2.0-0t64 (>= 2.80.0)",
+    "libjson-glib-1.0-0 (>= 1.5.2)",
+    "libmarisa0 (>= 0.2.6)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libkkc2-0.3.5-11-1-x86_64.mind",
+   "sha256": "f58742aa0e1c513c39b62418f3694b7f65fb2ce8226afb49172824a206bdae19",
+   "size": 194876,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libkkc2-0.3.5-11-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libklatexformula4",
@@ -694780,17 +694970,38 @@
   },
   {
    "name": "libkshark2",
-   "version": "2.2.1",
+   "version": "2.4.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Library for accessing ftrace file system (shared library)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libkshark2-2.2.1-1-x86_64.mind",
-   "sha256": "e16f0f832eecef69bf860f2bf14941348dff9b81d346d434a0de5998be1b248d",
-   "size": 378899,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/libkshark2-2.2.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-05"
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libgl1",
+    "libglu1-mesa | libglu1",
+    "libglut3.12 (>= 3.4.0)",
+    "libgomp1 (>= 4.9)",
+    "libjson-c5 (>= 0.15)",
+    "libqt6core6t64 (>= 6.8.2)",
+    "libqt6gui6 (>= 6.1.2)",
+    "libqt6network6 (>= 6.1.2)",
+    "libqt6openglwidgets6 (>= 6.1.2)",
+    "libqt6statemachine6 (>= 6.6.1)",
+    "libqt6widgets6 (>= 6.8.2)",
+    "libstdc++6 (>= 13.1)",
+    "libtracecmd1 (>= 3.0.3)",
+    "libtraceevent1 (>= 5.9~rc1)",
+    "libtracefs1 (>= 0.0~git20201221.74d7273)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libkshark2-2.4.0-1-1-x86_64.mind",
+   "sha256": "75016c4fa317f1a1ee54560f50d7ed1333d7233319b09ed69aeef6255e3e308d",
+   "size": 432687,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libkshark2-2.4.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libksieve-data",
@@ -706278,17 +706489,28 @@
   },
   {
    "name": "liblomiri-thumbnailer-qt1.0",
-   "version": "3.0.3",
+   "version": "3.0.4-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Qt/C++ API to obtain thumbnails",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "liblomiri-thumbnailer-qt1.0-3.0.3-1-x86_64.mind",
-   "sha256": "f250ef9287f13ad19144f4c0234015d42aae9e1ff5dd39f6f23914be3a3c290d",
-   "size": 30475,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-21/liblomiri-thumbnailer-qt1.0-3.0.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-21"
+   "dependencies": [
+    "libc6 (>= 2.32)",
+    "libgcc-s1 (>= 3.0)",
+    "libqt5core5t64 (>= 5.15.1)",
+    "libqt5dbus5t64 (>= 5.0.2)",
+    "libqt5gui5t64 (>= 5.0.2) | libqt5gui5-gles (>= 5.0.2)",
+    "libstdc++6 (>= 5.2)",
+    "lomiri-thumbnailer-service"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "liblomiri-thumbnailer-qt1.0-3.0.4-2-1-x86_64.mind",
+   "sha256": "933e5c305f2c8b985d79af5a6dfa1c4320c77aa5d9d92693bfc7d52b5e5c31ae",
+   "size": 92212,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/liblomiri-thumbnailer-qt1.0-3.0.4-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "liblomiri-upload-manager-common-dev",
@@ -805634,17 +805856,22 @@
   },
   {
    "name": "libprismatic-schema-clojure",
-   "version": "1.2.0",
+   "version": "1.2.0-6",
    "release": "1",
    "architecture": "x86_64",
    "description": "Clojure(Script) library for declarative data description and validation",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libprismatic-schema-clojure-1.2.0-1-x86_64.mind",
-   "sha256": "1c4194c7cf9fb4aa42527a31899869965243a45697207c1aa3bd1716538a3f3f",
-   "size": 70531,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-22/libprismatic-schema-clojure-1.2.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-22"
+   "dependencies": [
+    "libclojure-java"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libprismatic-schema-clojure-1.2.0-6-1-x86_64.mind",
+   "sha256": "5ec76d2d3939e856bc3da337e8ca2e0df6a61e7c959ba2ef2d050a04a187f2fa",
+   "size": 75085,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libprismatic-schema-clojure-1.2.0-6-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libpriv-wrapper",
@@ -824889,17 +825116,26 @@
   },
   {
    "name": "librdf-trine-node-literal-xml-perl",
-   "version": "0.16",
+   "version": "0.16-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "RDF Node class for XML Literals",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "librdf-trine-node-literal-xml-perl-0.16-1-x86_64.mind",
-   "sha256": "fe3b03f6763f96967710ce4427a3794fef0f6e71b12d0140829530c2607bc94d",
-   "size": 7661,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-05/librdf-trine-node-literal-xml-perl-0.16-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-05"
+   "dependencies": [
+    "perl:any",
+    "librdf-trine-perl",
+    "libxml-libxml-perl",
+    "liberror-perl",
+    "libxml2 (>= 2.6.27)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librdf-trine-node-literal-xml-perl-0.16-4-1-x86_64.mind",
+   "sha256": "f8af7ab096665406dd74a059e4342e1ef3c57e9b2558dde2fe63e90470b9fe40",
+   "size": 13137,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/librdf-trine-node-literal-xml-perl-0.16-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "librdf-trine-perl",
@@ -827611,14 +827847,14 @@
   },
   {
    "name": "libreoffice-dev",
-   "version": "4:25.2.3-2+deb13u6",
+   "version": "4:25.2.3-2+deb13u8",
    "release": "1",
    "architecture": "x86_64",
    "description": "office productivity suite -- SDK -- architecture-dependent parts",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [
-    "libreoffice-core-nogui (= 4:25.2.3-2+deb13u6) | libreoffice-core (= 4:25.2.3-2+deb13u6)",
-    "libreoffice-dev-common (= 4:25.2.3-2+deb13u6)",
+    "libreoffice-core-nogui (= 4:25.2.3-2+deb13u8) | libreoffice-core (= 4:25.2.3-2+deb13u8)",
+    "libreoffice-dev-common (= 4:25.2.3-2+deb13u8)",
     "libc6 (>= 2.38)",
     "libgcc-s1 (>= 3.3.1)",
     "libstdc++6 (>= 13.1)",
@@ -827628,15 +827864,15 @@
    "origin": "debian/trixie",
    "format": 2,
    "maintscripts": [],
-   "filename": "libreoffice-dev-4.25.2.3-2+deb13u6-1-x86_64.mind",
-   "sha256": "ebd2262213f6b9d1944b39cd317174f1484a15bae3234986694995583c92df92",
-   "size": 470510,
-   "chunk_tag": "v1.0-chunk-51",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-51/libreoffice-dev-4.25.2.3-2+deb13u6-1-x86_64.mind"
+   "filename": "libreoffice-dev-4:25.2.3-2+deb13u8-1-x86_64.mind",
+   "sha256": "5f9743187d064888420c5b82f65f24187aa6f7e6413ee67fadc60dad8b1ee247",
+   "size": 412134,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libreoffice-dev-4.25.2.3-2%2Bdeb13u8-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libreoffice-dev-common",
-   "version": "4:25.2.3-2+deb13u6",
+   "version": "4:25.2.3-2+deb13u8",
    "release": "1",
    "architecture": "x86_64",
    "description": "office productivity suite -- SDK -- architecture-independent parts",
@@ -827645,11 +827881,11 @@
    "origin": "debian/trixie",
    "format": 2,
    "maintscripts": [],
-   "filename": "libreoffice-dev-common-4.25.2.3-2+deb13u6-1-x86_64.mind",
-   "sha256": "e7c8d60eca8a0382a99b6483134b22bd5449ae513016cbb30ee6417a044be2ab",
-   "size": 393239,
-   "chunk_tag": "v1.0-chunk-51",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-51/libreoffice-dev-common-4.25.2.3-2+deb13u6-1-x86_64.mind"
+   "filename": "libreoffice-dev-common-4:25.2.3-2+deb13u8-1-x86_64.mind",
+   "sha256": "4da8b37a8734aeaae00d97ed8fc9f86330cfadebbaef5fe1f42d004259f7c69d",
+   "size": 367913,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libreoffice-dev-common-4.25.2.3-2%2Bdeb13u8-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libreoffice-dev-doc",
@@ -833136,17 +833372,25 @@
   },
   {
    "name": "libretro-beetle-vb",
-   "version": "0.9.36.1",
+   "version": "0.9.36.1+git20160623-2+b2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Libretro wrapper for the Beetle VB core",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libretro-beetle-vb-0.9.36.1-1-x86_64.mind",
-   "sha256": "5f839ea81d2b999ec871ac0244c182698d90e2afbe37ebc2325f71d7faf1ea05",
-   "size": 91136,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/libretro-beetle-vb-0.9.36.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "retroarch | libretro-frontend",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libstdc++6 (>= 5.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libretro-beetle-vb-0.9.36.1+git20160623-2+b2-1-x86_64.mind",
+   "sha256": "b2004c1dbeee24bed889b57b263c7a24209578dd41208fbb8eb9155e5c2ded21",
+   "size": 95289,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libretro-beetle-vb-0.9.36.1%2Bgit20160623-2%2Bb2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libretro-beetle-wswan",
@@ -833815,17 +834059,28 @@
   },
   {
    "name": "librhvoice-audio2",
-   "version": "1.8.0",
+   "version": "1.14.0-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "RHVoice speech synthesizer - audio shared library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "librhvoice-audio2-1.8.0-1-x86_64.mind",
-   "sha256": "8b4271b96e2173c8a412e70eb5adfd039d5c1f1c4ef99911d09d3249a8ff7e0e",
-   "size": 43907,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/librhvoice-audio2-1.8.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "libao4 (>= 1.1.0)",
+    "libc6 (>= 2.32)",
+    "libgcc-s1 (>= 3.0)",
+    "libportaudio2 (>= 19+svn20101113)",
+    "libpulse0 (>= 0.99.1)",
+    "librhvoice-core10 (>= 1.14.0)",
+    "libstdc++6 (>= 13.1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librhvoice-audio2-1.14.0-2-1-x86_64.mind",
+   "sha256": "3d8826c8f9e20490dc128a1326df098fd509976b004d1046d8b23cfa988956c9",
+   "size": 51022,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/librhvoice-audio2-1.14.0-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "librhvoice-core10",
@@ -835323,17 +835578,26 @@
   },
   {
    "name": "librocfft0",
-   "version": "5.7.1",
+   "version": "6.1.2-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "ROCm library for computing Fast Fourier Transforms - library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "librocfft0-5.7.1-1-x86_64.mind",
-   "sha256": "f18a9b085909b900606d2af100fc4321c57b446713d367990d128317d01b91d0",
-   "size": 1740596,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-22/librocfft0-5.7.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-22"
+   "dependencies": [
+    "libamdhip64-5 (>= 5.6.1~)",
+    "libc6 (>= 2.38)",
+    "libgcc-s1 (>= 3.0)",
+    "libsqlite3-0 (>= 3.36.0)",
+    "libstdc++6 (>= 13.1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "librocfft0-6.1.2-1-1-x86_64.mind",
+   "sha256": "128710efddc4ecdae06b866d97db5ee9a2238098415d66213832626131fa8191",
+   "size": 2099720,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/librocfft0-6.1.2-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "librocfft0-tests",
@@ -925680,17 +925944,24 @@
   },
   {
    "name": "libsasl2-modules-otp",
-   "version": "2.1.28",
+   "version": "2.1.28+dfsg1-9",
    "release": "1",
    "architecture": "x86_64",
    "description": "Cyrus SASL - pluggable authentication modules (OTP)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libsasl2-modules-otp-2.1.28-1-x86_64.mind",
-   "sha256": "afba6b328946acf342a9aa15af46e063c4f8cd9aab1484d1432a86f843dc5214",
-   "size": 42578,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-22/libsasl2-modules-otp-2.1.28-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-22"
+   "dependencies": [
+    "libsasl2-modules (= 2.1.28+dfsg1-9)",
+    "libc6 (>= 2.38)",
+    "libssl3t64 (>= 3.0.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libsasl2-modules-otp-2.1.28+dfsg1-9-1-x86_64.mind",
+   "sha256": "15f54e1c1c1597c4ff019d4ab0a9455ac38f17840b53dc22e07cf04d79b0ea34",
+   "size": 47000,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libsasl2-modules-otp-2.1.28%2Bdfsg1-9-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libsasl2-modules-sql",
@@ -935946,17 +936217,22 @@
   },
   {
    "name": "libslingshot-clojure",
-   "version": "0.12.2",
+   "version": "0.12.2-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Enhanced throw and catch library for Clojure",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libslingshot-clojure-0.12.2-1-x86_64.mind",
-   "sha256": "aefae41b00451b9965d4101cadf805429dee5f778c2b3803c7807676e7521956",
-   "size": 18860,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/libslingshot-clojure-0.12.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "libclojure-java"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libslingshot-clojure-0.12.2-3-1-x86_64.mind",
+   "sha256": "75fea5a6ca560b2d8a126b79cc1b45db81706f4d2c4df9125804a5a3abaa98f2",
+   "size": 20647,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libslingshot-clojure-0.12.2-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libslirp-dev",
@@ -944580,17 +944856,29 @@
   },
   {
    "name": "libssl-utils-clojure",
-   "version": "3.5.3",
+   "version": "3.5.3-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "library for SSL certificate management on the JVM",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libssl-utils-clojure-3.5.3-1-x86_64.mind",
-   "sha256": "df2684c5ff288fae7af88908f9e661bacf0153c640b3bf262d49d29336356954",
-   "size": 102870,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-22/libssl-utils-clojure-3.5.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-22"
+   "dependencies": [
+    "libclj-time-clojure (>= 0.15.2)",
+    "libprismatic-schema-clojure (>= 1.1.12)",
+    "libpuppetlabs-i18n-clojure (>= 0.9.0-2)",
+    "libraynes-fs-clojure (>= 1.5.2)",
+    "libbcpkix-java",
+    "libclojure-java",
+    "libcommons-codec-java",
+    "libtools-logging-clojure"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libssl-utils-clojure-3.5.3-2-1-x86_64.mind",
+   "sha256": "66c7d2c8410b563b4659502edb23bb5fd006f58f2e727a974911162c09b78530",
+   "size": 106439,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libssl-utils-clojure-3.5.3-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libssl3t64",
@@ -971595,17 +971883,25 @@
   },
   {
    "name": "libtime-out-perl",
-   "version": "0.24",
+   "version": "1.0.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "module to easily timeout long running operations",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libtime-out-perl-0.24-1-x86_64.mind",
-   "sha256": "79dbd8fc6e50ef67658c1b88388094d4ca933bc79ef16bbd070629be5b28c1fe",
-   "size": 7661,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/libtime-out-perl-0.24-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "perl:any",
+    "libscalar-list-utils-perl",
+    "libtry-tiny-perl",
+    "libversion-perl"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libtime-out-perl-1.0.0-1-1-x86_64.mind",
+   "sha256": "75c6d05e48f357fb6eba2d71bc3f9bd3aaaaf856873dfb0f9a9ef0a0ca158dfa",
+   "size": 8696,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libtime-out-perl-1.0.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libtime-parsedate-perl",
@@ -974932,17 +975228,26 @@
   },
   {
    "name": "libtracecmd1",
-   "version": "3.2",
+   "version": "3.3.1-1+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Library for creating and reading trace-cmd data files (shared library)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "libtracecmd1-3.2-1-x86_64.mind",
-   "sha256": "99f11d5043e2250e6ee4ad640d2eb60d12e00b5fbc2ba9c92ab8d331e11da2f4",
-   "size": 113256,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-06/libtracecmd1-3.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-06"
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "libtraceevent1 (>= 1:1.5.1)",
+    "libtracefs1 (>= 1.6.3)",
+    "libzstd1 (>= 1.5.5)",
+    "zlib1g (>= 1:1.2.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "libtracecmd1-3.3.1-1+b1-1-x86_64.mind",
+   "sha256": "16de2571fd61958ef17f7fcb9454a77274971c40d8ea106c3b91fcc17c90766f",
+   "size": 118277,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/libtracecmd1-3.3.1-1%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "libtraceevent-dev",
@@ -1038987,17 +1039292,24 @@
   },
   {
    "name": "lua-dbi-postgresql",
-   "version": "0.7.2",
+   "version": "0.7.4-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "DBI library for the Lua language, PostgreSQL backend",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "lua-dbi-postgresql-0.7.2-1-x86_64.mind",
-   "sha256": "deb68df297ce41ff722e33ee0f2dae7be066e1f839ff42b94d97d04876b02e85",
-   "size": 13120,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/lua-dbi-postgresql-0.7.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "lua-dbi-common",
+    "libc6 (>= 2.4)",
+    "libpq5"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "lua-dbi-postgresql-0.7.4-1-1-x86_64.mind",
+   "sha256": "950cefe604851e5ba2849a5c55149b061f566b9d433fc8b03e029d741a4260ba",
+   "size": 12967,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/lua-dbi-postgresql-0.7.4-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "lua-dbi-postgresql-dev",
@@ -1053663,17 +1053975,28 @@
   },
   {
    "name": "mathicgb",
-   "version": "1.0~git20240206",
+   "version": "1.0~git20240206-1.1+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Compute Groebner bases (command line tool)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "mathicgb-1.0~git20240206-1-x86_64.mind",
-   "sha256": "be8a67838a0db41ac1c35a54a273783c03c8b1801274ef529dcaab3d9b904cab",
-   "size": 72676,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-07/mathicgb-1.0.git20240206-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-07"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 3.0)",
+    "libmathic0v5 (>= 1.0~git20230916)",
+    "libmathicgb0t64 (>= 1.0~git20240206)",
+    "libmemtailor0 (>= 1.0~git20130809)",
+    "libstdc++6 (>= 14)",
+    "libtbb12 (>= 2021.4.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "mathicgb-1.0~git20240206-1.1+b1-1-x86_64.mind",
+   "sha256": "3fe3c007d8b81987fe7cccb336863d3fb31d7db64800b2cfcde83370b9ce992d",
+   "size": 84905,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/mathicgb-1.0.git20240206-1.1%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "mathjax-siunitx",
@@ -1075236,17 +1075559,24 @@
   },
   {
    "name": "mtkbabel",
-   "version": "0.8.3.1",
+   "version": "0.8.4-0.3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Tool for managing i-Blue 747 and compatible GPS data loggers",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "mtkbabel-0.8.3.1-1-x86_64.mind",
-   "sha256": "7deb20ae0b630363848f4f6ca0dda53ee58e65e41aff637043a5865508dc5a63",
-   "size": 25375,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-07/mtkbabel-0.8.3.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-07"
+   "dependencies": [
+    "perl:any",
+    "libtimedate-perl",
+    "libdevice-serialport-perl"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "mtkbabel-0.8.4-0.3-1-x86_64.mind",
+   "sha256": "1cc85f741a7901ab9ee817f18101f1373602347162a427f032d0c38b795eda64",
+   "size": 28227,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/mtkbabel-0.8.4-0.3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "mtools",
@@ -1075898,17 +1076228,25 @@
   },
   {
    "name": "multimedia-audio-utilities",
-   "version": "0.11build1",
+   "version": "0.12",
    "release": "1",
    "architecture": "x86_64",
    "description": "packages for manipulating & cataloging music and audio",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "multimedia-audio-utilities-0.11build1-1-x86_64.mind",
-   "sha256": "339a65933e851a2eb9bc38bb536e39d8a30d79780c4ca0c0add15b12a5d98ccd",
-   "size": 1843,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/multimedia-audio-utilities-0.11build1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "multimedia-tasks (= 0.12)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "multimedia-audio-utilities-0.12-1-x86_64.mind",
+   "sha256": "779120e15f77bc7c86819f7aab5d55e5045b440a050a3fd89279809f2140e29d",
+   "size": 8093,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/multimedia-audio-utilities-0.12-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "multimedia-broadcasting",
@@ -1085474,17 +1085812,30 @@
   },
   {
    "name": "netmaze",
-   "version": "0.81",
+   "version": "0.81+jpg0.82-19",
    "release": "1",
    "architecture": "x86_64",
    "description": "3-D Multiplayer Combat Game",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "netmaze-0.81-1-x86_64.mind",
-   "sha256": "3c9380ed1f2d5c7639c583cbe8ba8239f7cbdedf20ae776621bcd43fe07f2c94",
-   "size": 337197,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/netmaze-0.81-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libx11-6",
+    "libxext6",
+    "tix",
+    "tk"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "netmaze-0.81+jpg0.82-19-1-x86_64.mind",
+   "sha256": "3fe4267112e4e9b7f405e5f3f82695da2ed769baefa07916a79a442b961cdb4a",
+   "size": 330092,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/netmaze-0.81%2Bjpg0.82-19-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "netpanzer",
@@ -1097386,17 +1097737,20 @@
   },
   {
    "name": "node-cookie",
-   "version": "0.5.0",
+   "version": "0.7.1+~0.6.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Basic cookie parser and serializer module for Node.js",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "node-cookie-0.5.0-1-x86_64.mind",
-   "sha256": "7f30c7f1a9aeac34e10b8b0c9a13126bd034ce9814ee6a9c8d8ffc60a5960240",
-   "size": 8904,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-08/node-cookie-0.5.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-08"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "node-cookie-0.7.1+~0.6.0-1-1-x86_64.mind",
+   "sha256": "89291abe7e41b09bd878d0ed453cf7a3f7d91d2150ad7d4ce4225bf08aa4a1d5",
+   "size": 12934,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/node-cookie-0.7.1%2B.0.6.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "node-cookie-jar",
@@ -1107409,17 +1107763,20 @@
   },
   {
    "name": "node-js-sdsl",
-   "version": "4.1.4",
+   "version": "4.1.4-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "javascript standard data structure library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "node-js-sdsl-4.1.4-1-x86_64.mind",
-   "sha256": "74eb0e8d580a4c54881d377a485c9a6fac424e3da4505c25a35fa648c05bba4f",
-   "size": 33869,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/node-js-sdsl-4.1.4-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "node-js-sdsl-4.1.4-3-1-x86_64.mind",
+   "sha256": "7f515e35293fc9a0b40ab09065ed9b480f97520129250d6c16cd2ae6e43d0a54",
+   "size": 35037,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/node-js-sdsl-4.1.4-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "node-js-tokens",
@@ -1114199,17 +1114556,23 @@
   },
   {
    "name": "node-promise",
-   "version": "8.3.0",
+   "version": "8.3.0-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "bare bones Promises/A+ implementation - Node.js module",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "node-promise-8.3.0-1-x86_64.mind",
-   "sha256": "13552eb252770cfdb213026c81987973264d42007d838c0aa259949ef4ec544b",
-   "size": 17878,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/node-promise-8.3.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "node-asap",
+    "node-rimraf"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "node-promise-8.3.0-2-1-x86_64.mind",
+   "sha256": "a3cdfdbca25e747356db67f240cb75a567457d4a8dfb6b0da0ebaa7f5bf61000",
+   "size": 17791,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/node-promise-8.3.0-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "node-promise-inflight",
@@ -1119349,17 +1119712,20 @@
   },
   {
    "name": "node-statuses",
-   "version": "2.0.1",
+   "version": "2.0.1+~2.0.0-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "HTTP status utility",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "node-statuses-2.0.1-1-x86_64.mind",
-   "sha256": "4835309d2e26998ec558d830f378e24646c2ad9bf5c0f88f9872638c24b05e1d",
-   "size": 6991,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/node-statuses-2.0.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "node-statuses-2.0.1+~2.0.0-3-1-x86_64.mind",
+   "sha256": "529a6150c63624b7759310c2860d7c1c1b292a27a878615deb1ae4177ac39d30",
+   "size": 7726,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/node-statuses-2.0.1%2B.2.0.0-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "node-std-mocks",
@@ -1133020,17 +1133386,26 @@
   },
   {
    "name": "obs-ashmanix-blur-filter",
-   "version": "1.0.1",
+   "version": "1.1.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "plugin for OBS Studio to set a blur filter on a source",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "obs-ashmanix-blur-filter-1.0.1-1-x86_64.mind",
-   "sha256": "5072b40cfcb3146969f2683c09b6ef9b58580021a485b23d90c26ea58bfe0a6b",
-   "size": 13175,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-08/obs-ashmanix-blur-filter-1.0.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-08"
+   "dependencies": [
+    "libc6 (>= 2.14)",
+    "libgcc-s1 (>= 3.0)",
+    "libobs0t64 (>= 23.2.1)",
+    "libstdc++6 (>= 5.2)",
+    "obs-studio (>= 29)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "obs-ashmanix-blur-filter-1.1.0-1-1-x86_64.mind",
+   "sha256": "b87c394e42fbb8bd5f46a7f46047b94fc85940ee3c637445f2618d041b0e0a7e",
+   "size": 14165,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/obs-ashmanix-blur-filter-1.1.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "obs-ashmanix-countdown",
@@ -1134925,17 +1135300,24 @@
   },
   {
    "name": "octave-bim",
-   "version": "1.1.6",
+   "version": "1.1.6-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "PDE solver using a finite element/volume approach in Octave",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "octave-bim-1.1.6-1-x86_64.mind",
-   "sha256": "14a132a752c7e35c17640994ea1dcf26d4c025951b4b6de2c655e36d159cc3d2",
-   "size": 31087,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-08/octave-bim-1.1.6-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-08"
+   "dependencies": [
+    "octave (>= 7.3.0)",
+    "octave-fpl",
+    "octave-msh"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "octave-bim-1.1.6-1-1-x86_64.mind",
+   "sha256": "acf46b16cdc0f14888e1efc3462951455c7eef8a2e68f334bde99cde953ab9ce",
+   "size": 31908,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/octave-bim-1.1.6-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "octave-biosig",
@@ -1136682,17 +1137064,27 @@
   },
   {
    "name": "octave-vrml",
-   "version": "1.0.13",
+   "version": "1.0.14-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "VRML functions for Octave",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "octave-vrml-1.0.13-1-x86_64.mind",
-   "sha256": "37a5545ffa3e4c578f1e413cfd46a153dca7dca8b573ed7969a793debdaf14d1",
-   "size": 386306,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/octave-vrml-1.0.13-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "octave (>= 9.4.0)",
+    "octave-linear-algebra",
+    "octave-miscellaneous",
+    "octave-statistics",
+    "octave-struct",
+    "castle-model-viewer"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "octave-vrml-1.0.14-2-1-x86_64.mind",
+   "sha256": "80ba56383c06911d125777af9a6c51f40edbd508d8d09ac27a927a9627c03f24",
+   "size": 398905,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/octave-vrml-1.0.14-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "octave-zeromq",
@@ -1143318,13 +1143710,13 @@
   },
   {
    "name": "openjdk-21-jre-zero",
-   "version": "21.0.12.1+1-1~deb13u1",
+   "version": "21.0.13+9-1~deb13u2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Alternative JVM for OpenJDK, using Zero",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [
-    "openjdk-21-jre-headless (= 21.0.12.1+1-1~deb13u1)",
+    "openjdk-21-jre-headless (= 21.0.13+9-1~deb13u2)",
     "libc6 (>= 2.38)",
     "libgcc-s1 (>= 3.0)",
     "libstdc++6 (>= 4.3)"
@@ -1143332,11 +1143724,11 @@
    "origin": "debian/trixie",
    "format": 2,
    "maintscripts": [],
-   "filename": "openjdk-21-jre-zero-21.0.12.1+1-1.deb13u1-1-x86_64.mind",
-   "sha256": "5ec4c2c7d6a6dfa31e243d0308c94ba48db2bc2769d9ee9f0ca44adfc0aa3e5f",
-   "size": 12940151,
-   "chunk_tag": "v1.0-chunk-51",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-51/openjdk-21-jre-zero-21.0.12.1+1-1.deb13u1-1-x86_64.mind"
+   "filename": "openjdk-21-jre-zero-21.0.13+9-1~deb13u2-1-x86_64.mind",
+   "sha256": "5bfad3c038f56b49cae037364a094034e4cdf687526bba26fbae324f977094d9",
+   "size": 12021151,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/openjdk-21-jre-zero-21.0.13%2B9-1.deb13u2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "openjdk-21-source",
@@ -1148898,17 +1149290,20 @@
   },
   {
    "name": "orbital-eunuchs-sniper-data",
-   "version": "1.30",
+   "version": "1.30+svn20070601-4.1",
    "release": "1",
    "architecture": "x86_64",
    "description": "game data files for the game Orbital Eunuchs Sniper",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "orbital-eunuchs-sniper-data-1.30-1-x86_64.mind",
-   "sha256": "e08ffd9894a27828dc9b8abc1b7d52e9c8f111acef2294df1e2eb3958c036ece",
-   "size": 3900183,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/orbital-eunuchs-sniper-data-1.30-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "orbital-eunuchs-sniper-data-1.30+svn20070601-4.1-1-x86_64.mind",
+   "sha256": "1f1110a24d47c4212d65c899e58e994436967211ab3eef643945b78fa764fd95",
+   "size": 3901019,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/orbital-eunuchs-sniper-data-1.30%2Bsvn20070601-4.1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "orca",
@@ -1157543,17 +1157938,28 @@
   },
   {
    "name": "pax-britannica",
-   "version": "1.0.0",
+   "version": "1.0.0-5+b3",
    "release": "1",
    "architecture": "x86_64",
    "description": "one-button multi-player real-time strategy game",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "pax-britannica-1.0.0-1-x86_64.mind",
-   "sha256": "03eb82f02b033b473a005b4f8b00c9d3cdf8d98243ad6b3213b6f87f408c4b45",
-   "size": 177664,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/pax-britannica-1.0.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "pax-britannica-data",
+    "libasound2t64 (>= 1.0.16)",
+    "libc6 (>= 2.34)",
+    "libgl1",
+    "libglfw3 (>= 3.0)",
+    "libglu1-mesa | libglu1",
+    "liblua5.1-0 (>= 5.1.3)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "pax-britannica-1.0.0-5+b3-1-x86_64.mind",
+   "sha256": "ed7b98e831ad90c91644fa9e782caca24d38d78a702c3a34d6d51937f1e2028a",
+   "size": 178865,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/pax-britannica-1.0.0-5%2Bb3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "pax-britannica-data",
@@ -1171476,17 +1171882,23 @@
   },
   {
    "name": "php-oauth",
-   "version": "2.0.7",
+   "version": "2.0.9-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "OAuth 1.0 consumer and provider extension",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-oauth-2.0.7-1-x86_64.mind",
-   "sha256": "f1086d57c2502a4a58b2a617215166ca907d711690f62bac487f8c244ffe9d66",
-   "size": 1748,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-oauth-2.0.7-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common (>= 2:69~)",
+    "php8.4-oauth"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-oauth-2.0.9-1-1-x86_64.mind",
+   "sha256": "cf198306abe52dea09c90f72d9776d8ecc287c3c84e9adddc9d11451d0855e1f",
+   "size": 3553,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-oauth-2.0.9-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-oauth-all-dev",
@@ -1172123,17 +1172535,22 @@
   },
   {
    "name": "php-predis",
-   "version": "2.2.2",
+   "version": "2.4.0-1",
    "release": "1",
    "architecture": "x86_64",
-   "description": "A flexible and feature-complete Redis client for PHP",
+   "description": "A flexible and feature-complete Redis/Valkey client for PHP",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-predis-2.2.2-1-x86_64.mind",
-   "sha256": "470afe3c87a09badab49e6447795e0a5898d40a46173fcc40f5c6354c448fa11",
-   "size": 161951,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-predis-2.2.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-predis-2.4.0-1-1-x86_64.mind",
+   "sha256": "256ca98ac8f0a25d057416b4be9f602bab2e2d7534f09fe9b413f6c6b28f1c0a",
+   "size": 175101,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-predis-2.4.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-proxy-manager",
@@ -1174109,17 +1174526,22 @@
   },
   {
    "name": "php-symfony-intl",
-   "version": "6.4.5",
+   "version": "6.4.49+dfsg-0+deb13u1",
    "release": "1",
    "architecture": "x86_64",
    "description": "limited replacement layer for the PHP extension intl",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-symfony-intl-6.4.5-1-x86_64.mind",
-   "sha256": "873a13bd147b491808d984fa78254f4f800a563bdac308566890235e275b0373",
-   "size": 6520662,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-symfony-intl-6.4.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-symfony-intl-6.4.49+dfsg-0+deb13u1-1-x86_64.mind",
+   "sha256": "9979a2274f13ed531bd3a5cc309d12bcbc8030bf7098d08b2f5d539e34b4dfcc",
+   "size": 8968819,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-symfony-intl-6.4.49%2Bdfsg-0%2Bdeb13u1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-symfony-iqsms-notifier",
@@ -1174291,17 +1174713,29 @@
   },
   {
    "name": "php-symfony-mailer",
-   "version": "6.4.5",
+   "version": "6.4.49+dfsg-0+deb13u1",
    "release": "1",
    "architecture": "x86_64",
    "description": "help sending emails",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-symfony-mailer-6.4.5-1-x86_64.mind",
-   "sha256": "1771d5181454099efac398823356b1f4eca3372ba8e37c34e29aec4de6795400",
-   "size": 37153,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-symfony-mailer-6.4.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common",
+    "php-email-validator",
+    "php-psr-event-dispatcher (>= 1)",
+    "php-psr-event-dispatcher (<< 2~~)",
+    "php-psr-log",
+    "php-symfony-event-dispatcher",
+    "php-symfony-mime",
+    "php-symfony-service-contracts"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-symfony-mailer-6.4.49+dfsg-0+deb13u1-1-x86_64.mind",
+   "sha256": "70e2b3b27f41a29386f15ffd729ab1c9a39604565eaafd1d3ac4426c294b7b22",
+   "size": 50607,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-symfony-mailer-6.4.49%2Bdfsg-0%2Bdeb13u1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-symfony-mailer-send-mailer",
@@ -1175060,17 +1175494,23 @@
   },
   {
    "name": "php-symfony-property-info",
-   "version": "6.4.5",
+   "version": "6.4.49+dfsg-0+deb13u1",
    "release": "1",
    "architecture": "x86_64",
    "description": "extract information about properties of PHP classes",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-symfony-property-info-6.4.5-1-x86_64.mind",
-   "sha256": "3999bc66ba9a819c2e7a2ee926f810c3b4154332dd4d1e1726af2541e3c10038",
-   "size": 31012,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-symfony-property-info-6.4.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common",
+    "php-symfony-string"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-symfony-property-info-6.4.49+dfsg-0+deb13u1-1-x86_64.mind",
+   "sha256": "3cdaf1e8d9504c0c0e83f3e3918f0f1cea95f95fd5ea9b5bcfb7153fea8349c9",
+   "size": 44152,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-symfony-property-info-6.4.49%2Bdfsg-0%2Bdeb13u1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-symfony-proxy-manager-bridge",
@@ -1175402,17 +1175842,23 @@
   },
   {
    "name": "php-symfony-serializer",
-   "version": "6.4.5",
+   "version": "6.4.49+dfsg-0+deb13u1",
    "release": "1",
    "architecture": "x86_64",
    "description": "convert PHP objects into specific formats and vice versa",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "php-symfony-serializer-6.4.5-1-x86_64.mind",
-   "sha256": "c80d391aecfd820ed7b68653e8237b60d1b113c8bfa736f71075f7de6261b352",
-   "size": 91751,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-23/php-symfony-serializer-6.4.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-23"
+   "dependencies": [
+    "php-common",
+    "php-symfony-deprecation-contracts"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "php-symfony-serializer-6.4.49+dfsg-0+deb13u1-1-x86_64.mind",
+   "sha256": "162923fc5f454bfcde9353a65125c8d11b0bf6d5e12e146a0b098b0d83a34b8f",
+   "size": 105487,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/php-symfony-serializer-6.4.49%2Bdfsg-0%2Bdeb13u1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "php-symfony-service-contracts",
@@ -1237347,17 +1237793,32 @@
   },
   {
    "name": "python3-bandit",
-   "version": "1.6.2",
+   "version": "1.7.10-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Security oriented static analyzer for Python code - Python 3.x",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-bandit-1.6.2-1-x86_64.mind",
-   "sha256": "b76dc71eb86e696f3f83037264724613c1115d08713c62407bbef537da0ad4de",
-   "size": 76724,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-09/python3-bandit-1.6.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-09"
+   "dependencies": [
+    "python3-git",
+    "python3-jschema-to-python",
+    "python3-rich",
+    "python3-sarif-python-om",
+    "python3-stevedore",
+    "python3-yaml",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "python3-bandit-1.7.10-2-1-x86_64.mind",
+   "sha256": "c855195e6e347bdf2bace52f1f1e8bbe9c9fe0bdbd76d3cfc7d16e853651948b",
+   "size": 89049,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-bandit-1.7.10-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-barbican",
@@ -1238141,17 +1238602,25 @@
   },
   {
    "name": "python3-bidi",
-   "version": "0.4.2",
+   "version": "0.4.2-8",
    "release": "1",
    "architecture": "x86_64",
    "description": "bi-directional layout implementation",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-bidi-0.4.2-1-x86_64.mind",
-   "sha256": "9b82a19d00fd35a0dface9de2bc98744a6ff872e8e55c05265aa78129553a405",
-   "size": 16102,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-09/python3-bidi-0.4.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-09"
+   "dependencies": [
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-bidi-0.4.2-8-1-x86_64.mind",
+   "sha256": "37e6d2f9a743c926a7908bed2239eced1613e5cec56d48ec95d7ced44e1a9e7a",
+   "size": 17953,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-bidi-0.4.2-8-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-bidict",
@@ -1239871,17 +1240340,27 @@
   },
   {
    "name": "python3-booleanoperations",
-   "version": "0.9.0",
+   "version": "0.9.0-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "Python library for Boolean operations on paths",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-booleanoperations-0.9.0-1-x86_64.mind",
-   "sha256": "88c89698bc927bc3801abd39ba3cb3d327aaeee347f161918017699360ed6c3c",
-   "size": 20522,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-09/python3-booleanoperations-0.9.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-09"
+   "dependencies": [
+    "python3-fonttools",
+    "python3-pyclipper (>= 1.1.0.post2-3)",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-booleanoperations-0.9.0-4-1-x86_64.mind",
+   "sha256": "9f15868fc4388836c063c17f7edae9c65cb60df1498e53fa0ec1d16c46cc0685",
+   "size": 21941,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-booleanoperations-0.9.0-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-bootstrapform",
@@ -1240374,17 +1240853,29 @@
   },
   {
    "name": "python3-breezy.tests",
-   "version": "3.3.5",
+   "version": "3.3.11-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "distributed version control system - Python 3 testsuite",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-breezy.tests-3.3.5-1-x86_64.mind",
-   "sha256": "a56bca0c09d7817b413743ca3c6f9b793203290adfd57d0a6d3cc0286a5fb6ac",
-   "size": 1054337,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-09/python3-breezy.tests-3.3.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-09"
+   "dependencies": [
+    "python3-breezy (<= 3.3.11-1.1~)",
+    "python3-breezy (>= 3.3.11-1)",
+    "python3-testtools (>= 0.9.5~)",
+    "python3-packaging",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-breezy.tests-3.3.11-1-1-x86_64.mind",
+   "sha256": "deb35ea0b079b05b9db6fa4a8ae9b13384960b216e2515c9ee53fccd117723b5",
+   "size": 1064910,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-breezy.tests-3.3.11-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-brian",
@@ -1258897,17 +1259388,28 @@
   },
   {
    "name": "python3-fake-factory",
-   "version": "22.0.0",
+   "version": "33.3.1-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Faker is a Python library that generates fake data (Python 3)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-fake-factory-22.0.0-1-x86_64.mind",
-   "sha256": "dad2a6f9ca046c31d6ae1cf0167e8100b5f349d0ceef518a210d0a52f1e38246",
-   "size": 1638136,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-10/python3-fake-factory-22.0.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-10"
+   "dependencies": [
+    "python3-dateutil",
+    "python3-typing-extensions",
+    "python3:any",
+    "python3-pil"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-fake-factory-33.3.1-1-1-x86_64.mind",
+   "sha256": "d74f8fe19ef5a431116c2fd8bf8f762fd42c99e10e9f1d2ae6e1c1175caf2a0e",
+   "size": 1789638,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-fake-factory-33.3.1-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-fake-useragent",
@@ -1260983,17 +1261485,26 @@
   },
   {
    "name": "python3-flask-paranoid",
-   "version": "0.2.0",
+   "version": "0.2.0-5",
    "release": "1",
    "architecture": "x86_64",
    "description": "Simple user session protection",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-flask-paranoid-0.2.0-1-x86_64.mind",
-   "sha256": "5965aa6d5e1c952e5303e6ebe9547558bdf92f333ca447c63d2d6a3661ee2443",
-   "size": 4380,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-11/python3-flask-paranoid-0.2.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-11"
+   "dependencies": [
+    "python3-flask (>= 0.10)",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-flask-paranoid-0.2.0-5-1-x86_64.mind",
+   "sha256": "1865a54ea0e464d74b9b29e5aabd016b87aa77c61c34f4803efd1ea22bfb531d",
+   "size": 5560,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-flask-paranoid-0.2.0-5-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-flask-peewee",
@@ -1263429,17 +1263940,26 @@
   },
   {
    "name": "python3-geneagrapher",
-   "version": "2.0.0",
+   "version": "2.0.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Create tree from Mathematics Genealogy Project (module)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-geneagrapher-2.0.0-1-x86_64.mind",
-   "sha256": "9b0b48753c8d9987c5dfadf19e26186f5927932aeddecfb98883e0c58285c21d",
-   "size": 11579,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-11/python3-geneagrapher-2.0.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-11"
+   "dependencies": [
+    "python3-websockets",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-geneagrapher-2.0.0-1-1-x86_64.mind",
+   "sha256": "2f0671f2d1cb0a0c80dd39396eab580abe5e39e133b774787a4255c9b6f671f2",
+   "size": 15111,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-geneagrapher-2.0.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-geneagrapher-core",
@@ -1265985,17 +1266505,36 @@
   },
   {
    "name": "python3-grib",
-   "version": "2.1.5",
+   "version": "2.1.6-1+b3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Python 3 module for reading and writing GRIB files",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-grib-2.1.5-1-x86_64.mind",
-   "sha256": "4fa82fb8e11aa57379259a7bcced08b5e19eec0213e93e620dbc78d2574bb117",
-   "size": 239374,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-11/python3-grib-2.1.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-11"
+   "dependencies": [
+    "libc6 (>= 2.14)",
+    "libeccodes0 (>= 2.40.0)",
+    "libeccodes-data",
+    "python3-numpy2-abi0 | python3-numpy-abi9",
+    "python3 (<< 3.14)",
+    "python3 (>= 3.13~)",
+    "python3-numpy",
+    "python3-packaging",
+    "python3-pyproj",
+    "python3:any",
+    "libeccodes-dev",
+    "libg2c-dev | libgrib2c-dev"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-grib-2.1.6-1+b3-1-x86_64.mind",
+   "sha256": "3eba91d1638b8581d14ee4e18d666513f286a0b8032917381ad313971e6e6160",
+   "size": 339278,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-grib-2.1.6-1%2Bb3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-griddataformats",
@@ -1272446,17 +1272985,29 @@
   },
   {
    "name": "python3-jenkins",
-   "version": "1.4.0",
+   "version": "1.8.2-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "bindings for the Jenkins Remote API - Python 3.x",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-jenkins-1.4.0-1-x86_64.mind",
-   "sha256": "12389d2052d4a05540f3a4ccdef83991d03aa788e70412572bb4765d24fe62a4",
-   "size": 26252,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-11/python3-jenkins-1.4.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-11"
+   "dependencies": [
+    "python3-requests",
+    "python3-multi-key-dict",
+    "python3-pbr (>= 0.8.2)",
+    "python3-six (>= 1.3.0)",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-jenkins-1.8.2-2-1-x86_64.mind",
+   "sha256": "ba038366cac9cd64160f65b1bfbd05670d9d712701268cefe1c4ab59ce701133",
+   "size": 30019,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-jenkins-1.8.2-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-jenkins-job-builder",
@@ -1280332,17 +1280883,27 @@
   },
   {
    "name": "python3-matrix-common",
-   "version": "1.3.0",
+   "version": "1.3.0-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "common Python utilities for Matrix infrastructure",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-matrix-common-1.3.0-1-x86_64.mind",
-   "sha256": "50bbe1129efe515e68b083d9f83aacabab6b84255b2bd95bcee0abe67bb32806",
-   "size": 3109,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-12/python3-matrix-common-1.3.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-12"
+   "dependencies": [
+    "python3-attr",
+    "python3-importlib-metadata | python3 (>> 3.8)",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-matrix-common-1.3.0-2-1-x86_64.mind",
+   "sha256": "9bc060cce49639a90c9cd9fdcf6104ced1fce334f19a6463d1a8dfce34b162bf",
+   "size": 8555,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-matrix-common-1.3.0-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-matrix-nio",
@@ -1283708,17 +1284269,27 @@
   },
   {
    "name": "python3-mshr",
-   "version": "2019.2.0~git20230811.ff54a68",
+   "version": "2019.2.0~git20230811.ff54a68+dfsg1-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "Python 3 interface for mshr",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-mshr-2019.2.0~git20230811.ff54a68-1-x86_64.mind",
-   "sha256": "8bd1b638f9c2f1e455c1d66bc091d4b731fd01059487cdbd8cc97dfc436b57ab",
-   "size": 4757,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-12/python3-mshr-2019.2.0.git20230811.ff54a68-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-12"
+   "dependencies": [
+    "libmshr-dev (>= 2019.2.0~git20230811.ff54a68+dfsg1-4)",
+    "python3-mshr-real | python3-mshr64-real",
+    "python3-dolfin (>= 2019.2)",
+    "dolfin-bin (>= 2019.2)",
+    "python3",
+    "python3-numpy"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "python3-mshr-2019.2.0~git20230811.ff54a68+dfsg1-4-1-x86_64.mind",
+   "sha256": "dc044bac1f1415d48469735848496d6f79516591f4d2ab6867bf4ed8988024c1",
+   "size": 8457,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-mshr-2019.2.0.git20230811.ff54a68%2Bdfsg1-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-mshr-real",
@@ -1283915,17 +1284486,25 @@
   },
   {
    "name": "python3-multi-key-dict",
-   "version": "2.0.3",
+   "version": "2.0.3-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Multi key dictionary implementation - Python 3.x",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-multi-key-dict-2.0.3-1-x86_64.mind",
-   "sha256": "38ca3bcda79fb2ecf7491274d0f32c3ecd7c65c914f67063a5f1f236e3448c6d",
-   "size": 10523,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-12/python3-multi-key-dict-2.0.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-12"
+   "dependencies": [
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-multi-key-dict-2.0.3-2-1-x86_64.mind",
+   "sha256": "ee2162aeb466d669772886c53d1f2ca39f87c6529ffa175d4dc6184882a66e93",
+   "size": 11751,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-multi-key-dict-2.0.3-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-multidict",
@@ -1285539,17 +1286118,33 @@
   },
   {
    "name": "python3-netmiko",
-   "version": "4.3.0",
+   "version": "4.5.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "multi-vendor library for SSH connections to network devices - Python 3.X",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-netmiko-4.3.0-1-x86_64.mind",
-   "sha256": "fc86c1639edce3b3dec2658a8a8242a7850cb3b2724739b72b44d7f43b1c1188",
-   "size": 131535,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-netmiko-4.3.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3-ntc-templates",
+    "python3-paramiko",
+    "python3-rich",
+    "python3-ruamel.yaml",
+    "python3-scp",
+    "python3-serial",
+    "python3-textfsm",
+    "python3-yaml",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-netmiko-4.5.0-1-1-x86_64.mind",
+   "sha256": "abbd3409bdd773079b5e3291b2d9df845c0f7d3984e5bb9ec830ff6440ceb90d",
+   "size": 154419,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-netmiko-4.5.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-netplan",
@@ -1287761,17 +1288356,25 @@
   },
   {
    "name": "python3-objgraph",
-   "version": "3.6.1",
+   "version": "3.6.2-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Module for exploring Python object reference graphs",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-objgraph-3.6.1-1-x86_64.mind",
-   "sha256": "79160db2c3d24465ec5ef7f6a3a66a80d3efb7b8f8b727ef99c4c228cc2147d6",
-   "size": 19453,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-objgraph-3.6.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-objgraph-3.6.2-1-1-x86_64.mind",
+   "sha256": "7dd1894cf96f1c732cc71707ac24e7f18450470d89b0c00fd1b99f63e45e5e66",
+   "size": 24950,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-objgraph-3.6.2-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-observabilityclient",
@@ -1290731,17 +1291334,37 @@
   },
   {
    "name": "python3-oslo.privsep",
-   "version": "3.3.0",
+   "version": "3.6.0-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "OpenStack library for privilege separation - Python 3.x",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-oslo.privsep-3.3.0-1-x86_64.mind",
-   "sha256": "8504558946c91db2f8f081ab0f8986e216f63c54970fca9807f55f5bc5616ecd",
-   "size": 25970,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-oslo.privsep-3.3.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3-cffi",
+    "python3-debtcollector (>= 3.0.0)",
+    "python3-eventlet",
+    "python3-greenlet",
+    "python3-msgpack",
+    "python3-oslo.config",
+    "python3-oslo.i18n",
+    "python3-oslo.log",
+    "python3-oslo.utils",
+    "python3-cffi-backend-api-min (<= 9729)",
+    "python3-cffi-backend-api-max (>= 9729)",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "python3-oslo.privsep-3.6.0-3-1-x86_64.mind",
+   "sha256": "3cea6bc4faf1152f9b3845638f45d0e3846326f01f9d7702eee3137f922ed78e",
+   "size": 26187,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-oslo.privsep-3.6.0-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-oslo.reports",
@@ -1290774,17 +1291397,29 @@
   },
   {
    "name": "python3-oslo.rootwrap",
-   "version": "7.1.0",
+   "version": "7.5.1-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "allows fine filtering of shell commands to run as root - Python 3.x",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-oslo.rootwrap-7.1.0-1-x86_64.mind",
-   "sha256": "7fba65ffc12b2658c8f79afcc6a6503f62e7ae6588ca5b41da40b1660e4b0956",
-   "size": 26486,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-oslo.rootwrap-7.1.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3-debtcollector (>= 3.0.0)",
+    "python3-pbr",
+    "sudo",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm",
+    "postrm"
+   ],
+   "filename": "python3-oslo.rootwrap-7.5.1-3-1-x86_64.mind",
+   "sha256": "cb15548af081be0f22acb84402a1d76617b945734cd0462a32a5a2eea4e3d0b3",
+   "size": 28336,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-oslo.rootwrap-7.5.1-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-oslo.serialization",
@@ -1292276,17 +1292911,30 @@
   },
   {
    "name": "python3-parsel",
-   "version": "1.8.1",
+   "version": "1.10.0+dfsg-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Python 3 library to extract HTML/XML data using XPath/CSS selectors",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-parsel-1.8.1-1-x86_64.mind",
-   "sha256": "1757ce30f14cbd4a81b219734c9c1538b86d0ac350a68d0e5075f0eb0f4685ca",
-   "size": 17687,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-parsel-1.8.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3-cssselect",
+    "python3-jmespath",
+    "python3-lxml",
+    "python3-packaging",
+    "python3-w3lib",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-parsel-1.10.0+dfsg-1-1-x86_64.mind",
+   "sha256": "b1893a0eef64e50ca83ccae0f7ed805ee06035afcef00416222a95417f3667fb",
+   "size": 22956,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-parsel-1.10.0%2Bdfsg-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-parsimonious",
@@ -1292954,17 +1293602,27 @@
   },
   {
    "name": "python3-pcapy",
-   "version": "0.11.5",
+   "version": "0.11.5-5+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Python interface to the libpcap packet capture library (Python 3)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-pcapy-0.11.5-1-x86_64.mind",
-   "sha256": "3f7ab59a38432d51f7e5e31609df45e5e1399e2737c2c13be2dabab3e5feba05",
-   "size": 28261,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-pcapy-0.11.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3 (<< 3.14)",
+    "python3 (>= 3.13~)",
+    "libc6 (>= 2.4)",
+    "libgcc-s1 (>= 3.0)",
+    "libpcap0.8t64 (>= 1.0.0)",
+    "libstdc++6 (>= 4.1.1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "python3-pcapy-0.11.5-5+b1-1-x86_64.mind",
+   "sha256": "0ebecb18bb3a0e0c9d4cd16740741a4a9b3bf12ff7f247ffe054b51720f5d2bf",
+   "size": 30186,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-pcapy-0.11.5-5%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-pcbasic",
@@ -1294457,17 +1295115,25 @@
   },
   {
    "name": "python3-phx-class-registry",
-   "version": "4.1.0",
+   "version": "4.1.0-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Module to define global factories and service registries",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-phx-class-registry-4.1.0-1-x86_64.mind",
-   "sha256": "dee336b5eff64dfa81cc7c7dd3cf2a9355b3e7bb630f06a1c47490020113419f",
-   "size": 12785,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-13/python3-phx-class-registry-4.1.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-13"
+   "dependencies": [
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-phx-class-registry-4.1.0-2-1-x86_64.mind",
+   "sha256": "d661432c790d1b9270599a001feb4159c2afe7be523e0e6301ad38f7795686e3",
+   "size": 14213,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-phx-class-registry-4.1.0-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-picklable-itertools",
@@ -1299053,17 +1299719,28 @@
   },
   {
    "name": "python3-pyaxmlparser",
-   "version": "0.3.28",
+   "version": "0.3.31-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Simple Python library to parse Android XML files",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-pyaxmlparser-0.3.28-1-x86_64.mind",
-   "sha256": "021dacc24c4f14082b97e16e304911deddf2626d54cf75680610ee786893a24d",
-   "size": 98023,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-14/python3-pyaxmlparser-0.3.28-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-14"
+   "dependencies": [
+    "python3-asn1crypto",
+    "python3-click",
+    "python3-lxml",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-pyaxmlparser-0.3.31-1-1-x86_64.mind",
+   "sha256": "1b3537bd05b82deb4491328b9eb1c661c5871f94364ea621a63145a1f25c83f6",
+   "size": 97892,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-pyaxmlparser-0.3.31-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-pybadges",
@@ -1301904,17 +1302581,27 @@
   },
   {
    "name": "python3-pygls",
-   "version": "1.3.0",
+   "version": "1.3.0-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Generic Language Server Framework for Python",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-pygls-1.3.0-1-x86_64.mind",
-   "sha256": "eb82e9f68dbb718d07b3cb566cf09b6a992f891bc2866b3896b737d6cc479efa",
-   "size": 42728,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-14/python3-pygls-1.3.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-14"
+   "dependencies": [
+    "python3-cattr",
+    "python3-lsprotocol",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-pygls-1.3.0-2-1-x86_64.mind",
+   "sha256": "255a4489c7b9851f61409cd721a293a481ae3a6da508fe9cf6377a2da4b87c54",
+   "size": 49942,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-pygls-1.3.0-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-pygments",
@@ -1311289,17 +1311976,25 @@
   },
   {
    "name": "python3-pysword",
-   "version": "0.2.8",
+   "version": "0.2.8-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "native Python reader module for the SWORD Project (Python 3)",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-pysword-0.2.8-1-x86_64.mind",
-   "sha256": "1d04012fec0baa3e126510454930f255707d42f90f0e6b4957f2701a9e2dac22",
-   "size": 26470,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-14/python3-pysword-0.2.8-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-14"
+   "dependencies": [
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-pysword-0.2.8-2-1-x86_64.mind",
+   "sha256": "88815db32ad25d0affe5209976cf832fb9c381b58805064515e42c304d2fbdb8",
+   "size": 27529,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-pysword-0.2.8-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-pysyncobj",
@@ -1312533,17 +1313228,27 @@
   },
   {
    "name": "python3-pytest-rerunfailures",
-   "version": "12.0",
+   "version": "15.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "pytest plugin to re-run tests to eliminate flaky failures",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-pytest-rerunfailures-12.0-1-x86_64.mind",
-   "sha256": "d663ee7dbe2df8a5f0748c22ca48a93498ee1e9c36f9b016d3decaef04f436f8",
-   "size": 14657,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-14/python3-pytest-rerunfailures-12.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-14"
+   "dependencies": [
+    "python3-packaging",
+    "python3-pytest",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-pytest-rerunfailures-15.0-1-1-x86_64.mind",
+   "sha256": "4e71eba15e490201b0ff6773f087e783ea3461dfc2899b242e66c15a6307b4d7",
+   "size": 19355,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-pytest-rerunfailures-15.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-pytest-resource-path",
@@ -1336510,17 +1337215,27 @@
   },
   {
    "name": "python3-unearth",
-   "version": "0.14.0",
+   "version": "0.17.5-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "utility to fetch and download python packages",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "python3-unearth-0.14.0-1-x86_64.mind",
-   "sha256": "97b268771d876ae5de0c2e4ad77c99eb62f41464e1534d1c31902c0da6b444fa",
-   "size": 37293,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-16/python3-unearth-0.14.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-16"
+   "dependencies": [
+    "python3-packaging",
+    "python3-httpx",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "python3-unearth-0.17.5-1-1-x86_64.mind",
+   "sha256": "49654922c18ee42112a8b239dfe02bcfc25ae30c6732d6df073649bfef95a264",
+   "size": 41809,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/python3-unearth-0.17.5-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "python3-unicode-rbnf",
@@ -1400618,17 +1401333,25 @@
   },
   {
    "name": "raku-json-unmarshal",
-   "version": "0.15",
+   "version": "0.15-4",
    "release": "1",
    "architecture": "x86_64",
    "description": "Raku module to turn JSON into objects",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "raku-json-unmarshal-0.15-1-x86_64.mind",
-   "sha256": "15cbe9ff4d820329604d9ba667c297a7ad8b3e38e1d813283797d0381e849ba1",
-   "size": 74978,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/raku-json-unmarshal-0.15-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "rakudo",
+    "raku-json-fast",
+    "raku-json-name",
+    "raku-json-optin"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "raku-json-unmarshal-0.15-4-1-x86_64.mind",
+   "sha256": "cdbe7783d02c5ca3f44de21f6a9d09f7fb24af2032f3ab7099d8feb263a66846",
+   "size": 11004,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/raku-json-unmarshal-0.15-4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "raku-librarycheck",
@@ -1401037,17 +1401760,23 @@
   },
   {
    "name": "randtype",
-   "version": "1.13",
+   "version": "1.13-11.2",
    "release": "1",
    "architecture": "x86_64",
    "description": "semi-random text typer",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "randtype-1.13-1-x86_64.mind",
-   "sha256": "b8c6155a455e2d5e696b0c3337a4f660b416cbd489224c98a0d71c4985682aab",
-   "size": 11982,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/randtype-1.13-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "libc6 (>= 2.38)",
+    "zlib1g (>= 1:1.1.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "randtype-1.13-11.2-1-x86_64.mind",
+   "sha256": "46b701b85e6e40da8b5c702cbe74537efc7e77b29f569ff77f341c1eef4df7a0",
+   "size": 12406,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/randtype-1.13-11.2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ranger",
@@ -1405198,17 +1405927,24 @@
   },
   {
    "name": "remake",
-   "version": "4.3",
+   "version": "4.3+dbg-1.6+dfsg-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "GNU make fork with improved error reporting and debugging",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "remake-4.3-1-x86_64.mind",
-   "sha256": "7318b50eeea43b4196658561f934608cd0944010d6f4bdbe3d6c7d46d548800c",
-   "size": 193897,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-17/remake-4.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-17"
+   "dependencies": [
+    "guile-3.0-libs",
+    "libc6 (>= 2.38)",
+    "libreadline8t64 (>= 6.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "remake-4.3+dbg-1.6+dfsg-2-1-x86_64.mind",
+   "sha256": "ed096b6733a2eec2eb2e9b2dcdaf45cc2bc268bed8f4e66759d12298def43763",
+   "size": 304925,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/remake-4.3%2Bdbg-1.6%2Bdfsg-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "remaster-iso",
@@ -1417667,17 +1418403,23 @@
   },
   {
    "name": "ruby-asciidoctor-plantuml",
-   "version": "0.0.16",
+   "version": "0.0.16-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "extension for Asciidoctor to enable support for PlantUML diagrams",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-asciidoctor-plantuml-0.0.16-1-x86_64.mind",
-   "sha256": "89104f9248cd61be2eec1a4c6471069d43848ceae5faf36b8f84ceb76c506599",
-   "size": 5963,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-17/ruby-asciidoctor-plantuml-0.0.16-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-17"
+   "dependencies": [
+    "ruby-asciidoctor (>= 2.0.17)",
+    "ruby-asciidoctor (<< 3.0.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-asciidoctor-plantuml-0.0.16-1-1-x86_64.mind",
+   "sha256": "2221ad589e478952fb3be1ade361473985ec013ceb4c57cf241f3a26575eb200",
+   "size": 6017,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-asciidoctor-plantuml-0.0.16-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-asetus",
@@ -1419325,17 +1420067,29 @@
   },
   {
    "name": "ruby-chef-config",
-   "version": "16.12.3",
+   "version": "16.12.3-3",
    "release": "1",
    "architecture": "x86_64",
    "description": "Chef Infra's default configuration and config loading library",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-chef-config-16.12.3-1-x86_64.mind",
-   "sha256": "f8f2bbbd9ff973d9513136113c16d84d5f887653fdb7555b661916225651eb2d",
-   "size": 31125,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-17/ruby-chef-config-16.12.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-17"
+   "dependencies": [
+    "ruby-chef-utils (>= 16.12.3)",
+    "ruby-mixlib-shellout (>= 2.0)",
+    "ruby-mixlib-shellout (<< 4.0)",
+    "ruby-mixlib-config (>= 2.2.12)",
+    "ruby-mixlib-config (<< 4.0)",
+    "ruby-fuzzyurl",
+    "ruby-addressable",
+    "ruby-tomlrb (>= 1.2)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-chef-config-16.12.3-3-1-x86_64.mind",
+   "sha256": "59f0bcc7e91c110ab850faa4bc0e423e3ae1a04f8ffe58206cfac5206b419259",
+   "size": 31384,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-chef-config-16.12.3-3-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-chef-utils",
@@ -1424130,17 +1424884,27 @@
   },
   {
    "name": "ruby-gpgme",
-   "version": "2.0.23",
+   "version": "2.0.23-1+b4",
    "release": "1",
    "architecture": "x86_64",
    "description": "Ruby GPGME binding",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-gpgme-2.0.23-1-x86_64.mind",
-   "sha256": "04ccb5a3903e1aee21ba2c21d3e6d2e9aeea3ccde0417e89cf7a047752d4bad4",
-   "size": 48341,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-18/ruby-gpgme-2.0.23-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-18"
+   "dependencies": [
+    "ruby",
+    "libc6 (>= 2.14)",
+    "libgpgme11t64 (>= 1.23.2)",
+    "libruby3.3 (>= 3.3.1)",
+    "libruby (>= 1:3.3~0)",
+    "libruby (<< 1:3.4~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-gpgme-2.0.23-1+b4-1-x86_64.mind",
+   "sha256": "200be88eebe75e172959ec0b2b4a121205ef275d576f261ebb77f998b8648757",
+   "size": 48570,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-gpgme-2.0.23-1%2Bb4-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-grack",
@@ -1424614,17 +1425378,25 @@
   },
   {
    "name": "ruby-haml",
-   "version": "6.1.2",
+   "version": "6.3.0-1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Elegant, structured XHTML/XML templating engine",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-haml-6.1.2-1-x86_64.mind",
-   "sha256": "f5ecdd31b77b52e63ae1cf65d01e4ef90e648a7f1040ecdcb18d85cb26b00ed5",
-   "size": 238710,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/ruby-haml-6.1.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "ruby",
+    "ruby-temple (>= 0.8.2)",
+    "ruby-thor",
+    "ruby-tilt"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-haml-6.3.0-1-1-x86_64.mind",
+   "sha256": "379f78a748db4e9b48148207b1c841251d732987dabe43265354becb5974c6e6",
+   "size": 161681,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-haml-6.3.0-1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-haml-rails",
@@ -1429363,17 +1430135,23 @@
   },
   {
    "name": "ruby-net-ssh-multi",
-   "version": "1.2.1",
+   "version": "1.2.1-7",
    "release": "1",
    "architecture": "x86_64",
    "description": "Ruby library for making multiple SSH connections to remote systems",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-net-ssh-multi-1.2.1-1-x86_64.mind",
-   "sha256": "319a2632b765d2d0aed16b4220f2a0c8e77841b54c533974fee4523fec1faf2f",
-   "size": 24333,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-19/ruby-net-ssh-multi-1.2.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-19"
+   "dependencies": [
+    "ruby-net-ssh (>= 2.6.5)",
+    "ruby-net-ssh-gateway (>= 1.2.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-net-ssh-multi-1.2.1-7-1-x86_64.mind",
+   "sha256": "f90703f92a20d032c2790eb846e0b3966347be7381161874270f27323c391450",
+   "size": 23913,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-net-ssh-multi-1.2.1-7-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-net-telnet",
@@ -1435800,17 +1436578,26 @@
   },
   {
    "name": "ruby-sinatra-contrib",
-   "version": "3.0.5",
+   "version": "4.1.1-5",
    "release": "1",
    "architecture": "x86_64",
    "description": "collection of useful extensions to the Sinatra web framework",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-sinatra-contrib-3.0.5-1-x86_64.mind",
-   "sha256": "3b4527c8d7f26b3533668047fd31fcd09a4725d03da281ed75b739ac394ad7fc",
-   "size": 28935,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-19/ruby-sinatra-contrib-3.0.5-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-19"
+   "dependencies": [
+    "ruby-multi-json (>= 0.0.2)",
+    "ruby-mustermann (>= 3.0)",
+    "ruby-rack-protection (>= 4.1.1)",
+    "ruby-sinatra (>= 4.1.1)",
+    "ruby-tilt (>= 2.0)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-sinatra-contrib-4.1.1-5-1-x86_64.mind",
+   "sha256": "fa9a1fc2cbb7cb435e1efb833c115574138a14d7bfd2ee8020400688164dac97",
+   "size": 58622,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-sinatra-contrib-4.1.1-5-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-six",
@@ -1436751,17 +1437538,22 @@
   },
   {
    "name": "ruby-task-list",
-   "version": "2.3.2",
+   "version": "2.3.2-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "GitHub-flavored-Markdown TaskList components",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-task-list-2.3.2-1-x86_64.mind",
-   "sha256": "72da2c0ffeed8d241fe859658b61f26aa306bcc55712067dc9201be4b0788f19",
-   "size": 11257,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-19/ruby-task-list-2.3.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-19"
+   "dependencies": [
+    "ruby-html-pipeline"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-task-list-2.3.2-2-1-x86_64.mind",
+   "sha256": "db29868d865d4da206eaf537fe8f782ed41d1e8a1429065c5685167898e9a6db",
+   "size": 11228,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-task-list-2.3.2-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-tdiff",
@@ -1436807,17 +1437599,20 @@
   },
   {
    "name": "ruby-temple",
-   "version": "0.10.3",
+   "version": "0.10.3-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "template compilation framework in Ruby",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [],
-   "filename": "ruby-temple-0.10.3-1-x86_64.mind",
-   "sha256": "0a48bff760c528a3e1e421fb67695e16bffcb9cf92df368a619b45aa1ee6bb12",
-   "size": 30392,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-19/ruby-temple-0.10.3-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-19"
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-temple-0.10.3-2-1-x86_64.mind",
+   "sha256": "a2fcc0a95dfebad74091bbc626901c67a08a76199bed14acf1542a68d176affb",
+   "size": 33313,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-temple-0.10.3-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-term-ansicolor",
@@ -1437132,17 +1437927,22 @@
   },
   {
    "name": "ruby-thread-order",
-   "version": "1.1.0",
+   "version": "1.1.0-1.1",
    "release": "1",
    "architecture": "x86_64",
    "description": "test helper for ordering threaded code",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-thread-order-1.1.0-1-x86_64.mind",
-   "sha256": "63e7504be1be52faa8b2087012462201aeef29b5b3f2196aa5984107d4f419e4",
-   "size": 4999,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-20/ruby-thread-order-1.1.0-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-20"
+   "dependencies": [
+    "ruby | ruby-interpreter"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-thread-order-1.1.0-1.1-1-x86_64.mind",
+   "sha256": "c78f7d6c8c976062156f3328bd077ee096a3192ac5883da6c56b0b44422246ac",
+   "size": 5040,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-thread-order-1.1.0-1.1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-thread-safe",
@@ -1437852,17 +1438652,25 @@
   },
   {
    "name": "ruby-uconv",
-   "version": "0.6.1",
+   "version": "0.6.1-4+b2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Unicode/EUC-JP translation module for Ruby",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ruby-uconv-0.6.1-1-x86_64.mind",
-   "sha256": "fd7c714d67ffdfbabe780358d92b0f8f8e2ad3643269b26232cbf139af89c28b",
-   "size": 247069,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-20/ruby-uconv-0.6.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-20"
+   "dependencies": [
+    "libc6 (>= 2.14)",
+    "libruby3.3 (>= 3.3.0~preview1)",
+    "libruby (>= 1:3.3~0)",
+    "libruby (<< 1:3.4~)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "ruby-uconv-0.6.1-4+b2-1-x86_64.mind",
+   "sha256": "a776d5519738583eb8d00ba7d6090349ec3f6789b8b6696c94d9c5facc8ea4b0",
+   "size": 255279,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ruby-uconv-0.6.1-4%2Bb2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "ruby-unf",
@@ -1464342,17 +1465150,26 @@
   },
   {
    "name": "spacearyarya",
-   "version": "1.0.2",
+   "version": "1.0.3-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "third person shooter in pseudo-3D",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "spacearyarya-1.0.2-1-x86_64.mind",
-   "sha256": "00118d00369e32c13cf8fea29e352c771d4a88c651cd7abadd88defefe01ec84",
-   "size": 259717,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/spacearyarya-1.0.2-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libkxl0 (>= 1.2.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "postrm"
+   ],
+   "filename": "spacearyarya-1.0.3-2-1-x86_64.mind",
+   "sha256": "a8e3ee7a77e3ee9eacb34a105ce019fcbe126eada38f4bec67a7359dcdd0cd20",
+   "size": 260555,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/spacearyarya-1.0.3-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "spacebar",
@@ -1475233,17 +1476050,27 @@
   },
   {
    "name": "sudoku-solver",
-   "version": "1.0.1",
+   "version": "1.0.1-4+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "sudoku puzzles solver",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "sudoku-solver-1.0.1-1-x86_64.mind",
-   "sha256": "e0e5b54f763b6075dbeec1c238b66f3593128016ce2573d154525604d03348da",
-   "size": 36142,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/sudoku-solver-1.0.1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libgcc-s1 (>= 3.0)",
+    "libqt5core5t64 (>= 5.15.1)",
+    "libqt5gui5t64 (>= 5.0.2) | libqt5gui5-gles (>= 5.0.2)",
+    "libqt5widgets5t64 (>= 5.0.2)",
+    "libstdc++6 (>= 4.1.1)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "sudoku-solver-1.0.1-4+b1-1-x86_64.mind",
+   "sha256": "874a24c6898e08ca66a12fc88cc14556bea9e88f1f0f96f6a138d40234808c17",
+   "size": 37136,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/sudoku-solver-1.0.1-4%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "suffixfsm",
@@ -1500372,23 +1501199,23 @@
   },
   {
    "name": "thunderbird-l10n-pt-pt",
-   "version": "1:140.12.0esr-1~deb13u1",
+   "version": "1:153.6.0esr-1~deb13u1",
    "release": "1",
    "architecture": "x86_64",
    "description": "Portuguese (Portugal) language package for Thunderbird",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
    "dependencies": [
-    "thunderbird (<< 1:140.12.0esr-1~deb13u1.1~)",
-    "thunderbird (>= 1:140.12.0esr-1~deb13u1)"
+    "thunderbird (<< 1:153.6.0esr-1~deb13u1.1~)",
+    "thunderbird (>= 1:153.6.0esr-1~deb13u1)"
    ],
    "origin": "debian/trixie",
    "format": 2,
    "maintscripts": [],
-   "filename": "thunderbird-l10n-pt-pt-1.140.12.0esr-1.deb13u1-1-x86_64.mind",
-   "sha256": "cf18f778d52de3f05b2b2541324cc19ed0aa82f0ca40e75c53ed8c8a21eabd1d",
-   "size": 499241,
-   "chunk_tag": "v1.0-chunk-52",
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-52/thunderbird-l10n-pt-pt-1.140.12.0esr-1.deb13u1-1-x86_64.mind"
+   "filename": "thunderbird-l10n-pt-pt-1:153.6.0esr-1~deb13u1-1-x86_64.mind",
+   "sha256": "22651b27e9668d7f2c3ae520d0d4c315245c6ed7e1c46b21780a06798eb89ef9",
+   "size": 516859,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/thunderbird-l10n-pt-pt-1.153.6.0esr-1.deb13u1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "thunderbird-l10n-rm",
@@ -1526425,17 +1527252,26 @@
   },
   {
    "name": "usbutils-py",
-   "version": "1:017",
+   "version": "1:018-2",
    "release": "1",
    "architecture": "x86_64",
    "description": "Linux USB utilities - lsusb.py command",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "usbutils-py-1:017-1-x86_64.mind",
-   "sha256": "0bbe027b0a30e1d9577cb94415edcf500e296f7eb193bf4f80eb1e1d40cfbbc9",
-   "size": 9375,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/usbutils-py-1.017-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "usb.ids",
+    "python3:any"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "prerm"
+   ],
+   "filename": "usbutils-py-1:018-2-1-x86_64.mind",
+   "sha256": "24bb326412933b62f6c0affd26dd766165a133a1bea5acd5d49741f5e52dcb1a",
+   "size": 12350,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/usbutils-py-1.018-2-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "usbview",
@@ -1546746,17 +1547582,26 @@
   },
   {
    "name": "wminput",
-   "version": "0.6.91",
+   "version": "0.6.91-11",
    "release": "1",
    "architecture": "x86_64",
    "description": "Userspace driver for the wiimote",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "wminput-0.6.91-1-x86_64.mind",
-   "sha256": "61722f129dd762851f137472f1dc3873ebeb7ecbec98cc46a14bd4279fba96e7",
-   "size": 51447,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-20/wminput-0.6.91-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-20"
+   "dependencies": [
+    "python3-cwiid",
+    "libbluetooth3 (>= 4.91)",
+    "libc6 (>= 2.34)",
+    "libcwiid1t64 (>= 0.6.00+svn184)",
+    "libpython3.13 (>= 3.13.0~rc3)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "wminput-0.6.91-11-1-x86_64.mind",
+   "sha256": "bd6931547a0e093178c355c1a4e98a45a7f6e4ad728c0be8735cb0bd5679ef5f",
+   "size": 56765,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/wminput-0.6.91-11-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "wmitime",
@@ -1560150,17 +1560995,65 @@
   },
   {
    "name": "xmms2-plugin-all",
-   "version": "0.8",
+   "version": "0.8+dfsg-28+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "XMMS2 - all plug-ins",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "xmms2-plugin-all-0.8-1-x86_64.mind",
-   "sha256": "23a6857b70c8340f92380fbde2eb231e617b86946d660052c314a39c95a9bc05",
-   "size": 7269,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-20/xmms2-plugin-all-0.8-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-20"
+   "dependencies": [
+    "xmms2-plugin-airplay",
+    "xmms2-plugin-alsa",
+    "xmms2-plugin-ao",
+    "xmms2-plugin-apefile",
+    "xmms2-plugin-asf",
+    "xmms2-plugin-asx",
+    "xmms2-plugin-avcodec",
+    "xmms2-plugin-cdda",
+    "xmms2-plugin-cue",
+    "xmms2-plugin-curl",
+    "xmms2-plugin-daap",
+    "xmms2-plugin-faad",
+    "xmms2-plugin-flac",
+    "xmms2-plugin-flv",
+    "xmms2-plugin-gme",
+    "xmms2-plugin-gvfs",
+    "xmms2-plugin-html",
+    "xmms2-plugin-ices",
+    "xmms2-plugin-icymetaint",
+    "xmms2-plugin-id3v2",
+    "xmms2-plugin-jack",
+    "xmms2-plugin-karaoke",
+    "xmms2-plugin-m3u",
+    "xmms2-plugin-mad",
+    "xmms2-plugin-mms",
+    "xmms2-plugin-modplug",
+    "xmms2-plugin-mp4",
+    "xmms2-plugin-mpg123",
+    "xmms2-plugin-musepack",
+    "xmms2-plugin-normalize",
+    "xmms2-plugin-ofa",
+    "xmms2-plugin-oss",
+    "xmms2-plugin-pls",
+    "xmms2-plugin-pulse",
+    "xmms2-plugin-rss",
+    "xmms2-plugin-sid",
+    "xmms2-plugin-smb",
+    "xmms2-plugin-speex",
+    "xmms2-plugin-tta",
+    "xmms2-plugin-vocoder",
+    "xmms2-plugin-vorbis",
+    "xmms2-plugin-wavpack",
+    "xmms2-plugin-xml",
+    "xmms2-plugin-xspf"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "xmms2-plugin-all-0.8+dfsg-28+b1-1-x86_64.mind",
+   "sha256": "acc7a7a92582c5f857aa7dd4352e5dd6c0b98ba92dd9558853466449bd788a2a",
+   "size": 10086,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/xmms2-plugin-all-0.8%2Bdfsg-28%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "xmms2-plugin-alsa",
@@ -1560667,17 +1561560,25 @@
   },
   {
    "name": "xmms2-plugin-mms",
-   "version": "0.8",
+   "version": "0.8+dfsg-28+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "XMMS2 - MMS transport",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "xmms2-plugin-mms-0.8-1-x86_64.mind",
-   "sha256": "6920144253134f37202013361149d2431d4b110ec209bb158507cf98814ce230",
-   "size": 10733,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-24/xmms2-plugin-mms-0.8-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-24"
+   "dependencies": [
+    "xmms2-core (= 0.8+dfsg-28+b1)",
+    "libc6 (>= 2.4)",
+    "libglib2.0-0t64 (>= 2.12.0)",
+    "libmms0 (>= 0.4)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [],
+   "filename": "xmms2-plugin-mms-0.8+dfsg-28+b1-1-x86_64.mind",
+   "sha256": "47a83d443239778590ae248968ae3ee4405e47f203d051cc1dc08dcc4ade1739",
+   "size": 13052,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/xmms2-plugin-mms-0.8%2Bdfsg-28%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "xmms2-plugin-modplug",
@@ -1569969,17 +1570870,28 @@
   },
   {
    "name": "ytree",
-   "version": "1.99pl1",
+   "version": "1.99pl1-2.2+b1",
    "release": "1",
    "architecture": "x86_64",
    "description": "File manager for terminals",
    "maintainer": "MindOS Team <https://github.com/MindOS-Official>",
-   "dependencies": [],
-   "filename": "ytree-1.99pl1-1-x86_64.mind",
-   "sha256": "3b143e004b41bfa4dbe66437e4bb0375047b718b57d6a98e2545adc181bd0246",
-   "size": 97618,
-   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-20/ytree-1.99pl1-1-x86_64.mind",
-   "chunk_tag": "v1.0-chunk-20"
+   "dependencies": [
+    "libc6 (>= 2.34)",
+    "libncursesw6 (>= 6)",
+    "libreadline8t64 (>= 6.0)",
+    "libtinfo6 (>= 6)"
+   ],
+   "origin": "debian/trixie",
+   "format": 2,
+   "maintscripts": [
+    "postinst",
+    "postrm"
+   ],
+   "filename": "ytree-1.99pl1-2.2+b1-1-x86_64.mind",
+   "sha256": "6e686e65e7d00561a2adc74d2b0bc8732538c7b0553b4c429722df3803e60c46",
+   "size": 101112,
+   "url": "https://github.com/MindOS-Official/packages/releases/download/v1.0-chunk-93/ytree-1.99pl1-2.2%2Bb1-1-x86_64.mind",
+   "chunk_tag": "v1.0-chunk-93"
   },
   {
    "name": "yubico-piv-tool",
