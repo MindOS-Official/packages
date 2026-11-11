@@ -327,7 +327,7 @@ def main():
 
     if not index.get("packages"):
         index = {
-            "repository": "MindOS Sunrise Official Package Repository (aarch64)",
+            "repository": "MindOS Paradise Official Package Repository (aarch64)",
             "architecture": ARCH,
             "version": "1.0",
             "total_packages": 0,

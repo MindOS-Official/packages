@@ -1,12 +1,12 @@
 # 🌅 MindOS Official Package Repository
 
-Official binary package repository for **MindOS** (Sunrise and Paradise).
+Official binary package repository for **MindOS** (Paradise).
 
 - `packages.json` is the index; every package file lives in **GitHub Releases** (`v1.0-chunk-NN`, up to 990 files each).
 - New packages are built every day from **Debian 13 (trixie)** by the package factory (see below).
 
 ## 📦 What is a `.mind` package?
-A `.mind` package is a high-speed, lightweight software container compressed with **Zstandard (zstd)** specifically tuned for the **MindOS Sunrise**.
+A `.mind` package is a high-speed, lightweight software container compressed with **Zstandard (zstd)** specifically tuned for the **MindOS Paradise**.
 
 ```
 package-name-version-release-arch.mind

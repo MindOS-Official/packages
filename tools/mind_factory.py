@@ -281,7 +281,7 @@ def main():
 
     cur_idx_path = stg_file if stg_file.exists() else idx_file
     index = json.loads(cur_idx_path.read_text(encoding="utf-8")) if cur_idx_path.exists() else {
-        "repository": f"MindOS Sunrise Official Package Repository ({arch_name})",
+        "repository": f"MindOS Paradise Official Package Repository ({arch_name})",
         "architecture": arch_name,
         "version": "1.0",
         "total_packages": 0,

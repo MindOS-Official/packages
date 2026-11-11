@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# MindOS Sunrise Official Universal System Installer
+# MindOS Paradise Official Universal System Installer
 # Full GTK4 / Libadwaita Ubiquity & Calamares Style Universal Installation Suite
 # ==============================================================================
 
@@ -38,7 +38,7 @@ class MindOSInstallerApp(Adw.Application):
 class InstallerWindow(Adw.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_title("MindOS Sunrise Kurulumu")
+        self.set_title("MindOS Paradise Kurulumu")
         self.set_default_size(900, 640)
         self.set_resizable(False)
 
@@ -117,7 +117,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         # Clean HeaderBar
         self.header_bar = Adw.HeaderBar()
-        self.header_title = Adw.WindowTitle(title="MindOS Sunrise Kurulumu", subtitle="v2.0 Universal Installer")
+        self.header_title = Adw.WindowTitle(title="MindOS Paradise Kurulumu", subtitle="v2.0 Universal Installer")
         self.header_bar.set_title_widget(self.header_title)
         main_box.append(self.header_bar)
 
@@ -190,7 +190,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         tbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
         tbox.set_valign(Gtk.Align.CENTER)
-        title = Gtk.Label(label="MindOS Sunrise v1.0")
+        title = Gtk.Label(label="MindOS Paradise v1.0")
         title.add_css_class("title-1")
         sub = Gtk.Label(label="Lütfen kurulum ve sistem dilinizi seçin:")
         sub.add_css_class("dim-label")
@@ -261,7 +261,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         img_inst = Gtk.Image.new_from_icon_name("drive-harddisk-symbolic")
         img_inst.set_pixel_size(48)
         img_inst.add_css_class("accent")
-        lbl_inst = Gtk.Label(label="MindOS Sunrise'ı Kur")
+        lbl_inst = Gtk.Label(label="MindOS Paradise'ı Kur")
         lbl_inst.add_css_class("heading")
         lbl_inst.add_css_class("accent")
         lbl_inst_d = Gtk.Label(label="MindOS'u dahili diskinize kurun veya Windows yanına ekleyin.")
@@ -416,7 +416,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         group_mode = Adw.PreferencesGroup()
         group_mode.set_title("Kurulum Türü ve Disk Bölümlendirme")
-        group_mode.set_description("MindOS Sunrise'ın diskinize nasıl kurulacağını belirleyin:")
+        group_mode.set_description("MindOS Paradise'ın diskinize nasıl kurulacağını belirleyin:")
         box.append(group_mode)
 
         # OPTION 1: Windows Alongside Dual-Boot
@@ -456,7 +456,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.box_mind.add_css_class("card")
         self.box_mind.set_margin_top(4)
         self.box_mind.set_margin_bottom(4)
-        lbl_mind_title = Gtk.Label(label="🌅 MindOS Sunrise (Ext4)")
+        lbl_mind_title = Gtk.Label(label="🌅 MindOS Paradise (Ext4)")
         lbl_mind_title.add_css_class("heading")
         lbl_mind_title.add_css_class("accent")
         self.lbl_mind_size = Gtk.Label(label=f"{self.mindos_gb:.1f} GB")
@@ -483,7 +483,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
         # OPTION 2: Erase Entire Disk
         self.row_erase = Adw.ActionRow(
-            title="2. Diski Sil ve Yalnızca MindOS Sunrise Kur (Tüm Diski Formatla)",
+            title="2. Diski Sil ve Yalnızca MindOS Paradise Kur (Tüm Diski Formatla)",
             subtitle="Tüm disk temizlenir, mevcut tüm veriler silinir ve tek sistem kurulur."
         )
         self.radio_erase = Gtk.CheckButton()
@@ -666,7 +666,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.slide_stack.set_transition_duration(500)
         self.slide_stack.set_vexpand(True)
 
-        s1 = self.create_slide("weather-clear-symbolic", "MindOS Sunrise'a Hoş Geldiniz",
+        s1 = self.create_slide("weather-clear-symbolic", "MindOS Paradise'a Hoş Geldiniz",
                                "Linux Kernel 7.0 ile güçlendirilmiş yıldırım hızında modern masaüstü deneyimi.")
         self.slide_stack.add_named(s1, "slide1")
 
@@ -675,7 +675,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         self.slide_stack.add_named(s2, "slide2")
 
         s3 = self.create_slide("applications-games-symbolic", "Kusursuz Dual-Boot ve Donanım Uyumu",
-                               "Windows ve MindOS Sunrise yan yana tam performansla çalışır, dilediğiniz zaman geçiş yapabilirsiniz.")
+                               "Windows ve MindOS Paradise yan yana tam performansla çalışır, dilediğiniz zaman geçiş yapabilirsiniz.")
         self.slide_stack.add_named(s3, "slide3")
 
         s4 = self.create_slide("video-display-symbolic", "Modern Donanım ve Sürücü Desteği",
@@ -742,7 +742,7 @@ class InstallerWindow(Adw.ApplicationWindow):
         title.add_css_class("title-1")
         box.append(title)
 
-        subtitle = Gtk.Label(label="MindOS Sunrise diskinize kuruldu. Bilgisayarı yeniden başlattığınızda sisteminiz açılacaktır.")
+        subtitle = Gtk.Label(label="MindOS Paradise diskinize kuruldu. Bilgisayarı yeniden başlattığınızda sisteminiz açılacaktır.")
         subtitle.add_css_class("dim-label")
         box.append(subtitle)
 
@@ -825,7 +825,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             # Update Summary Page
             if self.install_mode == "alongside":
                 self.sum_mode.set_subtitle("Windows Boot Manager'ın Yanına Kurulum (Dual Boot)")
-                self.sum_disk.set_subtitle(f"Windows: {self.win_gb:.1f} GB  |  MindOS Sunrise: {self.mindos_gb:.1f} GB")
+                self.sum_disk.set_subtitle(f"Windows: {self.win_gb:.1f} GB  |  MindOS Paradise: {self.mindos_gb:.1f} GB")
             elif self.install_mode == "erase_disk":
                 self.sum_mode.set_subtitle("Tüm Diski Sil ve Sıfırdan Kur (Format)")
                 self.sum_disk.set_subtitle(f"Tüm {self.selected_disk} diski MindOS için kullanılacak")
@@ -918,7 +918,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 self.run_cmd(["parted", "-s", target_disk, "resizepart", part_num, f"{win_new_end_mib}MiB"], check=False)
                 time.sleep(1)
 
-                self.update_progress(0.20, "MindOS Sunrise için yeni kök bölüm (Ext4) oluşturuluyor...")
+                self.update_progress(0.20, "MindOS Paradise için yeni kök bölüm (Ext4) oluşturuluyor...")
                 self.run_cmd(["parted", "-s", target_disk, "mkpart", "primary", "ext4", f"{win_new_end_mib}MiB", "100%"], check=False)
                 self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
@@ -927,7 +927,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 part_root = new_parts[-1]
 
                 self.update_progress(0.25, f"Bölüm biçimlendiriliyor: {part_root} (Ext4)...")
-                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Paradise", part_root], check=True)
 
             elif self.install_mode == "erase_disk" or not self.windows_part:
                 self.update_progress(0.05, f"Tüm disk temizleniyor ({target_disk})...")
@@ -949,7 +949,7 @@ class InstallerWindow(Adw.ApplicationWindow):
                 self.run_cmd(["partprobe", target_disk], check=False)
                 time.sleep(2)
                 self.run_cmd(["mkfs.vfat", "-F32", "-n", "MINDOS_ESP", part_esp], check=True)
-                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Sunrise", part_root], check=True)
+                self.run_cmd(["mkfs.ext4", "-F", "-L", "MindOS_Paradise", part_root], check=True)
 
             elif self.install_mode == "manual":
                 all_parts = subprocess.check_output(["lsblk", "-p", "-n", "-l", "-o", "NAME,FSTYPE", target_disk], text=True).splitlines()
@@ -969,7 +969,7 @@ class InstallerWindow(Adw.ApplicationWindow):
             if part_esp:
                 self.run_cmd(["mount", part_esp, str(target_mount / "boot" / "efi")], check=False)
 
-            self.update_progress(0.35, "MindOS Sunrise diske kopyalanıyor (Dosyalar aktarılıyor)...")
+            self.update_progress(0.35, "MindOS Paradise diske kopyalanıyor (Dosyalar aktarılıyor)...")
             copy_dirs = ["bin", "etc", "home", "lib", "lib64", "opt", "root", "sbin", "usr", "var", "boot"]
             total_dirs = len(copy_dirs)
             for i, d in enumerate(copy_dirs):
@@ -1015,7 +1015,7 @@ class InstallerWindow(Adw.ApplicationWindow):
 
             if part_esp:
                 self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=x86_64-efi",
-                              "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Sunrise", "--no-nvram", "--removable", "--recheck"], check=False)
+                              "--efi-directory=/boot/efi", "--bootloader-id=MindOS_Paradise", "--no-nvram", "--removable", "--recheck"], check=False)
             self.run_cmd(["chroot", str(target_mount), "grub-install", "--target=i386-pc",
                           "--recheck", target_disk], check=False)
 
@@ -1028,7 +1028,7 @@ insmod ext2
 insmod fat
 insmod all_video
 
-menuentry 'MindOS Sunrise v1.0 (Kernel 7.0)' {{
+menuentry 'MindOS Paradise v1.0 (Kernel 7.0)' {{
     search --no-floppy --fs-uuid --set=root {root_uuid}
     linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID={root_uuid} rw quiet splash init=/lib/systemd/systemd console=tty0
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
@@ -1043,7 +1043,7 @@ menuentry 'Windows Boot Manager' {{
 }}
 """
             grub_cfg += f"""
-menuentry 'MindOS Sunrise (Kurtarma / Recovery Modu)' {{
+menuentry 'MindOS Paradise (Kurtarma / Recovery Modu)' {{
     search --no-floppy --fs-uuid --set=root {root_uuid}
     linux /boot/vmlinuz-7.0.0-mindos-sunrise-v1 root=UUID={root_uuid} ro single
     initrd /boot/initramfs-7.0.0-mindos-sunrise-v1.img
